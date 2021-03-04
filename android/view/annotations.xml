@@ -1,0 +1,9 @@
+<root>
+    <item
+        name='android.view.MenuItem android.view.MenuItem setOnMenuItemClickListener(android.view.MenuItem.OnMenuItemClickListener)'>
+        <annotation name='android.support.annotation.Nullable' />
+    </item>
+    <item name='android.view.View T findViewById(int)'>
+        <annotation name='android.support.annotation.NonNull' />
+    </item>
+</root>

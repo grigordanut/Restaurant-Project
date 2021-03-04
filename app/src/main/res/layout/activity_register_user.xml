@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/textViewUserReg"
+            android:layout_width="350dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Please enter your SIGN UP details."
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/FirstNameWrapper"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/textViewUserReg"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/etFirstNameReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text_reg"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="First Name"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/LastNameWrapper"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/FirstNameWrapper"
+            android:layout_marginTop="0dp">
+
+            <EditText
+                android:id="@+id/etLastNameReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text_reg"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Last Name"
+                android:inputType="textPersonName"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/PhoneNumbWrapper"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/LastNameWrapper"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/etPhoneNumberReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text_reg"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:textColorHint="#000000"
+                android:hint="Phone Number"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailWrapper"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/PhoneNumbWrapper"
+            android:layout_marginTop="0dp">
+
+            <EditText
+                android:id="@+id/etEmailReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text_reg"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Email Address"
+                android:inputType="textEmailAddress"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordWrapper"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/emailWrapper"
+            android:layout_marginTop="0dp">
+
+            <EditText
+                android:id="@+id/etPasswordReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text_reg"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="20sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confPasswordWrapper"
+            android:layout_width="300dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:textColorHint="#000000"
+            android:layout_below="@id/passwordWrapper"
+            android:layout_marginTop="0dp">
+
+            <EditText
+                android:id="@+id/etConfPassReg"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_text_reg"
+                android:ems="10"
+                android:paddingLeft="5dp"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:textSize="20sp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnRegUser"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/confPasswordWrapper"
+            android:layout_alignLeft="@id/confPasswordWrapper"
+            android:layout_marginTop="25dp"
+            android:text="REGISTER"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="@drawable/round_left"/>
+
+        <Button
+            android:id="@+id/btnCancelRegUser"
+            android:layout_width="140dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/confPasswordWrapper"
+            android:layout_alignRight="@id/confPasswordWrapper"
+            android:layout_marginTop="25dp"
+            android:text="CANCEL"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="@drawable/round_right"/>
+
+        <TextView
+            android:id="@+id/tvLogInUser"
+            android:layout_width="340dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/btnRegUser"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Already registered/Please LOG IN"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"
+            android:textSize="22sp" />
+
+    </RelativeLayout>
+
+</ScrollView>

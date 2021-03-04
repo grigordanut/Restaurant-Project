@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "815623711516",
+    "firebase_url": "https://restaurant-3300b.firebaseio.com",
+    "project_id": "restaurant-3300b",
+    "storage_bucket": "restaurant-3300b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815623711516:android:8c769b92adeb609c",
+        "android_client_info": {
+          "package_name": "com.example.danut.restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "815623711516-k182m35ii5udpmin0eps9nrc87h394vc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfYctt9nKyxFmwOLCZL37zuq9vjV795Ig"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

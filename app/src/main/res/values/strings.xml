@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Restaurant</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="contact_form">Contact Us</string>
+    <string name="contact_form_name">Name</string>
+    <string name="contact_form_email">Email</string>
+    <string name="contact_form_subject">Subject</string>
+    <string name="contact_form_message">Message</string>
+    <string name="contact_form_button">Send Message</string>
+    <string name="contact_form_post_message">Please wait! sending your message ...</string>
+    <string name="contact_posted">Your message has been successfully delivered.</string>
+
+</resources>

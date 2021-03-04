@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="350dp"
+            android:layout_height="35dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"/>
+
+        <TextView
+            android:id="@+id/tvFirstName"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/tvWelcome"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="First Name:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvFirstNameUserPage"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/tvFirstName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:textSize="22sp"
+            android:ems="10"
+            android:text="First Name:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvLastName"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/tvFirstNameUserPage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Last Name:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvLastNameUserPage"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/tvLastName"
+            android:layout_centerHorizontal="true"
+            android:textSize="22sp"
+            android:ems="10"
+            android:text="Last Name:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvPhoneNumber"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/tvLastNameUserPage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Phone Number:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvPhoneNumberUserPage"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/tvPhoneNumber"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Phone:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/tvPhoneNumberUserPage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Email Address:"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <TextView
+            android:id="@+id/tvEmailUserPage"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/tvEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="0dp"
+            android:textSize="22sp"
+            android:ems="10"
+            android:text="Email"
+            android:textColor="#000000"
+            android:paddingLeft="5dp"/>
+
+        <Button
+            android:id="@+id/btnUpdateProfile"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvEmailUserPage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="EDIT PROFILE"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="@drawable/round_corners"/>
+
+        <Button
+            android:id="@+id/btnChangePassword"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/btnUpdateProfile"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Change Password"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="@drawable/round_corners"/>
+
+    </RelativeLayout>
+
+</ScrollView>
+

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30dp">
+
+        <TextView
+            android:id="@+id/textViewUserPage"
+            android:layout_width="350dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="Update your details."
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"/>
+
+        <EditText
+            android:id="@+id/etNewFirstName"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/textViewUserPage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="First Name:"
+            android:paddingLeft="5dp"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/etNewLastName"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/etNewFirstName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Last Name:"
+            android:paddingLeft="5dp"
+            android:inputType="textPersonName"/>
+
+        <EditText
+            android:id="@+id/etNewPhoneNumber"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/etNewLastName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Phone:"
+            android:paddingLeft="5dp"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/etNewEmail"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/round_text_reg"
+            android:layout_below="@id/etNewPhoneNumber"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:ems="10"
+            android:text="Email"
+            android:paddingLeft="5dp"
+            android:inputType="textEmailAddress"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/etNewEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="SAVE CHANGES"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="@drawable/round_corners"/>
+
+        <Button
+            android:id="@+id/btnCancelReg"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/btnSave"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Change Password"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:background="@drawable/round_corners"/>
+
+    </RelativeLayout>
+
+</ScrollView>
+
