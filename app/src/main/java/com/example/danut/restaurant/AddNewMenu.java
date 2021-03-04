@@ -39,7 +39,6 @@ import java.util.List;
 public class AddNewMenu extends AppCompatActivity {
 
     //Declare Variables
-
     private ImageView imageView;
     private static final int PICK_IMAGE = 100;
     private Uri imageUri = null;
@@ -136,7 +135,7 @@ public class AddNewMenu extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    //Upload a new menu into the menu table
+    //Upload a new menu into the Menu table
     public void uploadMenusData() {
 
         progressDialog.dismiss();
