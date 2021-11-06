@@ -3,13 +3,99 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
 
+    <!--    Activity Add New Menu-->
+    <string name="tv_restaurantName">Restaurant Name</string>
+    <string name="et_menuName">Enter Menu Name</string>
+    <string name="et_menuDescription">Enter Menu Description</string>
+    <string name="et_menuPrice">Enter Menu Price</string>
+    <string name="btn_saveMenu">Save Menu</string>
+    <string name="btn_backAdminToPage">Back Admin</string>
+
+    <!--    Activity Add New Restaurant-->
+    <string name="tv_addNewRestaurant">Add New Restaurant</string>
+    <string name="et_addRestName">Restaurant Name</string>
+    <string name="et_addRestAddress">Restaurant Address</string>
+    <string name="btn_saveRestaurant">Save Restaurant</string>
+
+    <!--    Activity Admin Page-->
+    <string name="tv_adminPage">Admin Page</string>
+    <string name="btn_addRestaurant">Add Restaurant</string>
+    <string name="btn_showRestaurant">Show Restaurant</string>
+    <string name="btn_addMenu">Add Menu</string>
+    <string name="btn_showMenu">Show Menu</string>
+
+    <!--    Contact Us Form-->
     <string name="contact_form">Contact Us</string>
     <string name="contact_form_name">Name</string>
     <string name="contact_form_email">Email</string>
     <string name="contact_form_subject">Subject</string>
     <string name="contact_form_message">Message</string>
     <string name="contact_form_button">Send Message</string>
-    <string name="contact_form_post_message">Please wait! sending your message ...</string>
+    <string name="contact_form_post_message">Please wait! sending your message …</string>
     <string name="contact_posted">Your message has been successfully delivered.</string>
+
+    <!--    Activity Register User-->
+    <string name="tv_registerUser">Please enter your SIGN UP details.</string>
+    <string name="et_regUserFirstName">First Name</string>
+    <string name="et_regUserLastName">Last Name</string>
+    <string name="et_regUserPhoneNumber">Phone Number</string>
+    <string name="et_regUserEmailAddress">Email Address</string>
+    <string name="et_regUserPassword">Password</string>
+    <string name="et_regUserConfPassword">Confirm Password</string>
+    <string name="btn_registerUser">Register</string>
+    <string name="btn_cancelUser">Cancel</string>
+    <string name="tv_userAlreadyRegistered">Already registered/Please LOG IN</string>
+
+    <!--    Activity Restaurant Image Add Menus-->
+    <string name="tv_restListCustom">Select a restaurant</string>
+
+    <!--    Activity Restaurant Image Add Menus-->
+    <string name="tv_restImageAddMenus">Select a restaurant</string>
+
+    <!--    Activity Restaurant Image Show Menu Admin-->
+    <string name="tv_restImageShowMenus">Select a restaurant</string>
+    <string name="tv_adminNumberMenus">Number Menus</string>
+
+    <!--    Activity Restaurant Image Show Rest Admin-->
+    <string name="tv_restImageShowRestAdmin">List of Restaurants</string>
+    <string name="btn_addNewRestaurant">Add Restaurant</string>
+    <string name="btn_backAdminPage">Back Admin Page</string>
+
+    <!--    Activity Update Restaurant-->
+    <string name="tv_updateRestDetails">Update Restaurant Details</string>
+    <string name="tv_updateRestName">Restaurant Name</string>
+    <string name="et_updateRestName">Restaurant Name</string>
+    <string name="tv_updateRestAddress">Restaurant Address</string>
+    <string name="et_updateRestAddress">Restaurant Address</string>
+    <string name="btn_updateRestDetails">Update Restaurant Details</string>
+
+    <!--    Activity Update User-->
+    <string name="tv_editUserProfile">Edit your Profile</string>
+    <string name="tv_fNameUserProfile">First Name</string>
+    <string name="et_userFirstName">First Name: </string>
+    <string name="tv_lNameUserProfile">Last Name: </string>
+    <string name="et_userLastName">Last Name: </string>
+    <string name="et_userName">User Name: </string>
+    <string name="tv_phoneUserProfile">Phone: </string>
+    <string name="et_userPhone">Phone: </string>
+    <string name="tv_emailUserProfile">Email: </string>
+    <string name="et_userEmailAddress">Email: </string>
+    <string name="btn_saveChangesEditProfile">Save Changes</string>
+
+    <!--    Content Main-->
+    <string name="tv_mainPage">Welcome to Restaurant!</string>
+    <string name="btn_mainAdmin">Log In</string>
+    <string name="btn_mainDeals">Deals</string>
+    <string name="btn_mainCustomer">Register</string>
+    <string name="btn_mainContactUs">Contact Us</string>
+
+    <!--    Image Restaurant-->
+    <string name="tv_restName">Restaurant Name</string>
+    <string name="tv_restAddress">Restaurant Address</string>
+    <string name="tv_menusAvailable">Menus Available: </string>
+    <string name="tv_numberMenusAvailable">0</string>
+
+    <!--    Menu Admin-->
+    <string name="menu_adminLogOut">Log Out</string>
 
 </resources>

@@ -20,8 +20,30 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddRestNew"></activity>
-        <activity android:name=".RestaurantDetails" />
+        <activity
+            android:name=".RegisterUser"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateMenu"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateRestaurant"
+            android:exported="false" />
+        <activity
+            android:name=".RestaurantImageShowMenuAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".RestaurantImageAddMenus"
+            android:exported="false" />
+        <activity
+            android:name=".AddNewRestaurant"
+            android:exported="false" />
+        <activity
+            android:name=".AdminPage"
+            android:exported="false" />
+        <activity
+            android:name=".RestaurantImageShowRestAdmin"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -34,16 +56,13 @@
         </activity>
         <activity android:name=".LoginUser" />
         <activity android:name=".ContactUs" />
-        <activity android:name=".RegisterUser" />
         <activity android:name=".ResetPassword" />
         <activity android:name=".Home" />
-        <activity android:name=".UserPage" />
-        <activity android:name=".ImageActivityAdmin" />
-        <activity android:name=".UpdateProfile" />
-        <activity android:name=".AddRestaurant" />
+        <activity android:name=".MenuImageAdmin" />
+        <activity android:name=".UpdateUser" />
         <activity android:name=".AddNewMenu" />
         <activity android:name=".RestaurantCustomer" />
-        <activity android:name=".ImageActivityCustomer" />
+        <activity android:name=".MenuImageCustomer" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

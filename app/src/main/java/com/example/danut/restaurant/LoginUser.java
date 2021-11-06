@@ -50,12 +50,6 @@ public class LoginUser extends AppCompatActivity {
 
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-
-        if (user != null) {
-            finish();
-            startActivity(new Intent(LoginUser.this, RestaurantCustomer.class));
-        }
-
         //Action TextView Forgotten Password
         textViewForgotPassUser = (TextView)findViewById(R.id.tvForgotPasswordUser);
         textViewForgotPassUser.setOnClickListener(new View.OnClickListener() {
@@ -156,7 +150,7 @@ public class LoginUser extends AppCompatActivity {
         else if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
             progressDialog.setMessage("Login Admin");
             progressDialog.show();
-            startActivity(new Intent(LoginUser.this, AddRestaurant.class));
+            startActivity(new Intent(LoginUser.this, AdminPage.class));
             emailLogUser.setText("");
             passwordLogUser.setText("");
             progressDialog.dismiss();
@@ -170,6 +164,7 @@ public class LoginUser extends AppCompatActivity {
     //check if the email has been verified
     private void checkEmailVerification(){
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert firebaseUser != null;
         boolean emailFlag = firebaseUser.isEmailVerified();
 
         if(emailFlag){

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:context=".UpdateRestaurant"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/tvRestUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/tv_updateRestDetails"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/tvRestNameUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/tv_updateRestName"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/etRestNameUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/round_corners"
+            android:inputType="text|textCapWords"
+            android:paddingStart="10dp"
+            android:text="@string/et_updateRestName"
+            android:textSize="24sp"
+            tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+
+        <TextView
+            android:id="@+id/tvRestAddressUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:text="@string/tv_updateRestAddress"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="22sp"
+            tools:ignore="RtlCompat,RtlSymmetry" />
+
+        <EditText
+            android:id="@+id/etRestAddressUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/round_corners"
+            android:inputType="text|textCapWords"
+            android:paddingStart="10dp"
+            android:text="@string/et_updateRestAddress"
+            android:textSize="24sp"
+            tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+
+        <Button
+            android:id="@+id/btnSaveRestUpdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:background="@drawable/btn_background"
+            android:text="@string/btn_updateRestDetails"
+            android:textColor="#ffffff"
+            android:textSize="22sp" />
+
+    </LinearLayout>
+</ScrollView>

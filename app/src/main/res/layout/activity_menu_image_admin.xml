@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context="com.example.danut.restaurant.ImageActivityAdmin">
+    tools:context="com.example.danut.restaurant.MenuImageAdmin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             tools:ignore="HardcodedText" />
 
         <TextView
-            android:id="@+id/tvRestMenusAdmin"
+            android:id="@+id/tvMenusAvAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -51,27 +51,26 @@
 
             <Button
                 android:id="@+id/btnNewMenu"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:text="New Menu"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 tools:ignore="ButtonStyle,HardcodedText" />
 
             <Button
                 android:id="@+id/btnBackRestaurant"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Back To Restaurant"
-                android:textSize="14sp"
+                android:text="Back Admin"
+                android:textSize="20sp"
                 tools:ignore="ButtonStyle,HardcodedText" />
 
         </LinearLayout>

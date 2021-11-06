@@ -1,196 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
+    tools:context=".RegisterUser"
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="30dp">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewUserReg"
-            android:layout_width="350dp"
-            android:layout_height="30dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:text="Please enter your SIGN UP details."
+            android:id="@+id/tvRegUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:text="@string/tv_registerUser"
             android:textAlignment="center"
-            android:textColor="@android:color/black"
-            android:textSize="22sp"/>
+            android:textColor="#000000"
+            android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/FirstNameWrapper"
-            android:layout_width="300dp"
+            android:id="@+id/fNameWrapperRegCustomer"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/textViewUserReg"
-            android:layout_marginTop="10dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
 
-            <EditText
-                android:id="@+id/etFirstNameReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etFirstNameRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:background="@drawable/round_text_reg"
+                android:hint="@string/et_regUserFirstName"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="10dp"
                 android:textSize="20sp"
-                android:ems="10"
-                android:paddingLeft="5dp"
-                android:hint="First Name"
-                android:inputType="textPersonName"/>
+                tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/LastNameWrapper"
-            android:layout_width="300dp"
+            android:id="@+id/lNameWrapperRegCustomer"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/FirstNameWrapper"
-            android:layout_marginTop="0dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
 
-            <EditText
-                android:id="@+id/etLastNameReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etLastNameRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:background="@drawable/round_text_reg"
+                android:hint="@string/et_regUserLastName"
+                android:inputType="textPersonName|textCapWords"
+                android:paddingStart="10dp"
                 android:textSize="20sp"
-                android:ems="10"
-                android:paddingLeft="5dp"
-                android:hint="Last Name"
-                android:inputType="textPersonName"/>
+                tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/PhoneNumbWrapper"
-            android:layout_width="300dp"
+            android:id="@+id/fNrWrapperRegCustomer"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/LastNameWrapper"
-            android:layout_marginTop="5dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
 
-            <EditText
-                android:id="@+id/etPhoneNumberReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPhoneNrRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:background="@drawable/round_text_reg"
+                android:hint="@string/et_regUserPhoneNumber"
+                android:inputType="phone"
+                android:paddingStart="10dp"
                 android:textSize="20sp"
-                android:ems="10"
-                android:paddingLeft="5dp"
-                android:textColorHint="#000000"
-                android:hint="Phone Number"
-                android:inputType="phone" />
+                tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailWrapper"
-            android:layout_width="300dp"
+            android:id="@+id/emailWrapperRegCustomer"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
-            android:textColorHint="#000000"
-            android:layout_below="@id/PhoneNumbWrapper"
-            android:layout_marginTop="0dp">
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:textColorHint="#000000">
 
-            <EditText
-                android:id="@+id/etEmailReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etEmailRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:background="@drawable/round_text_reg"
+                android:hint="@string/et_regUserEmailAddress"
+                android:inputType="textEmailAddress"
+                android:paddingStart="10dp"
                 android:textSize="20sp"
-                android:ems="10"
-                android:paddingLeft="5dp"
-                android:hint="Email Address"
-                android:inputType="textEmailAddress"/>
+                tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordWrapper"
-            android:layout_width="300dp"
+            android:id="@+id/passWrapperRegCustomer"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:textColorHint="#000000"
-            android:layout_below="@id/emailWrapper"
-            android:layout_marginTop="0dp">
+            app:passwordToggleEnabled="true">
 
-            <EditText
-                android:id="@+id/etPasswordReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:background="@drawable/round_text_reg"
-                android:ems="10"
-                android:paddingLeft="5dp"
-                android:hint="Password"
+                android:hint="@string/et_regUserPassword"
                 android:inputType="textPassword"
-                android:textSize="20sp" />
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confPasswordWrapper"
-            android:layout_width="300dp"
+            android:id="@+id/confPassWrapperRegCustomer"
+            android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:textColorHint="#000000"
-            android:layout_below="@id/passwordWrapper"
-            android:layout_marginTop="0dp">
+            app:passwordToggleEnabled="true">
 
-            <EditText
-                android:id="@+id/etConfPassReg"
-                android:layout_width="300dp"
-                android:layout_height="40dp"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConfPassRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
                 android:background="@drawable/round_text_reg"
-                android:ems="10"
-                android:paddingLeft="5dp"
-                android:hint="Confirm Password"
+                android:hint="@string/et_regUserConfPassword"
                 android:inputType="textPassword"
-                android:textSize="20sp"/>
+                android:paddingStart="10dp"
+                android:textSize="20sp"
+                tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnRegUser"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/confPasswordWrapper"
-            android:layout_alignLeft="@id/confPasswordWrapper"
-            android:layout_marginTop="25dp"
-            android:text="REGISTER"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:background="@drawable/round_left"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnCancelRegUser"
-            android:layout_width="140dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/confPasswordWrapper"
-            android:layout_alignRight="@id/confPasswordWrapper"
-            android:layout_marginTop="25dp"
-            android:text="CANCEL"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:background="@drawable/round_right"/>
+            <Button
+                android:id="@+id/btnRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_left"
+                android:text="@string/btn_registerUser"
+                android:textSize="20sp"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/btnCancelRegUser"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/round_right"
+                android:text="@string/btn_cancelUser"
+                android:textSize="20sp"
+                tools:ignore="ButtonStyle" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvLogInUser"
-            android:layout_width="340dp"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_below="@id/btnRegUser"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
-            android:text="Already registered/Please LOG IN"
+            android:layout_margin="20dp"
+            android:text="@string/tv_userAlreadyRegistered"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
-            android:textStyle="bold"
-            android:textSize="22sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
-    </RelativeLayout>
-
+    </LinearLayout>
 </ScrollView>

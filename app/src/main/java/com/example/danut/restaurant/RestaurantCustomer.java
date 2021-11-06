@@ -5,11 +5,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -28,9 +28,6 @@ public class RestaurantCustomer extends AppCompatActivity {
 
     //declare variables
     FirebaseAuth firebaseAuth;
-
-    private FirebaseAuth firebaseAuthRest;
-    private FirebaseUser currentUser;
 
     DatabaseReference databaseRefRest;
     ValueEventListener eventListener;
@@ -52,9 +49,6 @@ public class RestaurantCustomer extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        firebaseAuthRest = FirebaseAuth.getInstance();
-        currentUser = firebaseAuthRest.getCurrentUser();
-
         restNames = new ArrayList<>();
         restNames.add("No Restaurant found");
 
@@ -62,17 +56,26 @@ public class RestaurantCustomer extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, restNames);
         listView.setAdapter(adapter);
 
-        //shoew the menu of restaurant whemn the list view is clicked
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //show the menu of restaurant when the list view is clicked
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            if(restaurants.size() > 0) {
+                Restaurants rest = restaurants.get(position);
+                String selectedRestKey = rest.getRest_Key();
+                String restaurantName = restNames.get(position);
+
+                Intent i = new Intent(RestaurantCustomer.this, MenuImageCustomer.class);
+                i.putExtra("RKey",selectedRestKey);
+                i.putExtra("RName", restaurantName);
+                startActivity(i);
+            }
+        });
+
+        //action of the button show map
+        Button buttonShowMap = findViewById(R.id.btnShowMap);
+        buttonShowMap.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if(restaurants.size() > 0) {
-                    String restaurantName = restNames.get(position);
-                    Intent i = new Intent(RestaurantCustomer.this, ImageActivityCustomer.class);
-                    i.putExtra("RESID", restaurantName);
-                    //finish();
-                    startActivity(i);
-                }
+            public void onClick(View v) {
+                startActivity(new Intent(RestaurantCustomer.this, MapsActivity.class));
             }
         });
     }
@@ -143,7 +146,7 @@ public class RestaurantCustomer extends AppCompatActivity {
 
     private void UserDetails(){
         finish();
-        startActivity(new Intent(RestaurantCustomer.this, UserPage.class));
+        startActivity(new Intent(RestaurantCustomer.this, UpdateUser.class));
     }
 
     @Override
@@ -164,7 +167,4 @@ public class RestaurantCustomer extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 }

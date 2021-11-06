@@ -13,14 +13,14 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvMainPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="75dp"
             android:layout_marginEnd="20dp"
             android:background="#cce0ff"
-            android:text="Welcome to Restaurant!"
+            android:text="@string/tv_mainPage"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="28sp"
@@ -32,34 +32,36 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnRestaurant"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnMainLogIn"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_top_left"
-                android:text="RESTAURANT"
+                android:background="@drawable/btn_round_top_left"
+                android:text="@string/btn_mainAdmin"
                 android:textColor="#ffffff"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="HardcodedText"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
-                android:id="@+id/btnDeals"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnMainDeals"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_top_right"
-                android:text="DEALS"
+                android:background="@drawable/btn_round_top_right"
+                android:text="@string/btn_mainDeals"
                 android:textColor="#ffffff"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                style="?android:attr/buttonBarButtonStyle" />
 
         </LinearLayout>
 
@@ -69,34 +71,36 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnCustomer"
-                android:layout_width="wrap_content"
+                android:id="@+id/btnMainReg"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_bottom_left"
-                android:text="CUSTOMER"
+                android:background="@drawable/btn_round_bottom_left"
+                android:text="@string/btn_mainCustomer"
                 android:textColor="#ffffff"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText" />
+                tools:ignore="HardcodedText"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/btnContUs"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_bottom_right"
-                android:text="CONTACT US"
+                android:background="@drawable/btn_round_bottom_right"
+                android:text="@string/btn_mainContactUs"
                 android:textColor="#ffffff"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="HardcodedText"
+                style="?android:attr/buttonBarButtonStyle" />
 
         </LinearLayout>
 

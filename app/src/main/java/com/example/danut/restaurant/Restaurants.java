@@ -9,16 +9,16 @@ import java.util.List;
 public class Restaurants {
     private String rest_Name;
     private String rest_Address;
-    private String rest_ID;
+    private String rest_Key;
 
     public Restaurants(){
 
     }
 
-    public Restaurants(String rest_Name, String rest_Address, String rest_ID) {
+    public Restaurants(String rest_Name, String rest_Address, String rest_Key) {
         this.rest_Name = rest_Name;
         this.rest_Address = rest_Address;
-        this.rest_ID = rest_ID;
+        this.rest_Key = rest_Key;
     }
 
     public String getRest_Name() {
@@ -37,11 +37,11 @@ public class Restaurants {
         this.rest_Address = rest_Address;
     }
 
-    public String getRest_ID() {
-        return rest_ID;
+    public String getRest_Key() {
+        return rest_Key;
     }
 
-    public void setRest_ID(String rest_ID) {
-        this.rest_ID = rest_ID;
+    public void setRest_Key(String rest_Key) {
+        this.rest_Key = rest_Key;
     }
 }

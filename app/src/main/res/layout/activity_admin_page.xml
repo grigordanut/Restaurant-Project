@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_bright"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp"
+    tools:context=".AdminPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvAdminPage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_adminPage"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAddRestaurant"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_round_corners"
+                android:text="@string/btn_addRestaurant"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
+
+            <Button
+                android:id="@+id/btnShowRestaurant"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_round_corners"
+                android:text="@string/btn_showRestaurant"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                tools:ignore="ButtonStyle" />
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnAddMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_round_corners"
+                    android:text="@string/btn_addMenu"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:ignore="ButtonStyle" />
+
+                <Button
+                    android:id="@+id/btnShowMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_round_corners"
+                    android:text="@string/btn_showMenu"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    tools:ignore="ButtonStyle" />
+            </LinearLayout>
+
+
+    </LinearLayout>
+</ScrollView>

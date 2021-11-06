@@ -27,7 +27,7 @@ public class ResetPassword extends AppCompatActivity {
         setContentView(R.layout.activity_reset_password);
 
         //initialize variables
-        emailResetPass = (EditText) findViewById(R.id.etForgotPassword);
+        emailResetPass = (EditText) findViewById(R.id.etEmail);
         buttonResetPass = (Button) findViewById(R.id.btnResetPassword);
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -37,7 +37,7 @@ public class ResetPassword extends AppCompatActivity {
             public void onClick(View view) {
                 String email_ResetPass = emailResetPass.getText().toString().trim();
 
-                //check the imupt fields
+                //check the input fields
                 if (email_ResetPass.equals("")){
                     Toast.makeText(ResetPassword.this, "Please enter your registered email ID",Toast.LENGTH_SHORT).show();
                     emailResetPass.setError("");

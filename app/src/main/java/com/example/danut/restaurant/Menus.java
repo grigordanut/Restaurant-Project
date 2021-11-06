@@ -8,75 +8,81 @@ import com.google.firebase.database.Exclude;
 
 public class Menus {
 
-    private String itemName;
-    private String itemDescription;
-    private double itemPrice;
-    private String itemImage;
-    private String restaurantName;
-    private String menuKey;
-
-    public Menus(String itemName, String itemDescription, double itemPrice, String itemImage, String restaurantName) {
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemPrice = itemPrice;
-        this.itemImage = itemImage;
-        this.restaurantName = restaurantName;
-    }
+    private String menu_Name;
+    private String menu_Description;
+    private double menu_Price;
+    private String menu_Image;
+    private String restaurant_Name;
+    private String restaurant_Key;
+    private String menu_Key;
 
     public Menus() {
 
     }
 
-    public String getItemName() {
-        return itemName;
+    public Menus(String menu_Name, String menu_Description, double menu_Price, String menu_Image, String restaurant_Name, String restaurant_Key, String menu_Key) {
+        this.menu_Name = menu_Name;
+        this.menu_Description = menu_Description;
+        this.menu_Price = menu_Price;
+        this.menu_Image = menu_Image;
+        this.restaurant_Name = restaurant_Name;
+        this.restaurant_Key = restaurant_Key;
+        this.menu_Key = menu_Key;
     }
 
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
+    public String getMenu_Name() {
+        return menu_Name;
     }
 
-    public String getItemDescription() {
-        return itemDescription;
+    public void setMenu_Name(String menu_Name) {
+        this.menu_Name = menu_Name;
     }
 
-    public void setItemDescription(String itemDescription) {
-        this.itemDescription = itemDescription;
+    public String getMenu_Description() {
+        return menu_Description;
     }
 
-    public double getItemPrice() {
-        return itemPrice;
+    public void setMenu_Description(String menu_Description) {
+        this.menu_Description = menu_Description;
     }
 
-    public void setItemPrice(double itemPrice) {
-        this.itemPrice = itemPrice;
+    public double getMenu_Price() {
+        return menu_Price;
     }
 
-    public String getItemImage() {
-        return itemImage;
+    public void setMenu_Price(double menu_Price) {
+        this.menu_Price = menu_Price;
     }
 
-    public void setItemImage(String itemImage) {
-        this.itemImage = itemImage;
+    public String getMenu_Image() {
+        return menu_Image;
     }
 
-    public String getRestaurantName() {
-        return restaurantName;
+    public void setMenu_Image(String menu_Image) {
+        this.menu_Image = menu_Image;
     }
 
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
+    public String getRestaurant_Name() {
+        return restaurant_Name;
     }
 
-    @Exclude
-    public String getMenuKey() {
-        return menuKey;
+    public void setRestaurant_Name(String restaurant_Name) {
+        this.restaurant_Name = restaurant_Name;
     }
 
-    @Exclude
-    public void setMenuKey(String menuKey) {
-        this.menuKey = menuKey;
+    public String getRestaurant_Key() {
+        return restaurant_Key;
     }
 
-    public class NONE {
+    public void setRestaurant_Key(String restaurant_Key) {
+        this.restaurant_Key = restaurant_Key;
+    }
+
+    public String getMenu_Key() {
+        return menu_Key;
+    }
+
+    public void setMenu_Key(String menu_Key) {
+        this.menu_Key = menu_Key;
     }
 }

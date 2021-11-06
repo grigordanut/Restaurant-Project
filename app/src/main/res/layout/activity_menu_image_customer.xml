@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
-    tools:context="com.example.danut.restaurant.ImageActivityAdmin">
+    tools:context="com.example.danut.restaurant.MenuImageAdmin">
 
     <TextView
         android:id="@+id/tvRestNameCustomer"
@@ -24,7 +24,7 @@
         tools:ignore="HardcodedText" />
 
     <TextView
-        android:id="@+id/tvRestMenusCustomer"
+        android:id="@+id/tvMenusAvCustomer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

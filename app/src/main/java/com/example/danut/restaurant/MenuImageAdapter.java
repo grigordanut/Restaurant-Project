@@ -5,9 +5,8 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.ContextMenu;
+
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,21 +16,20 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static android.icu.text.DateFormat.NONE;
 import static com.example.danut.restaurant.R.*;
 
 /**
  * Created by danut on 24/03/2018.
  */
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder>{
+public class MenuImageAdapter extends RecyclerView.Adapter<MenuImageAdapter.ImageViewHolder>{
 
     //declare variables
     private final Context mContext;
     private final List<Menus> mUploads;
     private OnItemClickListener clickListener;
 
-    public ImageAdapter(Context context, List<Menus> uploads){
+    public MenuImageAdapter(Context context, List<Menus> uploads){
         mContext = context;
         mUploads = uploads;
     }
@@ -39,7 +37,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(layout.image_item, parent, false);
+        View v = LayoutInflater.from(mContext).inflate(layout.image_menu, parent, false);
         return new ImageViewHolder(v);
     }
 
@@ -48,12 +46,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Menus uploadCurrent = mUploads.get(position);
-        holder.textViewName.setText("Item Name: "+uploadCurrent.getItemName());
-        holder.textViewDescription.setText("Description: "+uploadCurrent.getItemDescription());
-        holder.textViewPrice.setText("Price: € "+uploadCurrent.getItemPrice());
+        holder.textViewName.setText("Menu Name: "+uploadCurrent.getMenu_Name());
+        holder.textViewDescription.setText("Description: "+uploadCurrent.getMenu_Description());
+        holder.textViewPrice.setText("Price: € "+uploadCurrent.getMenu_Price());
 
         Picasso.get()
-            .load(uploadCurrent.getItemImage())
+            .load(uploadCurrent.getMenu_Image())
             .placeholder(mipmap.ic_launcher)
             .fit()
             .centerCrop()
@@ -66,8 +64,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
         return mUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,
-            View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView textViewName;
         public TextView textViewDescription;
@@ -82,57 +79,21 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             imageView = itemView.findViewById(id.image_view_upload);
 
             itemView.setOnClickListener(this);
-            itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if(clickListener !=null){
+            if (clickListener != null) {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
+                if (position != RecyclerView.NO_POSITION) {
                     clickListener.onItemClick(position);
                 }
             }
-        }
-
-        //create onItem click menu
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Select an Action");
-            MenuItem doUpdate  = menu.add(NONE, 1, 1, "Update");
-            MenuItem doDelete  = menu.add(NONE, 2, 2, "Delete");
-
-            doUpdate.setOnMenuItemClickListener(this);
-            doDelete.setOnMenuItemClickListener(this);
-        }
-
-        @Override
-        public boolean onMenuItemClick(MenuItem item) {
-            if(clickListener !=null){
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
-                    switch (item.getItemId()){
-                        case 1:
-                            clickListener.onUpdateClick(position);
-                            return true;
-
-                        case 2:
-                            clickListener.onDeleteClick(position);
-                            return true;
-                    }
-                }
-            }
-
-            return false;
         }
     }
 
     public interface OnItemClickListener {
         void onItemClick(int position);
-
-        void onUpdateClick(int position);
-
-        void onDeleteClick(int position);
     }
 
     public void setOnItmClickListener(OnItemClickListener listener){

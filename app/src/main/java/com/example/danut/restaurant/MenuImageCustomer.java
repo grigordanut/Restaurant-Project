@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,32 +20,37 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageActivityCustomer extends AppCompatActivity {
+public class MenuImageCustomer extends AppCompatActivity {
 
     //Declare variables
     private DatabaseReference databaseRefMenu;
-    String restaurantID = "";
+    String restaurantKey = "";
+    String restaurantName ="";
 
     private RecyclerView recyclerView;
-    private ImageAdapter imageAdapter;
+    private MenuImageAdapter menuImageAdapter;
 
     private List<Menus> mUploads;
 
-    private TextView tVRestNameCustomer, tVRestMenusCustomer;
+    private TextView tVRestNameCustomer, tVMenusAvCustomer;
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_customer);
+        setContentView(R.layout.activity_menu_image_customer);
 
-        getIntent().hasExtra("RESID");
-        restaurantID = getIntent().getExtras().getString("RESID");
+        getIntent().hasExtra("RKey");
+        restaurantKey = getIntent().getExtras().getString("RKey");
+
+        getIntent().hasExtra("RName");
+        restaurantName = getIntent().getExtras().getString("RName");
 
         tVRestNameCustomer = (TextView) findViewById(R.id.tvRestNameCustomer);
-        tVRestNameCustomer.setText(restaurantID + " Restaurant ");
+        tVRestNameCustomer.setText(restaurantName + " Restaurant ");
 
-        tVRestMenusCustomer = findViewById(R.id.tvRestMenusCustomer);
+        tVMenusAvCustomer = findViewById(R.id.tvMenusAvCustomer);
+        tVMenusAvCustomer.setText("No Menus available");
 
         mUploads = new ArrayList<>();
 
@@ -66,20 +70,20 @@ public class ImageActivityCustomer extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
                     Menus menus = postSnapshot.getValue(Menus.class);
                     if(menus != null) {
-                        if( menus.getRestaurantName().equals(restaurantID)) {
+                        if( menus.getRestaurant_Key().equals(restaurantKey)) {
                             mUploads.add(menus);
-                            tVRestMenusCustomer.setText(mUploads.size()+" Menus Available");
+                            tVMenusAvCustomer.setText(mUploads.size()+" Menus Available");
                         }
                     }
                 }
 
-                imageAdapter = new ImageAdapter(ImageActivityCustomer.this, mUploads);
-                recyclerView.setAdapter(imageAdapter);
+                menuImageAdapter = new MenuImageAdapter(MenuImageCustomer.this, mUploads);
+                recyclerView.setAdapter(menuImageAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(ImageActivityCustomer.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuImageCustomer.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }

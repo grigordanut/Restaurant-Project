@@ -17,37 +17,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Action button Restaurant
-        Button buttonRestaurant = (Button) findViewById(R.id.btnRestaurant);
-        buttonRestaurant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RestaurantCustomer.class);
-                startActivity(intent);
-            }
+        Button buttonMainLogIn = findViewById(R.id.btnMainLogIn);
+        buttonMainLogIn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, LoginUser.class);
+            startActivity(intent);
         });
 
         //Action button Deals
-        Button buttonDeals = (Button)findViewById(R.id.btnDeals);
-        buttonDeals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent deals = new Intent(MainActivity.this,AddRestNew.class);
-                startActivity(deals);
-            }
-        });
+//        Button buttonMainDeals = (Button)findViewById(R.id.btnMainDeals);
+//        buttonMainDeals.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent deals = new Intent(MainActivity.this,AddRestNew.class);
+//                startActivity(deals);
+//            }
+//        });
 
         //Action button LogIn/RegisterUser
-        Button buttonLogReg = (Button) findViewById(R.id.btnCustomer);
-        buttonLogReg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent logReg =new Intent(MainActivity.this, LoginUser.class);
-                startActivity(logReg);
-            }
+        Button buttonMainReg = findViewById(R.id.btnMainReg);
+        buttonMainReg.setOnClickListener(view -> {
+            Intent logReg =new Intent(MainActivity.this, RegisterUser.class);
+            startActivity(logReg);
         });
 
         //Action button Contact Us
-        Button buttonContUs = (Button) findViewById(R.id.btnContUs);
+        Button buttonContUs = findViewById(R.id.btnContUs);
         buttonContUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

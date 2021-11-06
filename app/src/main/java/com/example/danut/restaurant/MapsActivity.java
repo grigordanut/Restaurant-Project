@@ -95,17 +95,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
 
-
-
         //show Distance Button
         btnShowDistance = (Button) findViewById(R.id.btnShowDistance);
         btnShowDistance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gDistance();
-
             }
-
         });
         // get notified when  map is ready.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
