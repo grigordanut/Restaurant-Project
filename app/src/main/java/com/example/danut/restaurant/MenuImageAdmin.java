@@ -126,7 +126,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuImageAdapte
         });
     }
 
-    //Action on bikes onClick
+    //Action on menus onClick
     @Override
     public void onItemClick(final int position) {
         showOptionMenu(position);
