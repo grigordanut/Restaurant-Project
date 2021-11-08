@@ -17,8 +17,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,7 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MenuImageAdmin extends AppCompatActivity implements MenuImageAdapter.OnItemClickListener{
+public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmin.OnItemClickListener{
 
     //Declare variables
     private FirebaseStorage menuStorage;
@@ -38,7 +36,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuImageAdapte
     private ValueEventListener menuEventListener;
 
     private RecyclerView recyclerView;
-    private MenuImageAdapter menuImageAdapter;
+    private MenuAdapterAdmin menuAdapterAdmin;
 
     private List<Menus> menusList;
 
@@ -114,9 +112,9 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuImageAdapte
                     }
                 }
 
-                menuImageAdapter = new MenuImageAdapter(MenuImageAdmin.this,  menusList);
-                recyclerView.setAdapter(menuImageAdapter);
-                menuImageAdapter.setOnItmClickListener(MenuImageAdmin.this);
+                menuAdapterAdmin = new MenuAdapterAdmin(MenuImageAdmin.this,  menusList);
+                recyclerView.setAdapter(menuAdapterAdmin);
+                menuAdapterAdmin.setOnItmClickListener(MenuImageAdmin.this);
             }
 
             @Override
@@ -140,7 +138,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuImageAdapte
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("You selected " + selected_Menu.getMenu_Name() +" menu!"+ "\nSelect an option:")
+                .setTitle("You selected: " + selected_Menu.getMenu_Name() +" menu!"+ "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -170,7 +168,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuImageAdapte
         Menus selected_Menu = menusList.get(position);
         intent.putExtra("MName", selected_Menu.getMenu_Name());
         intent.putExtra("MDesc", selected_Menu.getMenu_Description());
-        intent.putExtra("MPrice", selected_Menu.getMenu_Price());
+        intent.putExtra("MPrice", String.valueOf(selected_Menu.getMenu_Price()));
         intent.putExtra("MImage", selected_Menu.getMenu_Image());
         intent.putExtra("MKey", selected_Menu.getMenu_Key());
         startActivity(intent);
@@ -190,7 +188,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuImageAdapte
                                 StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
                                 imageReference.delete().addOnSuccessListener(aVoid -> {
                                     databaseRefMenu.child(selectedMenuKey).removeValue();
-                                    Toast.makeText(MenuImageAdmin.this, "The Bike has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MenuImageAdmin.this, "The Menu has been deleted successfully ", Toast.LENGTH_SHORT).show();
                                 });
                             }
                         })

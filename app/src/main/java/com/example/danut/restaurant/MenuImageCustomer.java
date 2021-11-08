@@ -28,7 +28,7 @@ public class MenuImageCustomer extends AppCompatActivity {
     String restaurantName ="";
 
     private RecyclerView recyclerView;
-    private MenuImageAdapter menuImageAdapter;
+    private MenuAdapterCustomer menuAdapterCustomer;
 
     private List<Menus> mUploads;
 
@@ -77,8 +77,8 @@ public class MenuImageCustomer extends AppCompatActivity {
                     }
                 }
 
-                menuImageAdapter = new MenuImageAdapter(MenuImageCustomer.this, mUploads);
-                recyclerView.setAdapter(menuImageAdapter);
+                menuAdapterCustomer= new MenuAdapterCustomer(MenuImageCustomer.this, mUploads);
+                recyclerView.setAdapter(menuAdapterCustomer);
             }
 
             @Override

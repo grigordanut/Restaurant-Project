@@ -28,7 +28,7 @@ public class AdminPage extends AppCompatActivity {
         buttonShowMenu.setOnClickListener(v -> startActivity(new Intent(AdminPage.this, RestaurantImageShowMenuAdmin.class)));
     }
 
-    //log aut Admin user
+    //log out Admin user
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         getMenuInflater().inflate(R.menu.menu_user, menu);

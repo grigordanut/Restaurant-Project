@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -19,11 +20,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageTask;
 
 public class UpdateRestaurant extends AppCompatActivity {
 
     //Save updated Restaurant data to database
     private DatabaseReference databaseRefRestUpdate;
+
+    //Check Menu data ino database
+    private DatabaseReference databaseRefMenuCheck;
+
+    //Save updated Restaurant name to Menu database
+    private DatabaseReference databaseRefMenuUpdate;
+
     private TextView tVRestUpdate;
 
     private EditText etRest_NameUp, etRest_AddressUp;
@@ -62,7 +71,13 @@ public class UpdateRestaurant extends AppCompatActivity {
         etRest_AddressUp.setText(restAddressUpdate);
 
         Button btnSaveRestUpdates = findViewById(R.id.btnSaveRestUpdate);
-        btnSaveRestUpdates.setOnClickListener(v -> updateRestaurantDetails());
+        btnSaveRestUpdates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateRestaurantDetails();
+                updateMenuRestName();
+            }
+        });
     }
 
     public void updateRestaurantDetails() {
@@ -115,5 +130,44 @@ public class UpdateRestaurant extends AppCompatActivity {
             result = true;
         }
         return result;
+    }
+
+    private void updateMenuRestName() {
+        databaseRefMenuCheck = FirebaseDatabase.getInstance().getReference("Menus");
+        databaseRefMenuCheck.orderByChild("restaurant_Name").equalTo(restNameUpdate)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            progressDialog.dismiss();
+
+                            //final String etBike_BikeStoreLocCheck = etStoreLocationUp.getText().toString().trim();
+                            final String etMenu_RestNameCheck = etRest_NameUp.getText().toString().trim();
+                            databaseRefMenuUpdate = FirebaseDatabase.getInstance().getReference("Menus");
+                            databaseRefMenuUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot dsBike : dataSnapshot.getChildren()) {
+                                        dsBike.getRef().child("restaurant_Name").setValue(etMenu_RestNameCheck);
+                                    }
+                                    progressDialog.dismiss();
+                                    Toast.makeText(UpdateRestaurant.this, "Restaurant Updated", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
+                                    finish();
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+                                    Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

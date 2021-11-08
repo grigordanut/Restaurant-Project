@@ -22,14 +22,14 @@ import static com.example.danut.restaurant.R.*;
  * Created by danut on 24/03/2018.
  */
 
-public class MenuImageAdapter extends RecyclerView.Adapter<MenuImageAdapter.ImageViewHolder>{
+public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.ImageViewHolder>{
 
     //declare variables
     private final Context mContext;
     private final List<Menus> mUploads;
     private OnItemClickListener clickListener;
 
-    public MenuImageAdapter(Context context, List<Menus> uploads){
+    public MenuAdapterAdmin(Context context, List<Menus> uploads){
         mContext = context;
         mUploads = uploads;
     }

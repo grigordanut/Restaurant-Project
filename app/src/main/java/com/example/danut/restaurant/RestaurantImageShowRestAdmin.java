@@ -126,7 +126,6 @@ public class RestaurantImageShowRestAdmin extends AppCompatActivity implements R
 
     @Override
     public void onUpdateRestClick(int position) {
-
         Intent intent = new Intent(RestaurantImageShowRestAdmin.this, UpdateRestaurant.class);
         Restaurants selected_Rest = restaurantList.get(position);
         intent.putExtra("RName", selected_Rest.getRest_Name());

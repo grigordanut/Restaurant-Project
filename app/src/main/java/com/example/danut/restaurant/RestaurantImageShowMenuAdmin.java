@@ -87,5 +87,6 @@ public class RestaurantImageShowMenuAdmin extends AppCompatActivity implements R
         intentAdd.putExtra("RName",selected_Rest.getRest_Name());
         intentAdd.putExtra("RKey",selected_Rest.getRest_Key());
         startActivity(intentAdd);
+        restaurantsList.clear();
     }
 }

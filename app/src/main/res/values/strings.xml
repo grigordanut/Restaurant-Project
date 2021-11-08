@@ -61,6 +61,15 @@
     <string name="btn_addNewRestaurant">Add Restaurant</string>
     <string name="btn_backAdminPage">Back Admin Page</string>
 
+    <!--    Activity Update Menu-->
+    <string name="tv_MenuUpdate">Update Menu</string>
+    <string name="et_menuNameUpdate">Enter Menu Name</string>
+    <string name="et_menuDescriptionUpdate">Enter Menu Description</string>
+    <string name="et_menuPriceUpdate">Enter Menu Price</string>
+    <string name="btn_saveMenuUpdate">Update Menu</string>
+    <string name="btn_backAdminUpdate">Back Admin</string>
+
+
     <!--    Activity Update Restaurant-->
     <string name="tv_updateRestDetails">Update Restaurant Details</string>
     <string name="tv_updateRestName">Restaurant Name</string>

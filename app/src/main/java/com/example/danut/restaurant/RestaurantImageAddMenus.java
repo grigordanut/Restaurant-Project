@@ -87,5 +87,6 @@ public class RestaurantImageAddMenus extends AppCompatActivity implements Restau
         intentAdd.putExtra("RName",selected_Rest.getRest_Name());
         intentAdd.putExtra("RKey",selected_Rest.getRest_Key());
         startActivity(intentAdd);
+        restaurantsList.clear();
     }
 }
