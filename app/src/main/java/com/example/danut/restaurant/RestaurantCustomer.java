@@ -3,7 +3,10 @@ package com.example.danut.restaurant;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,16 +33,19 @@ public class RestaurantCustomer extends AppCompatActivity {
     //declare variables
     FirebaseAuth firebaseAuth;
 
-    DatabaseReference databaseRefRest;
-    ValueEventListener eventListener;
-    List<Restaurants> restaurants;
-    List<String> restNames;
+    private TextView tVShowRestCustom;
 
-    ListView listView;
-    ArrayAdapter<String> adapter;
+    private DatabaseReference databaseRefRest;
+    private ValueEventListener eventListenerRest;
+    private List<Restaurants> restList;
+    private List<String> restNames;
+
+    private ListView lVRestCustomer;
+    private ArrayAdapter<String> adapter;
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,28 +53,33 @@ public class RestaurantCustomer extends AppCompatActivity {
 
         //initialize variables
         progressDialog = new ProgressDialog(this);
+        progressDialog.show();
 
         firebaseAuth = FirebaseAuth.getInstance();
 
+        restList = new ArrayList<>();
         restNames = new ArrayList<>();
-        restNames.add("No Restaurant found");
 
-        listView = findViewById(R.id.listViewRestCustomer);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, restNames);
-        listView.setAdapter(adapter);
+        tVShowRestCustom = findViewById(R.id.tvShowRestCustom);
+        tVShowRestCustom.setText("No Restaurant found");
+
+        lVRestCustomer = findViewById(R.id.lvRestCustomer);
+
+        adapter = new ArrayAdapter<String>(this, R.layout.image_restaurant_customer, R.id.tvRestNameCustom, restNames);
+        lVRestCustomer.setAdapter(adapter);
 
         //show the menu of restaurant when the list view is clicked
-        listView.setOnItemClickListener((parent, view, position, id) -> {
-            if(restaurants.size() > 0) {
-                Restaurants rest = restaurants.get(position);
-                String selectedRestKey = rest.getRest_Key();
-                String restaurantName = restNames.get(position);
+        lVRestCustomer.setOnItemClickListener((parent, view, position, id) -> {
 
-                Intent i = new Intent(RestaurantCustomer.this, MenuImageCustomer.class);
-                i.putExtra("RKey",selectedRestKey);
-                i.putExtra("RName", restaurantName);
-                startActivity(i);
-            }
+            Restaurants rest_Data = restList.get(position);
+
+            Intent i = new Intent(RestaurantCustomer.this, MenuImageCustomer.class);
+            i.putExtra("RKey", rest_Data.getRest_Key());
+            i.putExtra("RName", rest_Data.getRest_Name());
+            startActivity(i);
+
+            restNames.clear();
+            restList.clear();
         });
 
         //action of the button show map
@@ -80,71 +92,59 @@ public class RestaurantCustomer extends AppCompatActivity {
         });
     }
 
-    //load the list of the restaurants
-    private void loadRestaurantsList(){
-        restNames = new ArrayList<>();
-        restaurants = new ArrayList<>();
-        progressDialog.show();
-        if(databaseRefRest == null){
-            databaseRefRest = FirebaseDatabase.getInstance().getReference().child("Restaurants");
-        }
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+    public void loadRestaurantsList() {
 
-                for(DataSnapshot child : dataSnapshot.getChildren()){
-                    Restaurants rest = child.getValue(Restaurants.class);
-                    if(rest != null) {
-                        restaurants.add(rest);
+        //Retrieve data from Restaurants database
+        databaseRefRest = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+        eventListenerRest = databaseRefRest.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                restList.clear();
+                restNames.clear();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Restaurants rest = postSnapshot.getValue(Restaurants.class);
+                    if (rest != null) {
+                        restList.add(rest);
                         restNames.add(rest.getRest_Name());
+                        tVShowRestCustom.setText("Select a restaurant");
                     }
                 }
-                if(restNames.size()> 0){
-                    adapter.clear();
-                    adapter.addAll(restNames);
-                    adapter.notifyDataSetChanged();
-                }
+                adapter.notifyDataSetChanged();
+                progressDialog.dismiss();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(RestaurantCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(RestaurantCustomer.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        };
-        databaseRefRest.addValueEventListener(listener);
-        eventListener = listener;
-
-        progressDialog.dismiss();
+        });
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onStart() {
         super.onStart();
-
-        if (restNames.isEmpty()){
-            restNames.add("No Restaurant found");
-        }
-        else {
-            loadRestaurantsList();
-        }
+        loadRestaurantsList();
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if(eventListener != null){
-            databaseRefRest.removeEventListener(eventListener);
+        if (eventListenerRest != null) {
+            databaseRefRest.removeEventListener(eventListenerRest);
         }
     }
 
     //log aut restaurant user
-    private void LogOut(){
+    private void LogOut() {
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(RestaurantCustomer.this, MainActivity.class));
     }
 
-    private void UserDetails(){
+    private void UserDetails() {
         finish();
         startActivity(new Intent(RestaurantCustomer.this, UpdateUser.class));
     }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ContactUs">
+    tools:context=".ContactForm">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,93 +13,129 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/tvContactForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="3dp"
-            android:text="@string/contact_form_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:paddingStart="10dp"
+            android:text="@string/tv_contactForm"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            tools:ignore="RtlSymmetry" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="@string/tv_contactFormName"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/myName"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginBottom="20dp"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:inputType="textPersonName|textCapWords"
+            android:textColorHint="#000000"
+            android:textSize="22sp"
+            tools:ignore="Autofill,LabelFor" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="3dp"
-            android:text="@string/contact_form_email"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="@string/tv_contactFormEmail"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/myEmail"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:inputType="textEmailAddress"
-            android:singleLine="true"
-            android:textSize="14sp" />
-
+            android:textSize="22sp"
+            tools:ignore="Autofill,LabelFor" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="3dp"
-            android:text="@string/contact_form_subject"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:paddingStart="10dp"
+            android:text="@string/tv_contactFormSubject"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/mySubject"
             android:layout_width="match_parent"
-            android:layout_height="38dp"
-            android:layout_marginBottom="20dp"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:inputType="text|textCapSentences"
+            android:textColorHint="#000000"
+            android:textSize="22sp"
+            tools:ignore="Autofill,LabelFor" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="32dp"
-            android:paddingLeft="3dp"
-            android:text="@string/contact_form_message"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:paddingStart="10dp"
+            android:text="@string/tv_contactFormMessage"
             android:textAllCaps="true"
             android:textColor="@color/colorPrimary"
-            android:textSize="12sp" />
+            android:textSize="18sp"
+            tools:ignore="RtlSymmetry" />
 
         <EditText
             android:id="@+id/myMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:height="180dp"
             android:gravity="top"
-            android:inputType="textMultiLine"
-            android:textSize="14sp" />
+            android:inputType="textMultiLine|textCapSentences"
+            android:textSize="22sp"
+            tools:ignore="Autofill,LabelFor" />
 
         <Button
             android:id="@+id/post_message"
-            android:layout_width="wrap_content"
-            android:layout_height="32dp"
-            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/colorPrimary"
-            android:paddingBottom="1dp"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="1dp"
             android:text="@string/contact_form_button"
-            android:textAllCaps="true"
             android:textColor="@android:color/white"
-            android:textSize="13sp" />
+            android:textSize="22sp"/>
+
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

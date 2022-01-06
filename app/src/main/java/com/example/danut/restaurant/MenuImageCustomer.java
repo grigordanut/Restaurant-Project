@@ -40,11 +40,11 @@ public class MenuImageCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_image_customer);
 
-        getIntent().hasExtra("RKey");
-        restaurantKey = getIntent().getExtras().getString("RKey");
-
         getIntent().hasExtra("RName");
         restaurantName = getIntent().getExtras().getString("RName");
+
+        getIntent().hasExtra("RKey");
+        restaurantKey = getIntent().getExtras().getString("RKey");
 
         tVRestNameCustomer = (TextView) findViewById(R.id.tvRestNameCustomer);
         tVRestNameCustomer.setText(restaurantName + " Restaurant ");

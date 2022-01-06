@@ -46,7 +46,7 @@ public class RestaurantAdapterShowRestAdmin extends RecyclerView.Adapter<Restaur
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(restaurantsContext).inflate(R.layout.image_restaurant, parent, false);
+        View view = LayoutInflater.from(restaurantsContext).inflate(R.layout.image_restaurant_admin, parent, false);
         return new ImageViewHolder(view);
     }
 

@@ -174,8 +174,6 @@ public class AddNewMenu extends AppCompatActivity {
                                     eTextMenuPrice.setText("");
                                     imageView.setImageResource(R.drawable.add_menus_picture);
 
-                                    //startActivity(new Intent(AddNewMenu.this, AdminPage.class));
-
                                     Intent intentAdd = new Intent(AddNewMenu.this,MenuImageAdmin.class);
                                     intentAdd.putExtra("RName",menus.getRestaurant_Name());
                                     intentAdd.putExtra("RKey",menus.getRestaurant_Key());
