@@ -24,14 +24,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Action button Deals
-//        Button buttonMainDeals = (Button)findViewById(R.id.btnMainDeals);
-//        buttonMainDeals.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent deals = new Intent(MainActivity.this,AddRestNew.class);
-//                startActivity(deals);
-//            }
-//        });
+        Button buttonMainDeals = (Button)findViewById(R.id.btnMainDeals);
+        buttonMainDeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent deals = new Intent(MainActivity.this,AdminPage.class);
+                startActivity(deals);
+            }
+        });
 
         //Action button LogIn/RegisterUser
         Button buttonMainReg = findViewById(R.id.btnMainReg);

@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,6 +26,8 @@ public class RestaurantImageShowMenuAdmin extends AppCompatActivity implements R
     private DatabaseReference databaseReference;
     private ValueEventListener restaurantEventListener;
 
+    private TextView tVRestImageShowMenusAdmin;
+
     private RecyclerView restaurantRecyclerView;
     private RestaurantAdapterMenus restaurantAdapterMenus;
 
@@ -31,19 +35,30 @@ public class RestaurantImageShowMenuAdmin extends AppCompatActivity implements R
 
     private ProgressDialog progressDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_image_show_menu_admin);
 
-        restaurantRecyclerView = (RecyclerView) findViewById(R.id.restRecyclerView);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+
+        //initialize the Restaurants database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+        restaurantsList = new ArrayList<>();
+
+        tVRestImageShowMenusAdmin = findViewById(R.id.tvRestImageShowMenusAdmin);
+        tVRestImageShowMenusAdmin.setText("No Restaurants available!!");
+
+        restaurantRecyclerView = findViewById(R.id.restRecyclerView);
         restaurantRecyclerView.setHasFixedSize(true);
         restaurantRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressDialog = new ProgressDialog(this);
-        restaurantsList = new ArrayList<>();
-
-        progressDialog.show();
+        restaurantAdapterMenus = new RestaurantAdapterMenus(RestaurantImageShowMenuAdmin.this, restaurantsList);
+        restaurantRecyclerView.setAdapter(restaurantAdapterMenus);
+        restaurantAdapterMenus.setOnItmClickListener(RestaurantImageShowMenuAdmin.this);
     }
 
     @Override
@@ -53,10 +68,9 @@ public class RestaurantImageShowMenuAdmin extends AppCompatActivity implements R
     }
 
     private void loadBikeStoresListAdmin(){
-        //initialize the bike store database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         restaurantEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
@@ -64,10 +78,10 @@ public class RestaurantImageShowMenuAdmin extends AppCompatActivity implements R
                     assert restaurants != null;
                     restaurants.setRest_Key(postSnapshot.getKey());
                     restaurantsList.add(restaurants);
+                    tVRestImageShowMenusAdmin.setText("Select a Restaurant");
                 }
-                restaurantAdapterMenus = new RestaurantAdapterMenus(RestaurantImageShowMenuAdmin.this, restaurantsList);
-                restaurantRecyclerView.setAdapter(restaurantAdapterMenus);
-                restaurantAdapterMenus.setOnItmClickListener(RestaurantImageShowMenuAdmin.this);
+
+                restaurantAdapterMenus.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright">
+    android:background="@android:color/holo_blue_bright"
+    tools:context=".AddNewMenu">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,26 +16,25 @@
             android:id="@+id/tvMenuRestName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="10dp"
             android:text="@string/tv_restaurantName"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="24sp" />
+            android:textSize="22sp" />
 
         <ImageView
             android:id="@+id/menuImage"
             android:layout_width="280dp"
             android:layout_height="240dp"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:background="#f2f2f2"
             android:src="@drawable/add_menus_picture"
             tools:ignore="ContentDescription" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/menuName"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="20dp"
@@ -58,7 +58,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/menuDescription"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="20dp"
@@ -81,7 +80,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/menuPrice"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="20dp"
@@ -111,11 +109,12 @@
                 android:id="@+id/btnAddMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
+                android:background="@drawable/btn_round_corners"
                 android:text="@string/btn_saveMenu"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -125,11 +124,12 @@
                 android:id="@+id/btnBackAdminMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="25dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
+                android:background="@drawable/btn_round_corners"
                 android:text="@string/btn_backAdminToPage"
                 android:textSize="22sp"
                 android:textStyle="bold"

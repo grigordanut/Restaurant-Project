@@ -27,10 +27,10 @@ import java.util.List;
 
 public class RestaurantImageShowRestAdmin extends AppCompatActivity implements RestaurantAdapterShowRestAdmin.OnItemClickListener{
 
-    TextView tVRestImageShowRestAdmin;
-
     private DatabaseReference databaseReference;
     private ValueEventListener restaurantEventListener;
+
+    private TextView tVRestImageShowRestAdmin;
 
     private RecyclerView restaurantRecyclerView;
     private RestaurantAdapterShowRestAdmin restaurantAdapterShowRestAdmin;
@@ -45,6 +45,14 @@ public class RestaurantImageShowRestAdmin extends AppCompatActivity implements R
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_image_show_rest_admin);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.show();
+
+        //initialize the Restaurants database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+        restaurantList = new ArrayList<>();
+
         tVRestImageShowRestAdmin = findViewById(R.id.tvRestListAdmin);
         tVRestImageShowRestAdmin.setText("No Restaurants available");
 
@@ -52,10 +60,9 @@ public class RestaurantImageShowRestAdmin extends AppCompatActivity implements R
         restaurantRecyclerView.setHasFixedSize(true);
         restaurantRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        progressDialog = new ProgressDialog(this);
-        restaurantList = new ArrayList<>();
-
-        progressDialog.show();
+        restaurantAdapterShowRestAdmin = new RestaurantAdapterShowRestAdmin(RestaurantImageShowRestAdmin.this, restaurantList);
+        restaurantRecyclerView.setAdapter(restaurantAdapterShowRestAdmin);
+        restaurantAdapterShowRestAdmin.setOnItmClickListener(RestaurantImageShowRestAdmin.this);
 
         Button buttonAddMoreRest = findViewById(R.id.btnAddMoreRest);
         buttonAddMoreRest.setOnClickListener(new View.OnClickListener() {
@@ -81,11 +88,9 @@ public class RestaurantImageShowRestAdmin extends AppCompatActivity implements R
     }
 
     private void loadRestListAdmin() {
-        //initialize the restaurant database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         restaurantEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("SetTextI18n")
+            @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 restaurantList.clear();
@@ -96,9 +101,8 @@ public class RestaurantImageShowRestAdmin extends AppCompatActivity implements R
                     restaurantList.add(rest);
                     tVRestImageShowRestAdmin.setText(restaurantList.size()+" Restaurants available");
                 }
-                restaurantAdapterShowRestAdmin = new RestaurantAdapterShowRestAdmin(RestaurantImageShowRestAdmin.this, restaurantList);
-                restaurantRecyclerView.setAdapter(restaurantAdapterShowRestAdmin);
-                restaurantAdapterShowRestAdmin.setOnItmClickListener(RestaurantImageShowRestAdmin.this);
+
+                restaurantAdapterShowRestAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

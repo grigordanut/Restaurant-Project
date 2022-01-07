@@ -20,19 +20,18 @@ import java.util.List;
 public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustomer.ImageViewHolder>{
 
     //declare variables
-    private final Context mContext;
-    private final List<Menus> mUploads;
-    private MenuAdapterAdmin.OnItemClickListener clickListener;
+    private final Context menuContext;
+    private final List<Menus> menuUploads;
 
-    public MenuAdapterCustomer(Context context, List<Menus> uploads){
-        mContext = context;
-        mUploads = uploads;
+    public MenuAdapterCustomer(Context menu_context, List<Menus> menu_uploads){
+        menuContext = menu_context;
+        menuUploads = menu_uploads;
     }
 
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(mContext).inflate(R.layout.image_menu, parent, false);
+        View v = LayoutInflater.from(menuContext).inflate(R.layout.image_menu, parent, false);
         return new ImageViewHolder(v);
     }
 
@@ -40,30 +39,30 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
-        Menus uploadCurrent = mUploads.get(position);
-        holder.textViewName.setText("Menu Name: "+uploadCurrent.getMenu_Name());
-        holder.textViewDescription.setText("Description: "+uploadCurrent.getMenu_Description());
-        holder.textViewPrice.setText("Price: € "+uploadCurrent.getMenu_Price());
+        Menus uploadCurrent = menuUploads.get(position);
+        holder.tVNameMenu.setText("Menu Name: "+uploadCurrent.getMenu_Name());
+        holder.tVDescriptionMenu.setText("Description: "+uploadCurrent.getMenu_Description());
+        holder.tVPriceMenu.setText("Price: € "+uploadCurrent.getMenu_Price());
 
         Picasso.get()
                 .load(uploadCurrent.getMenu_Image())
                 .placeholder(R.mipmap.ic_launcher)
                 .fit()
                 .centerCrop()
-                .into(holder.imageView);
+                .into(holder.imageShowMenu);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(mContext);
-                View promptsView = li.inflate(R.layout.image_menu_full, null);
+                LayoutInflater li = LayoutInflater.from(menuContext);
+                View promptsView = li.inflate(R.layout.image_menu_full_customer, null);
 
                 androidx.appcompat.app.AlertDialog.Builder
-                        alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(mContext);
+                        alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(menuContext);
 
                 alertDialogBuilder.setView(promptsView);
 
-                final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgImageFull);
+                final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgFullCustomer);
 
                 Picasso.get()
                         .load(uploadCurrent.getMenu_Image())
@@ -95,22 +94,22 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
     //assign the values of textViews
     @Override
     public int getItemCount() {
-        return mUploads.size();
+        return menuUploads.size();
     }
 
     public static class ImageViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewName;
-        public TextView textViewDescription;
-        public TextView textViewPrice;
-        public ImageView imageView;
+        public TextView tVNameMenu;
+        public TextView tVDescriptionMenu;
+        public TextView tVPriceMenu;
+        public ImageView imageShowMenu;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            textViewName = itemView.findViewById(R.id.text_view_name);
-            textViewDescription = itemView.findViewById(R.id.text_view_description);
-            textViewPrice = itemView.findViewById(R.id.text_view_price);
-            imageView = itemView.findViewById(R.id.image_view_upload);
+            tVNameMenu = itemView.findViewById(R.id.tvNameMenu);
+            tVDescriptionMenu = itemView.findViewById(R.id.tvDescriptionMenu);
+            tVPriceMenu = itemView.findViewById(R.id.tvPriceMenu);
+            imageShowMenu = itemView.findViewById(R.id.imgShowMenu);
         }
     }
 }

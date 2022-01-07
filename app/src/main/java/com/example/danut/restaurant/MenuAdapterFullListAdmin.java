@@ -2,34 +2,27 @@ package com.example.danut.restaurant;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import static com.example.danut.restaurant.R.*;
-
-/**
- * Created by danut on 24/03/2018.
- */
-
-public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.ImageViewHolder>{
+public class MenuAdapterFullListAdmin extends RecyclerView.Adapter<MenuAdapterFullListAdmin.ImageViewHolder> {
 
     //declare variables
     private final Context menuContext;
     private final List<Menus> menuUploads;
     private OnItemClickListener clickListener;
 
-    public MenuAdapterAdmin(Context menu_context, List<Menus> menu_uploads){
+    public MenuAdapterFullListAdmin(Context menu_context, List<Menus> menu_uploads){
         menuContext = menu_context;
         menuUploads = menu_uploads;
     }
@@ -37,25 +30,26 @@ public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.Imag
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(menuContext).inflate(layout.image_menu, parent, false);
+        View v = LayoutInflater.from(menuContext).inflate(R.layout.image_menu_full_list, parent, false);
         return new ImageViewHolder(v);
     }
 
     //set the item layout view
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(ImageViewHolder holder, int position) {
+    public void onBindViewHolder(final ImageViewHolder holder, int position) {
         Menus uploadCurrent = menuUploads.get(position);
-        holder.tVNameMenu.setText("Menu Name: "+uploadCurrent.getMenu_Name());
-        holder.tVDescriptionMenu.setText("Description: "+uploadCurrent.getMenu_Description());
-        holder.tVPriceMenu.setText("Price: € "+uploadCurrent.getMenu_Price());
+        holder.tVRestNameFulList.setText(uploadCurrent.getRestaurant_Name());
+        holder.textViewName.setText("Menu Name: "+uploadCurrent.getMenu_Name());
+        holder.textViewDescription.setText("Description: "+uploadCurrent.getMenu_Description());
+        holder.textViewPrice.setText("Price: € "+uploadCurrent.getMenu_Price());
 
         Picasso.get()
-            .load(uploadCurrent.getMenu_Image())
-            .placeholder(mipmap.ic_launcher)
-            .fit()
-            .centerCrop()
-            .into(holder.imageShowMenu);
+                .load(uploadCurrent.getMenu_Image())
+                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
+                .into(holder.imageView);
     }
 
     //assign the values of textViews
@@ -65,18 +59,19 @@ public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.Imag
     }
 
     public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-
-        public TextView tVNameMenu;
-        public TextView tVDescriptionMenu;
-        public TextView tVPriceMenu;
-        public ImageView imageShowMenu;
+        public TextView tVRestNameFulList;
+        public TextView textViewName;
+        public TextView textViewDescription;
+        public TextView textViewPrice;
+        public ImageView imageView;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            tVNameMenu = itemView.findViewById(id.tvNameMenu);
-            tVDescriptionMenu = itemView.findViewById(id.tvDescriptionMenu);
-            tVPriceMenu = itemView.findViewById(id.tvPriceMenu);
-            imageShowMenu = itemView.findViewById(id.imgShowMenu);
+            tVRestNameFulList = itemView.findViewById(R.id.tvRestNameFulList);
+            textViewName = itemView.findViewById(R.id.text_view_name);
+            textViewDescription = itemView.findViewById(R.id.text_view_description);
+            textViewPrice = itemView.findViewById(R.id.text_view_price);
+            imageView = itemView.findViewById(R.id.image_view_upload);
 
             itemView.setOnClickListener(this);
         }
@@ -96,7 +91,7 @@ public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.Imag
         void onItemClick(int position);
     }
 
-    public void setOnItmClickListener(OnItemClickListener listener){
+    public void setOnItmClickListener(MenuAdapterFullListAdmin.OnItemClickListener listener){
         clickListener = listener;
     }
 }

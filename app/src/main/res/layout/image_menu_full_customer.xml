@@ -12,7 +12,7 @@
         app:cardBackgroundColor="@android:color/holo_blue_bright">
 
         <ImageView
-            android:id="@+id/imgImageFull"
+            android:id="@+id/imgFullCustomer"
             android:layout_width="match_parent"
             android:layout_height="350dp"
             android:layout_margin="2dp"

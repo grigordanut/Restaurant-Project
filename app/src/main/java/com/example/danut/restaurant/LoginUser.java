@@ -51,7 +51,7 @@ public class LoginUser extends AppCompatActivity {
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
         //Action TextView Forgotten Password
-        textViewForgotPassUser = (TextView)findViewById(R.id.tvForgotPasswordUser);
+        textViewForgotPassUser = findViewById(R.id.tvForgotPasswordUser);
         textViewForgotPassUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,7 +61,7 @@ public class LoginUser extends AppCompatActivity {
         });
 
         //Action button log in user
-        buttonCancelLogUser = (Button) findViewById(R.id.btnCancelLogUser);
+        buttonCancelLogUser = findViewById(R.id.btnCancelLogUser);
         buttonCancelLogUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +71,7 @@ public class LoginUser extends AppCompatActivity {
         });
 
         //Action button SignUp
-        buttonSignUp = (Button) findViewById(R.id.btnSignUpUser);
+        buttonSignUp = findViewById(R.id.btnSignUpUser);
         buttonSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,15 +167,15 @@ public class LoginUser extends AppCompatActivity {
         assert firebaseUser != null;
         boolean emailFlag = firebaseUser.isEmailVerified();
 
+        progressDialog.dismiss();
+
         if(emailFlag){
-            progressDialog.dismiss();
             finish();
             Toast.makeText(LoginUser.this, "Log In successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginUser.this, RestaurantCustomer.class));
+            startActivity(new Intent(LoginUser.this, RestaurantListShowRestCustomer.class));
         }
 
         else{
-            progressDialog.dismiss();
             Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
             firebaseAuth.signOut();
         }

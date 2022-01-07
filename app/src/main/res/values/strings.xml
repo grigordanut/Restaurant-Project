@@ -18,11 +18,13 @@
     <string name="btn_saveRestaurant">Save Restaurant</string>
 
     <!--    Activity Admin Page-->
-    <string name="tv_adminPage">Admin Page</string>
-    <string name="btn_addRestaurant">Add Restaurant</string>
-    <string name="btn_showRestaurant">Show Restaurant</string>
-    <string name="btn_addMenu">Add Menu</string>
-    <string name="btn_showMenu">Show Menu</string>
+    <string name="tv_adminPage">Welcome to Admin Page</string>
+    <string name="tv_adminDetails">Admin Personal Details</string>
+    <string name="tv_adminPersonalDetails">Phone: \n0894644545 \n\nEmail: \nadmin@gmail.com</string>
+    <string name="tv_adminRestaurant">Restaurants Available</string>
+    <string name="tv_adminRestaurantAv">0</string>
+    <string name="tv_adminMenus">Menus Available</string>
+    <string name="tv_adminMenusAv">0</string>
 
     <!--    Contact Us Form-->
     <string name="tv_contactForm">Contact Us</string>
@@ -54,7 +56,7 @@
     <string name="tv_restImageAddMenus">List of Restaurants</string>
 
     <!--    Activity Restaurant Image Show Menu Admin-->
-    <string name="tv_restImageShowMenus">Select a restaurant</string>
+    <string name="tv_restImageShowMenus">List of Restaurants</string>
     <string name="tv_adminNumberMenus">Number Menus</string>
 
     <!--    Activity Restaurant Image Show Rest Admin-->
@@ -69,7 +71,6 @@
     <string name="et_menuPriceUpdate">Enter Menu Price</string>
     <string name="btn_saveMenuUpdate">Update Menu</string>
     <string name="btn_backAdminUpdate">Back Admin</string>
-
 
     <!--    Activity Update Restaurant-->
     <string name="tv_updateRestDetails">Update Restaurant Details</string>
@@ -92,6 +93,9 @@
     <string name="et_userEmailAddress">Email: </string>
     <string name="btn_saveChangesEditProfile">Save Changes</string>
 
+    <!--    Admin Header-->
+    <string name="tv_drawerMenuAdmin">Admin Page\n\nEmail:\nadmin@gmail.com</string>
+
     <!--    Content Main-->
     <string name="tv_mainPage">Welcome to Restaurant!</string>
     <string name="btn_mainAdmin">Log In</string>
@@ -111,5 +115,17 @@
 
     <!--    Menu Admin-->
     <string name="menu_adminLogOut">Log Out</string>
+
+    <!--    Menu Drawer Admin-->
+    <string name="open_adminPage">Open</string>
+    <string name="close_adminPage">Close</string>
+    <string name="menuDAdmin_addRestaurant">Add Restaurant</string>
+    <string name="menuDAdmin_showRestaurant">Show Restaurant</string>
+    <string name="menuDAdmin_updateRestaurant">Update Restaurant</string>
+
+    <string name="menuDAdmin_addMenus">Add Menus</string>
+    <string name="menuDAdmin_showMenus">Show Menus</string>
+    <string name="menuDAdmin_showMenusFullList">List of all Menus</string>
+    <string name="menuDAdmin_updateMenu">Update Menu</string>
 
 </resources>

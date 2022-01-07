@@ -20,14 +20,13 @@ public class Menus {
 
     }
 
-    public Menus(String menu_Name, String menu_Description, double menu_Price, String menu_Image, String restaurant_Name, String restaurant_Key, String menu_Key) {
+    public Menus(String menu_Name, String menu_Description, double menu_Price, String menu_Image, String restaurant_Name, String restaurant_Key) {
         this.menu_Name = menu_Name;
         this.menu_Description = menu_Description;
         this.menu_Price = menu_Price;
         this.menu_Image = menu_Image;
         this.restaurant_Name = restaurant_Name;
         this.restaurant_Key = restaurant_Key;
-        this.menu_Key = menu_Key;
     }
 
     public String getMenu_Name() {
@@ -78,10 +77,12 @@ public class Menus {
         this.restaurant_Key = restaurant_Key;
     }
 
+    @Exclude
     public String getMenu_Key() {
         return menu_Key;
     }
 
+    @Exclude
     public void setMenu_Key(String menu_Key) {
         this.menu_Key = menu_Key;
     }

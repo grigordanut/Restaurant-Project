@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/adminAdd_restaurant"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_addRestaurant" />
+
+        <item
+            android:id="@+id/adminShow_restaurant"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_showRestaurant" />
+
+        <item
+            android:id="@+id/adminUpdate_restaurant"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_updateRestaurant"/>
+
+        <item
+            android:id="@+id/adminAdd_menu"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_addMenus" />
+
+        <item
+            android:id="@+id/adminShow_menus"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_showMenus" />
+
+        <item
+            android:id="@+id/adminShow_menusFullList"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_showMenusFullList" />
+
+        <item
+            android:id="@+id/adminUpdate_menu"
+            android:icon="@drawable/ic_launcher_foreground"
+            android:title="@string/menuDAdmin_updateMenu" />
+
+    </group>
+
+</menu>

@@ -42,12 +42,12 @@ import java.util.Objects;
 public class AddNewMenu extends AppCompatActivity {
 
     //Declare Variables
-    private ImageView imageView;
+    private ImageView menuImg;
     private static final int PICK_IMAGE = 100;
 
-    private EditText eTextMenuName, eTextMenuDescription, eTextMenuPrice;
-    private String et_MenuName, et_MenuDescription;
-    private double et_MenuPrice;
+    private EditText menuName, menuDescription, menuPrice;
+    private String menu_Name, menu_Description;
+    private double menu_Price;
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
@@ -59,7 +59,6 @@ public class AddNewMenu extends AppCompatActivity {
 
     private String restName = "";
     private String restKey = "";
-    private String menuKey = "";
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -67,29 +66,34 @@ public class AddNewMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_menu);
 
-        getIntent().hasExtra("RName");
-        restName = Objects.requireNonNull(getIntent().getExtras()).getString("RName");
-
-        getIntent().hasExtra("RKey");
-        restKey = Objects.requireNonNull(getIntent().getExtras()).getString("RKey");
-
-        TextView tVMenuRestMName = findViewById(R.id.tvMenuRestName);
-        tVMenuRestMName.setText("Add Menus to " + restName + " Restaurant");
-
-        eTextMenuName = findViewById(R.id.etMenuName);
-        eTextMenuDescription = findViewById(R.id.etMenuDescription);
-        eTextMenuPrice = findViewById(R.id.etMenuPrice);
-
         progressDialog = new ProgressDialog(AddNewMenu.this);
 
-        imageView = findViewById(R.id.menuImage);
-        imageView.setOnClickListener(new View.OnClickListener() {
+        TextView tVMenuRestName = findViewById(R.id.tvMenuRestName);
+
+        menuName = findViewById(R.id.etMenuName);
+        menuDescription = findViewById(R.id.etMenuDescription);
+        menuPrice = findViewById(R.id.etMenuPrice);
+        menuImg = findViewById(R.id.menuImage);
+
+        //Create a new menu into the Menu table
+        storageReference = FirebaseStorage.getInstance().getReference("Menus");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Menus");
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle !=null){
+            restName = bundle.getString("RName");
+            restKey = bundle.getString("RKey");
+        }
+
+        tVMenuRestName.setText("Add Menus to: " + restName);
+
+        menuImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openGallery();
             }
         });
-
 
         //Action button insert
         Button buttonAddMenu = findViewById(R.id.btnAddMenu);
@@ -100,7 +104,7 @@ public class AddNewMenu extends AppCompatActivity {
                     Toast.makeText(AddNewMenu.this, "Upload menu in progress", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    uploadMenu();
+                    uploadMenuData();
                 }
             }
         });
@@ -126,7 +130,7 @@ public class AddNewMenu extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             imageUri = data.getData();
-            imageView.setImageURI(imageUri);
+            menuImg.setImageURI(imageUri);
             //Picasso.with(this).load(imageView).into(imageView);
             Toast.makeText(AddNewMenu.this, "Image uploaded", Toast.LENGTH_SHORT).show();
         }
@@ -139,19 +143,16 @@ public class AddNewMenu extends AppCompatActivity {
     }
 
     //Upload a new menu into the menu table
-    public void uploadMenu() {
+    public void uploadMenuData() {
         progressDialog.dismiss();
 
         //Add menu into Menu's database
         if (validateMenuDetails()) {
 
-            et_MenuName = eTextMenuName.getText().toString().trim();
-            et_MenuDescription = eTextMenuDescription.getText().toString().trim();
-            et_MenuPrice = Double.parseDouble(eTextMenuPrice.getText().toString().trim());
+            menu_Name = menuName.getText().toString().trim();
+            menu_Description = menuDescription.getText().toString().trim();
+            menu_Price = Double.parseDouble(menuPrice.getText().toString().trim());
 
-            //Create a new menu into the menu table
-            storageReference = FirebaseStorage.getInstance().getReference("Menus");
-            databaseReference = FirebaseDatabase.getInstance().getReference("Menus");
 
             progressDialog.setTitle("The menu is uploading");
             progressDialog.show();
@@ -164,22 +165,22 @@ public class AddNewMenu extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String menu_Id = databaseReference.push().getKey();
-                                    menuKey = menu_Id;
-                                    Menus menus = new Menus(et_MenuName, et_MenuDescription, et_MenuPrice, uri.toString(),restName, restKey, menuKey);
+                                    Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(),restName, restKey);
                                     assert menu_Id != null;
                                     databaseReference.child(menu_Id).setValue(menus);
 
-                                    eTextMenuName.setText("");
-                                    eTextMenuDescription.setText("");
-                                    eTextMenuPrice.setText("");
-                                    imageView.setImageResource(R.drawable.add_menus_picture);
+                                    menuName.setText("");
+                                    menuDescription.setText("");
+                                    menuPrice.setText("");
+                                    menuImg.setImageResource(R.drawable.add_menus_picture);
 
+                                    finish();
+                                    Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
                                     Intent intentAdd = new Intent(AddNewMenu.this,MenuImageAdmin.class);
                                     intentAdd.putExtra("RName",menus.getRestaurant_Name());
                                     intentAdd.putExtra("RKey",menus.getRestaurant_Key());
                                     startActivity(intentAdd);
                                     Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
-                                    finish();
                                 }
                             });
                             progressDialog.dismiss();
@@ -208,18 +209,18 @@ public class AddNewMenu extends AppCompatActivity {
     private Boolean validateMenuDetails() {
         boolean result = false;
 
-        final String etMenu_NameValidation = eTextMenuName.getText().toString().trim();
-        final String etMenu_DescriptionValidation = eTextMenuDescription.getText().toString().trim();
-        final String etMenu_PriceValidation = eTextMenuPrice.getText().toString().trim();
+        final String menu_NameValidation = menuName.getText().toString().trim();
+        final String menu_DescriptionValidation = menuDescription.getText().toString().trim();
+        final String menu_PriceValidation = menuPrice.getText().toString().trim();
 
         if (imageUri == null) {
             alertDialogMenuPicture();
-        } else if (TextUtils.isEmpty(etMenu_NameValidation)) {
-            eTextMenuName.setError("Enter the menu name");
-        } else if (TextUtils.isEmpty(etMenu_DescriptionValidation)) {
-            eTextMenuDescription.setError("Enter the menu description");
-        } else if (TextUtils.isEmpty(etMenu_PriceValidation)) {
-            eTextMenuPrice.setError("Enter the menu price");
+        } else if (TextUtils.isEmpty(menu_NameValidation)) {
+            menuName.setError("Enter the menu name");
+        } else if (TextUtils.isEmpty(menu_DescriptionValidation)) {
+            menuDescription.setError("Enter the menu description");
+        } else if (TextUtils.isEmpty(menu_PriceValidation)) {
+            menuPrice.setError("Enter the menu price");
         } else {
             result = true;
         }

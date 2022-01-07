@@ -21,12 +21,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantImageAddMenus extends AppCompatActivity implements RestaurantAdapterMenus.OnItemClickListener {
+public class RestaurantImageUpdateMenus extends AppCompatActivity implements RestaurantAdapterMenus.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private ValueEventListener restaurantsEventListener;
 
-    private TextView tVRestImageAddMenusAdmin;
+    private TextView tVRestImageUpdateMenusAdmin;
 
     private RecyclerView restaurantsRecyclerView;
     private RestaurantAdapterMenus restaurantAdapterMenus;
@@ -39,7 +39,7 @@ public class RestaurantImageAddMenus extends AppCompatActivity implements Restau
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_image_add_menus);
+        setContentView(R.layout.activity_restaurant_image_update_menus);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -49,16 +49,16 @@ public class RestaurantImageAddMenus extends AppCompatActivity implements Restau
 
         restaurantsList = new ArrayList<>();
 
-        tVRestImageAddMenusAdmin = findViewById(R.id.tvRestImageAddMenusAdmin);
-        tVRestImageAddMenusAdmin.setText("No Restaurants available");
+        tVRestImageUpdateMenusAdmin = findViewById(R.id.tvRestImageUpdateMenusAdmin);
+        tVRestImageUpdateMenusAdmin.setText("No Restaurants available");
 
         restaurantsRecyclerView = findViewById(R.id.evRecyclerView);
         restaurantsRecyclerView.setHasFixedSize(true);
         restaurantsRecyclerView .setLayoutManager(new LinearLayoutManager(this));
 
-        restaurantAdapterMenus = new RestaurantAdapterMenus(RestaurantImageAddMenus.this, restaurantsList);
+        restaurantAdapterMenus = new RestaurantAdapterMenus(RestaurantImageUpdateMenus.this, restaurantsList);
         restaurantsRecyclerView.setAdapter(restaurantAdapterMenus);
-        restaurantAdapterMenus.setOnItmClickListener(RestaurantImageAddMenus.this);
+        restaurantAdapterMenus.setOnItmClickListener(RestaurantImageUpdateMenus.this);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class RestaurantImageAddMenus extends AppCompatActivity implements Restau
                     assert restaurants != null;
                     restaurants.setRest_Key(postSnapshot.getKey());
                     restaurantsList.add(restaurants);
-                    tVRestImageAddMenusAdmin.setText("Select a restaurant");
+                    tVRestImageUpdateMenusAdmin.setText("Select a restaurant");
                 }
 
                 restaurantAdapterMenus.notifyDataSetChanged();
@@ -88,7 +88,7 @@ public class RestaurantImageAddMenus extends AppCompatActivity implements Restau
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RestaurantImageAddMenus.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(RestaurantImageUpdateMenus.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -98,10 +98,10 @@ public class RestaurantImageAddMenus extends AppCompatActivity implements Restau
     public void onItemClick(int position) {
         Restaurants selected_Rest = restaurantsList.get(position);
 
-        Intent intentAdd = new Intent(RestaurantImageAddMenus.this,AddNewMenu.class);
-        intentAdd.putExtra("RName",selected_Rest.getRest_Name());
-        intentAdd.putExtra("RKey",selected_Rest.getRest_Key());
-        startActivity(intentAdd);
+        Intent intent_Update = new Intent(RestaurantImageUpdateMenus.this,MenuImageAdmin.class);
+        intent_Update.putExtra("RName",selected_Rest.getRest_Name());
+        intent_Update.putExtra("RKey",selected_Rest.getRest_Key());
+        startActivity(intent_Update);
         restaurantsList.clear();
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".MenuImageAdmin">
+    tools:context=".MenuImageFullListAdmin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,33 +13,20 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvRestNameAdmin"
+            android:id="@+id/tvMenusAvFullListAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="Restaurant Name"
             android:textAlignment="center"
-            android:textAllCaps="true"
-            android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold|italic"
-            tools:ignore="HardcodedText" />
-
-        <TextView
-            android:id="@+id/tvMenusAvAdmin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
             android:text="Menus"
             android:textColor="#000000"
-            android:textSize="20sp"
+            android:textSize="22sp"
             tools:ignore="HardcodedText" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+            android:id="@+id/rvFullList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" />
@@ -50,7 +37,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnNewMenuAdmin"
+                android:id="@+id/btnNewMenuFullList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -58,11 +45,11 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:text="New Menu"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 tools:ignore="ButtonStyle,HardcodedText" />
 
             <Button
-                android:id="@+id/btnBackAdmin"
+                android:id="@+id/btnBackAdminFullList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -70,7 +57,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:text="Back Admin"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 tools:ignore="ButtonStyle,HardcodedText" />
 
         </LinearLayout>

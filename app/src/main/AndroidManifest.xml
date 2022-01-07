@@ -21,6 +21,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MenuImageUpdateMenu"
+            android:exported="false" />
+        <activity
+            android:name=".MenuImageFullListAdmin"
+            android:exported="false" />
+        <activity
+            android:name=".RestaurantImageUpdateMenus"
+            android:exported="false" />
+        <activity
             android:name=".RegisterUser"
             android:exported="false" />
         <activity
@@ -62,7 +71,7 @@
         <activity android:name=".MenuImageAdmin" />
         <activity android:name=".UpdateUser" />
         <activity android:name=".AddNewMenu" />
-        <activity android:name=".RestaurantCustomer" />
+        <activity android:name=".RestaurantListShowRestCustomer" />
         <activity android:name=".MenuImageCustomer" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
