@@ -20,10 +20,9 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:textAlignment="center"
-            android:text="Menus"
+            android:text="@string/tv_menuImageFullListAdmin"
             android:textColor="#000000"
-            android:textSize="22sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="22sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvFullList"
@@ -44,9 +43,9 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="New Menu"
+                android:text="@string/btn_menuImageFullListAdminNewMenu"
                 android:textSize="20sp"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/btnBackAdminFullList"
@@ -56,9 +55,9 @@
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
-                android:text="Back Admin"
+                android:text="@string/btn_menuImageFullListAdminBackAdmin"
                 android:textSize="20sp"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
     </LinearLayout>

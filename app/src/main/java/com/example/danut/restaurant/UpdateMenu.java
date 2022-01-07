@@ -215,7 +215,7 @@ public class UpdateMenu extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(final Uri uri) {
 
-                                    Query query = databaseRefUpdate.orderByChild("menu_Key").equalTo(menuKeyUpdate);
+                                    Query query = databaseRefUpdate.orderByChild("menu_Name").equalTo(menuNameUpdate);
                                     query.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -273,7 +273,7 @@ public class UpdateMenu extends AppCompatActivity {
             progressDialog.setMessage("The Menu is updating");
             progressDialog.show();
 
-            Query query = databaseRefUpdate.orderByChild("menu_Key").equalTo(menuKeyUpdate);
+            Query query = databaseRefUpdate.orderByChild("menu_Name").equalTo(menuNameUpdate);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

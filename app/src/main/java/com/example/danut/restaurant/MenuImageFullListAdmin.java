@@ -64,7 +64,15 @@ public class MenuImageFullListAdmin extends AppCompatActivity implements MenuAda
         tVMenusAvFullListAdmin = findViewById(R.id.tvMenusAvFullListAdmin);
         tVMenusAvFullListAdmin.setText("No Menus available");
 
-        //Action button new Menus
+        rVFullList = findViewById(R.id.rvFullList);
+        rVFullList.setHasFixedSize(true);
+        rVFullList.setLayoutManager(new LinearLayoutManager(this));
+
+        menuAdapterFullListAdmin = new MenuAdapterFullListAdmin(MenuImageFullListAdmin.this,  menusList);
+        rVFullList.setAdapter(menuAdapterFullListAdmin);
+        menuAdapterFullListAdmin.setOnItmClickListener(MenuImageFullListAdmin.this);
+
+        //Action button new Menu
         Button buttonNewMenuFullList = findViewById(R.id.btnNewMenuFullList);
         buttonNewMenuFullList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +84,7 @@ public class MenuImageFullListAdmin extends AppCompatActivity implements MenuAda
             }
         });
 
-        //Action button back to restaurant
+        //Action button back to Admin page
         Button buttonBackAdminFullList = findViewById(R.id.btnBackAdminFullList);
         buttonBackAdminFullList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,14 +92,6 @@ public class MenuImageFullListAdmin extends AppCompatActivity implements MenuAda
                 startActivity(new Intent(MenuImageFullListAdmin.this, AdminPage.class));
             }
         });
-
-        rVFullList = findViewById(R.id.rvFullList);
-        rVFullList.setHasFixedSize(true);
-        rVFullList.setLayoutManager(new LinearLayoutManager(this));
-
-        menuAdapterFullListAdmin = new MenuAdapterFullListAdmin(MenuImageFullListAdmin.this,  menusList);
-        rVFullList.setAdapter(menuAdapterFullListAdmin);
-        menuAdapterFullListAdmin.setOnItmClickListener(MenuImageFullListAdmin.this);
     }
 
     @Override

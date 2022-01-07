@@ -66,7 +66,6 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         tVMenusAvAdmin = findViewById(R.id.tvMenusAvAdmin);
 
         Bundle bundle = getIntent().getExtras();
-
         if (bundle != null){
             restaurantName = bundle.getString("RName");
             restaurantKey = bundle.getString("RKey");

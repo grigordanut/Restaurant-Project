@@ -9,7 +9,7 @@
     <string name="et_menuDescription">Enter Menu Description</string>
     <string name="et_menuPrice">Enter Menu Price</string>
     <string name="btn_saveMenu">Save Menu</string>
-    <string name="btn_backAdminToPage">Back Admin</string>
+    <string name="btn_backToAdminPage">Back Admin</string>
 
     <!--    Activity Add New Restaurant-->
     <string name="tv_addNewRestaurant">Add New Restaurant</string>
@@ -32,9 +32,42 @@
     <string name="tv_contactFormEmail">Email</string>
     <string name="tv_contactFormSubject">Subject</string>
     <string name="tv_contactFormMessage">Message</string>
-    <string name="contact_form_button">Send Message</string>
+    <string name="btn_contactFormSendMessage">Send Message</string>
     <string name="contact_form_post_message">Please wait! sending your message …</string>
     <string name="contact_posted">Your message has been successfully delivered.</string>
+
+    <!--    Activity Log In User-->
+    <string name="tv_logInUser">Please enter your Log In details.</string>
+    <string name="et_logInUserEmailAddress">Email Address</string>
+    <string name="et_logInUserPassword">Password</string>
+    <string name="btn_logInUser">Log In</string>
+    <string name="btn_logCancelUser">Cancel</string>
+    <string name="tv_logInUserForgottenPass">Forgotten Password</string>
+    <string name="tv_logInUserNewUser">New user, Please press SIGN UP</string>
+    <string name="btn_logSignUpUser">Sign Up</string>
+
+    <!--    Activity Main-->
+
+    <!--    Activity Maps-->
+
+    <!--    Activity Menu Image Admin-->
+    <string name="tv_menuImageAdminRestName">Restaurant Name</string>
+    <string name="tv_menuImageAdminMenusAv">List of Menus</string>
+    <string name="btn_menuImageAdminNewMenu">New Menu</string>
+    <string name="btn_menuImageAdminBackAdmin">Back Admin</string>
+
+    <!--    Activity Menu Image Customer-->
+    <string name="tv_menuImageCustomRestName">Restaurant Name</string>
+    <string name="tv_menuImageCustomMenusAv">List of Menus</string>
+
+    <!--    Activity Menu Image Full List Admin-->
+    <string name="tv_menuImageFullListAdmin">List of Menus</string>
+    <string name="btn_menuImageFullListAdminNewMenu">New Menu</string>
+    <string name="btn_menuImageFullListAdminBackAdmin">Back Admin</string>
+
+    <!--    Activity Menu Image Update Menu-->
+    <string name="tv_menuImageUpdateMenuRestName">Restaurant Name</string>
+    <string name="tv_menuImageUpdateMenuMenusAv">List of Menus</string>
 
     <!--    Activity Register User-->
     <string name="tv_registerUser">Please enter your SIGN UP details.</string>
@@ -45,12 +78,13 @@
     <string name="et_regUserPassword">Password</string>
     <string name="et_regUserConfPassword">Confirm Password</string>
     <string name="btn_registerUser">Register</string>
-    <string name="btn_cancelUser">Cancel</string>
-    <string name="tv_userAlreadyRegistered">Already registered/Please LOG IN</string>
+    <string name="btn_regCancelUser">Cancel</string>
+    <string name="tv_regUserAlreadyRegistered">Already registered/Please LOG IN</string>
 
-    <!--    Activity Restaurant Customer-->
-    <string name="tv_restListCustom">List of Restaurants</string>
-    <string name="btn_showMap">Show Map</string>
+    <!--    Activity Reset Password-->
+    <string name="tv_resetPassword">Enter your registered Email.</string>
+    <string name="et_resetPasswordEnterEmail">Please enter your email address</string>
+    <string name="btn_resetPassword">Reset Password</string>
 
     <!--    Activity Restaurant Image Add Menus-->
     <string name="tv_restImageAddMenus">List of Restaurants</string>
@@ -63,6 +97,13 @@
     <string name="tv_restImageShowRestAdmin">List of Restaurants</string>
     <string name="btn_addNewRestaurant">Add Restaurant</string>
     <string name="btn_backAdminPage">Back Admin Page</string>
+
+    <!--    Activity Restaurant Image Update Menus-->
+    <string name="tv_restImageUpdateMenus">List of Restaurants</string>
+
+    <!--    Activity Restaurant List Show Rest Customer-->
+    <string name="tv_restListCustom">List of Restaurants</string>
+    <string name="btn_showMap">Show Map</string>
 
     <!--    Activity Update Menu-->
     <string name="tv_MenuUpdate">Update Menu</string>

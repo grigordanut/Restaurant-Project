@@ -98,7 +98,7 @@ public class RestaurantImageUpdateMenus extends AppCompatActivity implements Res
     public void onItemClick(int position) {
         Restaurants selected_Rest = restaurantsList.get(position);
 
-        Intent intent_Update = new Intent(RestaurantImageUpdateMenus.this,MenuImageAdmin.class);
+        Intent intent_Update = new Intent(RestaurantImageUpdateMenus.this,MenuImageUpdateMenu.class);
         intent_Update.putExtra("RName",selected_Rest.getRest_Name());
         intent_Update.putExtra("RKey",selected_Rest.getRest_Key());
         startActivity(intent_Update);

@@ -153,8 +153,7 @@ public class AddNewMenu extends AppCompatActivity {
             menu_Description = menuDescription.getText().toString().trim();
             menu_Price = Double.parseDouble(menuPrice.getText().toString().trim());
 
-
-            progressDialog.setTitle("The menu is uploading");
+            progressDialog.setTitle("The Menu is uploading");
             progressDialog.show();
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             menuUploadTask = fileReference.putFile(imageUri)
@@ -165,7 +164,7 @@ public class AddNewMenu extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     String menu_Id = databaseReference.push().getKey();
-                                    Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(),restName, restKey);
+                                    Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
                                     assert menu_Id != null;
                                     databaseReference.child(menu_Id).setValue(menus);
 

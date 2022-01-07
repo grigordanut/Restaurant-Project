@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_bright"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    android:background="@android:color/holo_blue_bright">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,17 +12,16 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewUser"
+            android:id="@+id/tvLogInUserPage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:text="Please enter your Log In details."
+            android:text="@string/tv_logInUser"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="22sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="22sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailLogUserWrapper"
@@ -41,11 +38,11 @@
                 android:layout_height="45dp"
                 android:background="@drawable/round_text_log"
                 android:ems="10"
-                android:hint="Email Address"
+                android:hint="@string/et_logInUserEmailAddress"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
                 android:textSize="20sp"
-                tools:ignore="HardcodedText,RtlSymmetry" />
+                tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,11 +60,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:background="@drawable/round_text_log"
-                android:hint="Password"
+                android:hint="@string/et_logInUserPassword"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
                 android:textSize="20sp"
-                tools:ignore="HardcodedText,RtlSymmetry" />
+                tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,11 +93,11 @@
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_left"
-                android:text="LOG IN"
+                android:text="@string/btn_logInUser"
                 android:textColor="#000000"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/btnCancelLogUser"
@@ -111,11 +108,11 @@
                 android:layout_marginEnd="25dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_right"
-                android:text="CANCEL"
+                android:text="@string/btn_logCancelUser"
                 android:textColor="#000000"
                 android:textSize="28sp"
                 android:textStyle="bold"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 
@@ -126,12 +123,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:text="FORGOTTEN PASSWORD"
+            android:text="@string/tv_logInUserForgottenPass"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
             android:textSize="22sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/textViewLogUser"
@@ -140,11 +136,10 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginEnd="20dp"
-            android:text="New user, Please press SIGN UP"
+            android:text="@string/tv_logInUserNewUser"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="22sp"
-            tools:ignore="HardcodedText" />
+            android:textSize="22sp" />
 
         <Button
             android:id="@+id/btnSignUpUser"
@@ -155,10 +150,9 @@
             android:layout_marginEnd="55dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/round_corners"
-            android:text="SIGN UP"
+            android:text="@string/btn_logSignUpUser"
             android:textSize="24sp"
-            android:textStyle="bold"
-            tools:ignore="HardcodedText" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 </ScrollView>

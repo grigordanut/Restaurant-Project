@@ -18,13 +18,13 @@ public class ContactForm extends AppCompatActivity {
         setContentView(R.layout.activity_contact_form);
 
         //Declare variable
-        final EditText myName   = findViewById(R.id.myName);
-        final EditText myEmail  = findViewById(R.id.myEmail);
+        final EditText myName = findViewById(R.id.myName);
+        final EditText myEmail = findViewById(R.id.myEmail);
         final EditText mySubject = findViewById(R.id.mySubject);
         final EditText myMessage = findViewById(R.id.myMessage);
 
-        Button email = (Button) findViewById(R.id.post_message);
-        email.setOnClickListener(new View.OnClickListener() {
+        Button buttonSendMessage = (Button) findViewById(R.id.btnSendMessage);
+        buttonSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -36,7 +36,6 @@ public class ContactForm extends AppCompatActivity {
                 if (TextUtils.isEmpty(name)){
                     myName.setError("Enter Your Name");
                     myName.requestFocus();
-                    return;
                 }
 
                 else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -48,13 +47,11 @@ public class ContactForm extends AppCompatActivity {
                 else if (TextUtils.isEmpty(subject)){
                     mySubject.setError("Enter Your Subject");
                     mySubject.requestFocus();
-                    return;
                 }
 
                 else if (TextUtils.isEmpty(message)){
                     myMessage.setError("Enter Your Message");
                     myMessage.requestFocus();
-                    return;
                 }
                 else {
                     Intent sendEmail = new Intent(android.content.Intent.ACTION_SEND);

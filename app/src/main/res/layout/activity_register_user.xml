@@ -27,7 +27,6 @@
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fNameWrapperRegCustomer"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -48,7 +47,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/lNameWrapperRegCustomer"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -68,7 +66,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/fNrWrapperRegCustomer"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -88,7 +85,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emailWrapperRegCustomer"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -108,7 +104,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passWrapperRegCustomer"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -129,7 +124,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confPassWrapperRegCustomer"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -176,7 +170,7 @@
                 android:layout_marginEnd="40dp"
                 android:layout_weight="1"
                 android:background="@drawable/round_right"
-                android:text="@string/btn_cancelUser"
+                android:text="@string/btn_regCancelUser"
                 android:textSize="20sp"
                 tools:ignore="ButtonStyle" />
 
@@ -185,12 +179,12 @@
         <TextView
             android:id="@+id/tvLogInUser"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_margin="20dp"
-            android:text="@string/tv_userAlreadyRegistered"
+            android:text="@string/tv_regUserAlreadyRegistered"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
     </LinearLayout>
