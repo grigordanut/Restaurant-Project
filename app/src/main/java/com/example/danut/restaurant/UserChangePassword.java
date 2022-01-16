@@ -93,7 +93,6 @@ public class UserChangePassword extends AppCompatActivity {
                     userOldPassword.setError("Enter your password");
                     userOldPassword.requestFocus();
                 }
-
                 else{
 
                     progressDialog.setMessage("The user is authenticating!");
@@ -131,7 +130,6 @@ public class UserChangePassword extends AppCompatActivity {
                                             userNewPassword.setError("The password is too short, enter minimum 6 character long");
                                             Toast.makeText(UserChangePassword.this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
                                         }
-
                                         else{
 
                                             progressDialog.setMessage("The user Password is changing!");

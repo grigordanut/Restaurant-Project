@@ -96,7 +96,6 @@ public class UserChangeEmail extends AppCompatActivity {
                     userPassword.setError("Enter your password");
                     userPassword.requestFocus();
                 }
-
                 else{
 
                     progressDialog.setMessage("The user is authenticating!");
