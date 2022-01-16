@@ -102,7 +102,6 @@ public class UserChangePassword extends AppCompatActivity {
                     AuthCredential credential = EmailAuthProvider.getCredential(user_Email, userOld_Password);
 
                     firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @SuppressLint("SetTextI18n")
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
