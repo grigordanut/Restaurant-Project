@@ -191,7 +191,7 @@ public class UpdateRestaurant extends AppCompatActivity {
                         }
                     }
                 }
-                
+
                 progressDialog.dismiss();
                 startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
                 finish();
