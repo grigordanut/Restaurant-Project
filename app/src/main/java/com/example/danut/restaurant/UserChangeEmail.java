@@ -85,7 +85,6 @@ public class UserChangeEmail extends AppCompatActivity {
         });
 
         Button buttonAuthUser = findViewById(R.id.btnAuthUser);
-
         buttonAuthUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
