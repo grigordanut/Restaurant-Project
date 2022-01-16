@@ -52,9 +52,9 @@ public class UserChangePassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_change_password);
 
-        progressDialog = new ProgressDialog(this);
-
         Objects.requireNonNull(getSupportActionBar()).setTitle("Change User Password");
+
+        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();

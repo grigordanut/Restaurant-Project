@@ -57,9 +57,9 @@ public class UserChangeEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_change_email);
 
-        progressDialog = new ProgressDialog(this);
-
         Objects.requireNonNull(getSupportActionBar()).setTitle("Change User Email");
+
+        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
