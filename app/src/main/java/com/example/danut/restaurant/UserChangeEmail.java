@@ -118,7 +118,6 @@ public class UserChangeEmail extends AppCompatActivity {
                                 buttonAuthUser.setText("Disabled");
                                 userNewEmail.requestFocus();
 
-                                buttonChangeEmail.setEnabled(true);
                                 buttonChangeEmail.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

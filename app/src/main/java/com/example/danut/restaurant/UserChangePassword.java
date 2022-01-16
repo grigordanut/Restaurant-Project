@@ -115,7 +115,6 @@ public class UserChangePassword extends AppCompatActivity {
                                 buttonAuthUserPass.setText("Disabled");
                                 userNewPassword.requestFocus();
 
-                                buttonChangePassword.setEnabled(true);
                                 buttonChangePassword.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
