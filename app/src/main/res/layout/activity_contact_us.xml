@@ -12,8 +12,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:contentDescription="TODO"
-        android:src="@drawable/contact" />
+        android:src="@drawable/contact"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/btnInsert"
@@ -30,4 +30,3 @@
         android:paddingBottom="3dp" />
 
 </RelativeLayout>
-

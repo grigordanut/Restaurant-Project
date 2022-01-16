@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,16 +20,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageTask;
+
+import java.util.Objects;
 
 public class UpdateRestaurant extends AppCompatActivity {
+
+    //Check Restaurant name into Restaurant database
+    private DatabaseReference databaseRefRestNameCheck;
 
     //Save updated Restaurant data to database
     private DatabaseReference databaseRefRestUpdate;
 
-    //Check Menu data ino database
+    //Check Restaurant name into Menu database
     private DatabaseReference databaseRefMenuCheck;
 
     //Save updated Restaurant name to Menu database
@@ -35,15 +40,15 @@ public class UpdateRestaurant extends AppCompatActivity {
 
     private TextView tVRestUpdate;
 
-    private EditText etRest_NameUp, etRest_AddressUp;
+    private EditText restNameUp, restAddressUp;
 
     private String rest_NameUp, rest_AddressUp;
-
-    private ProgressDialog progressDialog;
 
     private String restNameUpdate = "";
     private String restAddressUpdate = "";
     private String restKeyUpdate = "";
+
+    private ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -51,59 +56,90 @@ public class UpdateRestaurant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_restaurant);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Update Restaurant");
+
         progressDialog = new ProgressDialog(this);
 
         tVRestUpdate = findViewById(R.id.tvRestUpdate);
+        restNameUp = findViewById(R.id.etRestNameUp);
+        restAddressUp = findViewById(R.id.etRestAddressUp);
 
-        etRest_NameUp = findViewById(R.id.etRestNameUpdate);
-        etRest_AddressUp = findViewById(R.id.etRestAddressUpdate);
-
-        Bundle bundleStore = getIntent().getExtras();
-        if (bundleStore != null) {
-            restNameUpdate = bundleStore.getString("RName");
-            restAddressUpdate = bundleStore.getString("RAddress");
-            restKeyUpdate = bundleStore.getString("RKey");
+        Bundle bundleRest = getIntent().getExtras();
+        if (bundleRest != null) {
+            restNameUpdate = bundleRest.getString("RName");
+            restAddressUpdate = bundleRest.getString("RAddress");
+            restKeyUpdate =  bundleRest.getString("RKey");
         }
 
-        tVRestUpdate.setText("Update " + restNameUpdate + " Restaurant details");
+        tVRestUpdate.setText("Update: " + restNameUpdate + " Restaurant");
 
-        etRest_NameUp.setText(restNameUpdate);
-        etRest_AddressUp.setText(restAddressUpdate);
+        restNameUp.setText(restNameUpdate);
+        restAddressUp.setText(restAddressUpdate);
 
         Button btnSaveRestUpdates = findViewById(R.id.btnSaveRestUpdate);
         btnSaveRestUpdates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateRestaurantDetails();
-                updateMenuRestName();
+                checkRestaurantName();
             }
         });
     }
 
-    public void updateRestaurantDetails() {
+    private void checkRestaurantName() {
 
-        if (validateBikeStoreDetailsUp()) {
+        final String rest_nameCheck = restNameUp.getText().toString().trim();
 
-            rest_NameUp = etRest_NameUp.getText().toString().trim();
-            rest_AddressUp = etRest_AddressUp.getText().toString().trim();
+        databaseRefRestNameCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
 
-            progressDialog.setMessage("Update the Restaurant");
+        databaseRefRestNameCheck.orderByChild("rest_Name").equalTo(rest_nameCheck)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            alertDialogRestExist();
+                        } else {
+                            uploadRestDetailsUpdate();
+                            uploadRestNameMenuUp();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void uploadRestDetailsUpdate() {
+
+        if (validateRestDetailsUpdate()) {
+
+            rest_NameUp = restNameUp.getText().toString().trim();
+            rest_AddressUp = restAddressUp.getText().toString().trim();
+
+            progressDialog.setMessage("The " + restNameUpdate + " restaurant is updating!!");
             progressDialog.show();
 
             databaseRefRestUpdate = FirebaseDatabase.getInstance().getReference("Restaurants");
-            Query queryStore = databaseRefRestUpdate.orderByChild("rest_Key").equalTo(restKeyUpdate);
 
-            queryStore.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRefRestUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ds.getRef().child("rest_Name").setValue(rest_NameUp);
-                        ds.getRef().child("rest_Address").setValue(rest_AddressUp);
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        String rest_Key = postSnapshot.getKey();
+                        assert rest_Key != null;
+
+                        if (rest_Key.equals(restKeyUpdate)){
+                            postSnapshot.getRef().child("rest_Name").setValue(rest_NameUp);
+                            postSnapshot.getRef().child("rest_Address").setValue(rest_AddressUp);
+                        }
                     }
-                    progressDialog.dismiss();
-                    Toast.makeText(UpdateRestaurant.this, "Restaurant Updated", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
-                    finish();
+
+                    //progressDialog.dismiss();
+                    //Toast.makeText(UpdateRestaurant.this, "The Restaurant has been updated", Toast.LENGTH_SHORT).show();
+                    //finish();
+                    //startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
                 }
 
                 @Override
@@ -114,60 +150,73 @@ public class UpdateRestaurant extends AppCompatActivity {
         }
     }
 
-    private Boolean validateBikeStoreDetailsUp() {
+    private Boolean validateRestDetailsUpdate() {
+
         boolean result = false;
 
-        rest_NameUp = etRest_NameUp.getText().toString().trim();
-        rest_AddressUp = etRest_AddressUp.getText().toString().trim();
+        rest_NameUp = restNameUp.getText().toString().trim();
+        rest_AddressUp = restAddressUp.getText().toString().trim();
 
         if (TextUtils.isEmpty(rest_NameUp)) {
-            etRest_NameUp.setError("Enter Restaurant name");
-            etRest_NameUp.requestFocus();
+            restNameUp.setError("Enter Restaurant name");
+            restNameUp.requestFocus();
         } else if (TextUtils.isEmpty(rest_AddressUp)) {
-            etRest_AddressUp.setError("Enter Restaurant Address");
-            etRest_AddressUp.requestFocus();
+            restAddressUp.setError("Enter Restaurant Address");
+            restAddressUp.requestFocus();
         } else {
             result = true;
         }
         return result;
     }
 
-    private void updateMenuRestName() {
+    private void uploadRestNameMenuUp() {
+
+        final String menuRest_NameUp = restNameUp.getText().toString().trim();
+
+        //progressDialog.show();
+
         databaseRefMenuCheck = FirebaseDatabase.getInstance().getReference("Menus");
-        databaseRefMenuCheck.orderByChild("restaurant_Name").equalTo(restNameUpdate)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            progressDialog.dismiss();
 
-                            //final String etBike_BikeStoreLocCheck = etStoreLocationUp.getText().toString().trim();
-                            final String etMenu_RestNameCheck = etRest_NameUp.getText().toString().trim();
-                            databaseRefMenuUpdate = FirebaseDatabase.getInstance().getReference("Menus");
-                            databaseRefMenuUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot dsBike : dataSnapshot.getChildren()) {
-                                        dsBike.getRef().child("restaurant_Name").setValue(etMenu_RestNameCheck);
-                                    }
-                                    progressDialog.dismiss();
-                                    Toast.makeText(UpdateRestaurant.this, "Restaurant Updated", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
-                                    finish();
-                                }
+        databaseRefMenuCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                    Menus menus_restUpdate = postSnapshot.getValue(Menus.class);
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
+                    assert menus_restUpdate != null;
+                    String menuRest_Key = menus_restUpdate.getRestaurant_Key();
+
+                    if (menuRest_Key.equals(restKeyUpdate)){
+                        postSnapshot.getRef().child("restaurant_Name").setValue(menuRest_NameUp);
                     }
+                }
+                progressDialog.dismiss();
+                startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
+                finish();
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(UpdateRestaurant.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void alertDialogRestExist(){
+        final String rest_alertNameCheck = restNameUp.getText().toString().trim();
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage("The Restaurant " + rest_alertNameCheck + " already exists!")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

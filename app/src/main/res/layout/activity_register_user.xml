@@ -18,27 +18,26 @@
             android:id="@+id/tvRegUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="10dp"
             android:text="@string/tv_registerUser"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="20sp" />
+            android:textSize="22sp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etFirstNameRegUser"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/round_text_reg"
+                android:background="@drawable/et_round_corners"
                 android:hint="@string/et_regUserFirstName"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
@@ -49,15 +48,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLastNameRegUser"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/round_text_reg"
+                android:background="@drawable/et_round_corners"
                 android:hint="@string/et_regUserLastName"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
@@ -68,15 +67,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPhoneNrRegUser"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/round_text_reg"
+                android:background="@drawable/et_round_corners"
                 android:hint="@string/et_regUserPhoneNumber"
                 android:inputType="phone"
                 android:paddingStart="10dp"
@@ -87,15 +86,15 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etEmailRegUser"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/round_text_reg"
+                android:background="@drawable/et_round_corners"
                 android:hint="@string/et_regUserEmailAddress"
                 android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
@@ -106,8 +105,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
 
@@ -115,7 +114,7 @@
                 android:id="@+id/etPassRegUser"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/round_text_reg"
+                android:background="@drawable/et_round_corners"
                 android:hint="@string/et_regUserPassword"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
@@ -126,8 +125,8 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textColorHint="#000000"
             app:passwordToggleEnabled="true">
 
@@ -135,7 +134,7 @@
                 android:id="@+id/etConfPassRegUser"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:background="@drawable/round_text_reg"
+                android:background="@drawable/et_round_corners"
                 android:hint="@string/et_regUserConfPassword"
                 android:inputType="textPassword"
                 android:paddingStart="10dp"
@@ -152,13 +151,14 @@
                 android:id="@+id/btnRegUser"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_left"
+                android:background="@drawable/btn_round_left"
                 android:text="@string/btn_registerUser"
-                android:textSize="20sp"
+                android:textSize="28sp"
+                android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
 
             <Button
@@ -166,26 +166,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="25dp"
                 android:layout_weight="1"
-                android:background="@drawable/round_right"
+                android:background="@drawable/btn_round_right"
                 android:text="@string/btn_regCancelUser"
-                android:textSize="20sp"
-                tools:ignore="ButtonStyle" />
+                android:textSize="28sp"
+                tools:ignore="ButtonStyle"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvLogInUser"
+        <Button
+            android:id="@+id/btnRegLogUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text="@string/tv_regUserAlreadyRegistered"
-            android:textAlignment="center"
-            android:textColor="@color/colorAccent"
-            android:textSize="22sp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/btn_round_corners"
+            android:text="@string/btn_regLogUser"
+            android:textSize="28sp"
             android:textStyle="bold" />
 
     </LinearLayout>
+
 </ScrollView>

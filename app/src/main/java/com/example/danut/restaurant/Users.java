@@ -1,52 +1,65 @@
 package com.example.danut.restaurant;
 
+import com.google.firebase.database.Exclude;
+
 public class Users {
 
-    private String firstName_User;
-    private String lastName_User;
-    private String phoneNum_User;
-    private String email_User;
+    private String user_firstName;
+    private String user_lastName;
+    private String user_phone;
+    private String user_email;
+    private String user_key;
 
     public Users(){
 
     }
 
-    public Users(String firstName_User, String lastName_User, String phoneNum_User, String email_User) {
-        this.firstName_User = firstName_User;
-        this.lastName_User = lastName_User;
-        this.phoneNum_User = phoneNum_User;
-        this.email_User = email_User;
+    public Users(String user_firstName, String user_lastName, String user_phone, String user_email) {
+        this.user_firstName = user_firstName;
+        this.user_lastName = user_lastName;
+        this.user_phone = user_phone;
+        this.user_email = user_email;
     }
 
-    public String getFirstName_User() {
-        return firstName_User;
+    public String getUser_firstName() {
+        return user_firstName;
     }
 
-    public void setFirstName_User(String firstName_User) {
-        this.firstName_User = firstName_User;
+    public void setUser_firstName(String user_firstName) {
+        this.user_firstName = user_firstName;
     }
 
-    public String getLastName_User() {
-        return lastName_User;
+    public String getUser_lastName() {
+        return user_lastName;
     }
 
-    public void setLastName_User(String lastName_User) {
-        this.lastName_User = lastName_User;
+    public void setUser_lastName(String user_lastName) {
+        this.user_lastName = user_lastName;
     }
 
-    public String getPhoneNum_User() {
-        return phoneNum_User;
+    public String getUser_phone() {
+        return user_phone;
     }
 
-    public void setPhoneNum_User(String phoneNum_User) {
-        this.phoneNum_User = phoneNum_User;
+    public void setUser_phone(String user_phone) {
+        this.user_phone = user_phone;
     }
 
-    public String getEmail_User() {
-        return email_User;
+    public String getUser_email() {
+        return user_email;
     }
 
-    public void setEmail_User(String email_User) {
-        this.email_User = email_User;
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
+    }
+
+    @Exclude
+    public String getUser_key() {
+        return user_key;
+    }
+
+    @Exclude
+    public void setUser_key(String user_key) {
+        this.user_key = user_key;
     }
 }

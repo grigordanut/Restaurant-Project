@@ -10,12 +10,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class ContactForm extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_form);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Contact Us form");
 
         //Declare variable
         final EditText myName = findViewById(R.id.myName);

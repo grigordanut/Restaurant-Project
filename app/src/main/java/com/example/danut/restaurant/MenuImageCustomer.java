@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuImageCustomer extends AppCompatActivity {
 
@@ -29,13 +30,13 @@ public class MenuImageCustomer extends AppCompatActivity {
 
     private TextView tVRestNameCustomer, tVMenusAvCustomer;
 
-    private String restaurantName ="";
-    private String restaurantKey = "";
-
     private RecyclerView recyclerView;
     private MenuAdapterCustomer menuAdapterCustomer;
 
     private List<Menus> menusList;
+
+    private String restaurantName = "";
+    private String restaurantKey = "";
 
     private ProgressDialog progressDialog;
 
@@ -45,15 +46,14 @@ public class MenuImageCustomer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_image_customer);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("CUSTOMER: Menus available");
+
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        //Retrieve data from Menus database
-        databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
-
         menusList = new ArrayList<>();
 
-        tVRestNameCustomer = (TextView) findViewById(R.id.tvRestNameCustomer);
+        tVRestNameCustomer = findViewById(R.id.tvRestNameCustomer);
         tVMenusAvCustomer = findViewById(R.id.tvMenusAvCustomer);
 
         Bundle bundle = getIntent().getExtras();
@@ -68,7 +68,9 @@ public class MenuImageCustomer extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
         menuAdapterCustomer = new MenuAdapterCustomer(MenuImageCustomer.this, menusList);
+        recyclerView.setAdapter(menuAdapterCustomer);
     }
 
     @Override
@@ -79,24 +81,27 @@ public class MenuImageCustomer extends AppCompatActivity {
 
     private void loadMenuDataCustomer(){
 
+        //Retrieve data from Menus database
+        databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
+
         eventListenerMenu = databaseRefMenu.addValueEventListener(new ValueEventListener() {
-            @SuppressLint("NotifyDataSetChanged")
+            @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    Menus menus = postSnapshot.getValue(Menus.class);
-                    if(menus != null) {
-                        if( menus.getRestaurant_Key().equals(restaurantKey)) {
-                            menus.setMenu_Key(postSnapshot.getKey());
-                            menusList.add(menus);
+                    Menus menu_Data = postSnapshot.getValue(Menus.class);
+                    if(menu_Data != null) {
+                        if( menu_Data.getRestaurant_Key().equals(restaurantKey)) {
+                            menu_Data.setMenu_Key(postSnapshot.getKey());
+                            menusList.add(menu_Data);
                             tVMenusAvCustomer.setText(menusList.size()+" Menus Available");
                         }
                     }
                 }
 
                 menuAdapterCustomer.notifyDataSetChanged();
-                recyclerView.setAdapter(menuAdapterCustomer);
+                progressDialog.dismiss();
             }
 
             @Override
@@ -104,6 +109,5 @@ public class MenuImageCustomer extends AppCompatActivity {
                 Toast.makeText(MenuImageCustomer.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

@@ -24,19 +24,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class AddNewMenu extends AppCompatActivity {
@@ -66,6 +61,8 @@ public class AddNewMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_menu);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add Menus to Restaurant");
+
         progressDialog = new ProgressDialog(AddNewMenu.this);
 
         TextView tVMenuRestName = findViewById(R.id.tvMenuRestName);
@@ -86,7 +83,7 @@ public class AddNewMenu extends AppCompatActivity {
             restKey = bundle.getString("RKey");
         }
 
-        tVMenuRestName.setText("Add Menus to: " + restName);
+        tVMenuRestName.setText(restName + " Restaurant");
 
         menuImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +152,7 @@ public class AddNewMenu extends AppCompatActivity {
 
             progressDialog.setTitle("The Menu is uploading");
             progressDialog.show();
+
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             menuUploadTask = fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -173,16 +171,15 @@ public class AddNewMenu extends AppCompatActivity {
                                     menuPrice.setText("");
                                     menuImg.setImageResource(R.drawable.add_menus_picture);
 
+                                    progressDialog.dismiss();
                                     finish();
                                     Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
                                     Intent intentAdd = new Intent(AddNewMenu.this,MenuImageAdmin.class);
                                     intentAdd.putExtra("RName",menus.getRestaurant_Name());
                                     intentAdd.putExtra("RKey",menus.getRestaurant_Key());
                                     startActivity(intentAdd);
-                                    Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
                                 }
                             });
-                            progressDialog.dismiss();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -206,6 +203,7 @@ public class AddNewMenu extends AppCompatActivity {
     }
 
     private Boolean validateMenuDetails() {
+
         boolean result = false;
 
         final String menu_NameValidation = menuName.getText().toString().trim();
@@ -232,7 +230,8 @@ public class AddNewMenu extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
                     }
                 });
 

@@ -5,36 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".UpdateRestaurant"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp">
+    tools:context=".UpdateRestaurant">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvRestUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:text="@string/tv_updateRestDetails"
             android:textAlignment="center"
             android:textColor="#000000"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvRestNameUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="30dp"
             android:text="@string/tv_updateRestName"
             android:textAlignment="textStart"
             android:textColor="#000000"
@@ -42,17 +40,17 @@
             tools:ignore="RtlCompat,RtlSymmetry" />
 
         <EditText
-            android:id="@+id/etRestNameUpdate"
+            android:id="@+id/etRestNameUp"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/round_corners"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/et_round_corners"
             android:inputType="text|textCapWords"
             android:paddingStart="10dp"
             android:text="@string/et_updateRestName"
-            android:textSize="24sp"
+            android:textSize="22sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
         <TextView
@@ -60,9 +58,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="30dp"
             android:text="@string/tv_updateRestAddress"
             android:textAlignment="textStart"
             android:textColor="#000000"
@@ -70,29 +68,32 @@
             tools:ignore="RtlCompat,RtlSymmetry" />
 
         <EditText
-            android:id="@+id/etRestAddressUpdate"
+            android:id="@+id/etRestAddressUp"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@drawable/round_corners"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/et_round_corners"
             android:inputType="text|textCapWords"
             android:paddingStart="10dp"
             android:text="@string/et_updateRestAddress"
-            android:textSize="24sp"
+            android:textSize="22sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
         <Button
             android:id="@+id/btnSaveRestUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="20dp"
-            android:background="@drawable/btn_background"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_round_corners"
             android:text="@string/btn_updateRestDetails"
-            android:textColor="#ffffff"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
+
 </ScrollView>

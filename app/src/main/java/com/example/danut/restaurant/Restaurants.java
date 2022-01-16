@@ -1,5 +1,7 @@
 package com.example.danut.restaurant;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.List;
 
 /**
@@ -15,10 +17,9 @@ public class Restaurants {
 
     }
 
-    public Restaurants(String rest_Name, String rest_Address, String rest_Key) {
+    public Restaurants(String rest_Name, String rest_Address) {
         this.rest_Name = rest_Name;
         this.rest_Address = rest_Address;
-        this.rest_Key = rest_Key;
     }
 
     public String getRest_Name() {
@@ -37,10 +38,12 @@ public class Restaurants {
         this.rest_Address = rest_Address;
     }
 
+    @Exclude
     public String getRest_Key() {
         return rest_Key;
     }
 
+    @Exclude
     public void setRest_Key(String rest_Key) {
         this.rest_Key = rest_Key;
     }

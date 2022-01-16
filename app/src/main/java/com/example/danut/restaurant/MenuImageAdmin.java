@@ -28,6 +28,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmin.OnItemClickListener {
 
@@ -53,6 +54,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_image_admin);
+
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Menus available");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();

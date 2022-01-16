@@ -11,24 +11,34 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable-v24/drawer_item_color.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/btn_fading.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/btn_round_bottom_right.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/btn_round_left.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/btn_round_right.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_bottom_left.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_bottom_right.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_corners.xml" value="0.2537037037037037" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_left.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_text_log.xml" value="0.26614583333333336" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_text_reg.xml" value="0.26614583333333336" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_top_left.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/drawable/round_top_right.xml" value="0.2537037037037037" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_add_new_menu.xml" value="0.2212962962962963" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_add_new_restaurant.xml" value="0.2212962962962963" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_admin_page.xml" value="0.2212962962962963" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_admin_page2.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_change_email.xml" value="0.2359375" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_change_password.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_contact_form.xml" value="0.25461613216715256" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_contact_us.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_contact_us_new.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_customer_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_home.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_image_admin.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_login_user.xml" value="0.2" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_main.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_maps.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_menu_image_admin.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_menu_image_admin_full_list.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_menu_image_admin_update_menu.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_menu_image_customer.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_menu_image_full_list_admin.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_menu_image_update_menu.xml" value="0.25" />
@@ -40,19 +50,37 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_details.xml" value="0.2490740740740741" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_add_menus.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_add_menus_admin.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_admin_add_menu.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_admin_show_menu.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_admin_show_rest.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_admin_update_menu.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_admin_update_rest.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_custom_show_menu.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_customer_show_menu.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_customer_show_menus.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_customer_show_rest.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_show_menu_admin.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_show_menus_admin.xml" value="0.21388888888888888" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_show_rest_admin.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_show_rest_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_show_rest_list_admin.xml" value="0.2212962962962963" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_update_menus.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_update_rest.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_list_show_rest_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_menu_old.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_restaurant.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_restaurant_details.xml" value="0.2111111111111111" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_restaurant_old.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_restsurant.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_user.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_user_change_email.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_user_change_password.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_user_edit_profile.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_user_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/add_restaurant.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/admin_header.xml" value="0.24615384615384617" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/content_main.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_item.xml" value="0.23981481481481481" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_menu.xml" value="0.25416666666666665" />
@@ -62,10 +90,15 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_restaurant.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_restaurant_admin.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_restaurant_customer.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/menu_user_change_email.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/user_page_header.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/menu/menu_drawer_admin.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/menu/menu_drawer_user_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/menu/menu_listview.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/menu/menu_restaurant.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/menu/menu_user.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/menu/menu_user_change_email.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/menu/menu_user_page.xml" value="0.264" />
       </map>
     </option>
   </component>

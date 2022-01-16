@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,6 +26,7 @@ import com.google.firebase.storage.StorageTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AddNewRestaurant extends AppCompatActivity {
 
@@ -45,20 +47,22 @@ public class AddNewRestaurant extends AppCompatActivity {
     public List<Restaurants> restList;
     public List<Restaurants> restListCheck;
 
-    private String rest_KeyAdd;
+    //private String rest_KeyAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_restaurant);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add new Restaurant");
+
+        progressDialog = new ProgressDialog(this);
+
         restList = new ArrayList<>();
         restListCheck = new ArrayList<>();
 
         etRest_Name = findViewById(R.id.etRestName);
         etRest_Address = findViewById(R.id.etRestAddress);
-
-        progressDialog = new ProgressDialog(this);
 
         Button buttonSaveRestaurant = findViewById(R.id.btnSaveRestaurant);
         buttonSaveRestaurant.setOnClickListener(new View.OnClickListener() {
@@ -95,7 +99,7 @@ public class AddNewRestaurant extends AppCompatActivity {
 
     private void loadRestaurantData() {
 
-        progressDialog.dismiss();
+
         if (validateRestDetails()) {
             rest_Name = etRest_Name.getText().toString().trim();
             rest_Address = etRest_Address.getText().toString().trim();
@@ -107,8 +111,7 @@ public class AddNewRestaurant extends AppCompatActivity {
 
             String restID = databaseRefRest.push().getKey();
             assert restID != null;
-            rest_KeyAdd = restID;
-            Restaurants restaurants = new Restaurants(rest_Name, rest_Address, rest_KeyAdd);
+            Restaurants restaurants = new Restaurants(rest_Name, rest_Address);
             databaseRefRest.child(restID).setValue(restaurants).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -117,7 +120,7 @@ public class AddNewRestaurant extends AppCompatActivity {
                         etRest_Name.setText("");
                         etRest_Address.setText("");
 
-                        startActivity(new Intent(AddNewRestaurant.this, RestaurantImageShowRestAdmin.class));
+                        startActivity(new Intent(AddNewRestaurant.this, RestaurantImageAdminShowRest.class));
 
                         Toast.makeText(AddNewRestaurant.this, "Restaurant Successfully Added", Toast.LENGTH_SHORT).show();
                     } else {
@@ -157,9 +160,13 @@ public class AddNewRestaurant extends AppCompatActivity {
     public void alertDialogRestExist() {
         final String etRest_alertCheckName = etRest_Name.getText().toString().trim();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The Restaurant " + etRest_alertCheckName + " already exists!");
+        alertDialogBuilder.setMessage("The restaurant: " + etRest_alertCheckName + " already exists!");
         alertDialogBuilder.setPositiveButton("OK",
-                (arg0, arg1) -> {
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
                 });
 
         AlertDialog alertDialog = alertDialogBuilder.create();

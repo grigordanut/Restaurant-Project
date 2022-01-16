@@ -22,7 +22,8 @@
             android:text="@string/tv_restaurantName"
             android:textAlignment="center"
             android:textColor="@android:color/black"
-            android:textSize="22sp" />
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
 
         <ImageView
             android:id="@+id/menuImage"
@@ -46,12 +47,12 @@
                 android:id="@+id/etMenuName"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/round_text_log"
+                android:background="@drawable/et_round_corners"
                 android:ems="10"
                 android:hint="@string/et_menuName"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -68,12 +69,12 @@
                 android:id="@+id/etMenuDescription"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/round_text_log"
+                android:background="@drawable/et_round_corners"
                 android:ems="10"
                 android:hint="@string/et_menuDescription"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,12 +91,12 @@
                 android:id="@+id/etMenuPrice"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/round_text_log"
+                android:background="@drawable/et_round_corners"
                 android:ems="10"
                 android:hint="@string/et_menuPrice"
                 android:inputType="numberDecimal"
                 android:paddingStart="10dp"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -109,16 +110,16 @@
                 android:id="@+id/btnAddMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="25dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_round_corners"
+                android:background="@drawable/btn_round_left"
                 android:text="@string/btn_saveMenu"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/btnBackAdminMenu"
@@ -126,14 +127,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="25dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_round_corners"
+                android:background="@drawable/btn_round_right"
                 android:text="@string/btn_backToAdminPage"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                tools:ignore="ButtonStyle,HardcodedText" />
+                tools:ignore="ButtonStyle" />
 
         </LinearLayout>
 

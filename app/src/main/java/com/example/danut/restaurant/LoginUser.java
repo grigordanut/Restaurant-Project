@@ -3,9 +3,10 @@ package com.example.danut.restaurant;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -18,17 +19,22 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class LoginUser extends AppCompatActivity {
 
     //declare variables
-    private EditText emailLogUser, passwordLogUser;
-    private TextView textViewInfoLog, textViewForgotPassUser;
-    private String emailLog_User, passLog_User;
-    private Button buttonSignUp, buttonLogIn, buttonCancelLogUser;
-    private int counter = 5;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+
+    private EditText emailLogUser, passwordLogUser;
+    private TextView tVForgotPassUser;
+    private String emailLog_User, passLog_User;
+
     private ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
@@ -37,22 +43,19 @@ public class LoginUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_user);
 
-        //initialize variables
-        emailLogUser = (EditText) findViewById(R.id.etEmailLogUser);
-        passwordLogUser = (EditText) findViewById(R.id.etPassLogUser);
-        textViewInfoLog = (TextView) findViewById(R.id.tvInfoUser);
-        buttonLogIn = (Button) findViewById(R.id.btnLogInUser);
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Log in User");
 
-        textViewInfoLog.setText("No of attempts remaining: " + counter);
-
-        firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
 
-        FirebaseUser user = firebaseAuth.getCurrentUser();
+        firebaseAuth = FirebaseAuth.getInstance();
+
+        //initialize variables
+        emailLogUser = findViewById(R.id.etEmailLogUser);
+        passwordLogUser = findViewById(R.id.etPassLogUser);
 
         //Action TextView Forgotten Password
-        textViewForgotPassUser = findViewById(R.id.tvForgotPasswordUser);
-        textViewForgotPassUser.setOnClickListener(new View.OnClickListener() {
+        tVForgotPassUser = findViewById(R.id.tvForgotPassUser);
+        tVForgotPassUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent fPassword = new Intent(LoginUser.this, ResetPassword.class);
@@ -61,7 +64,7 @@ public class LoginUser extends AppCompatActivity {
         });
 
         //Action button log in user
-        buttonCancelLogUser = findViewById(R.id.btnCancelLogUser);
+        Button buttonCancelLogUser = findViewById(R.id.btnCancelLogUser);
         buttonCancelLogUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +74,8 @@ public class LoginUser extends AppCompatActivity {
         });
 
         //Action button SignUp
-        buttonSignUp = findViewById(R.id.btnSignUpUser);
-        buttonSignUp.setOnClickListener(new View.OnClickListener() {
+        Button buttonRegLogUser = findViewById(R.id.btnRegLogUser);
+        buttonRegLogUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent sign = new Intent(LoginUser.this, RegisterUser.class);
@@ -81,44 +84,101 @@ public class LoginUser extends AppCompatActivity {
         });
 
         //Action button LogIn
-        buttonLogIn.setOnClickListener(new View.OnClickListener() {
+        Button buttonLogInUser = findViewById(R.id.btnLogInUser);
+        buttonLogInUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //log in a new user
-                if (validateUserData()){
 
-                    progressDialog.setMessage("Welcome to restaurant");
-                    progressDialog.show();
-                    firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
+                emailLog_User = emailLogUser.getText().toString();
+                passLog_User = passwordLogUser.getText().toString();
 
-                            if (task.isSuccessful()) {
+                if (emailLog_User.isEmpty()) {
+                    emailLogUser.setError("Enter your Email Address");
+                    Toast.makeText(LoginUser.this, "Please enter your Email Address", Toast.LENGTH_SHORT).show();
+                    emailLogUser.requestFocus();
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()) {
+                    emailLogUser.setError("Enter a valid Email Address");
+                    Toast.makeText(LoginUser.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                    emailLogUser.requestFocus();
+                } else if (passLog_User.isEmpty()) {
+                    passwordLogUser.setError("Enter your Password");
+                    Toast.makeText(LoginUser.this, "Please enter your Password", Toast.LENGTH_SHORT).show();
+                    passwordLogUser.requestFocus();
+                }
 
-                                //clear data
-                                emailLogUser.setText("");
-                                passwordLogUser.setText("");
-                                checkEmailVerification();
-                            }
+                else{
+                    if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
+                        progressDialog.setMessage("Login Admin");
+                        progressDialog.show();
+                        startActivity(new Intent(LoginUser.this, AdminPage.class));
+                        finish();
+                    }
 
-                            else {
-                                Toast.makeText(LoginUser.this, "Log In failed, you entered a wrong email or password", Toast.LENGTH_SHORT).show();
-                                counter--;
-                                progressDialog.dismiss();
-                                textViewInfoLog.setText("No of attempts remaining: " + counter);
-
-                                if (counter == 0) {
-                                    textViewInfoLog.setText("No more attempts remaining, please press Forgoten Password");
-                                    buttonLogIn.setEnabled(false);
-                                    buttonLogIn.setBackgroundColor(Color.parseColor("#cc3333"));
-                                    buttonLogIn.setText("Stop");
-                                }
-                            }
-                        }
-                    });
+                    else {
+                        logInUser();
+                    }
                 }
             }
         });
+    }
+
+    private void logInUser() {
+        //log in a new user
+        //if (validateUserData()) {
+
+            progressDialog.setMessage("Welcome to restaurant");
+            progressDialog.show();
+
+            firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+
+                    if (task.isSuccessful()) {
+
+                        checkEmailVerification();
+
+                        //firebaseUser = firebaseAuth.getCurrentUser();
+
+//                               if (firebaseUser != null){
+//
+//                                   if (firebaseUser.isEmailVerified()) {
+//                                       progressDialog.dismiss();
+//
+//                                       //clear data
+//                                       emailLogUser.setText("");
+//                                       passwordLogUser.setText("");
+//                                       checkEmailVerification();
+//
+//                                       Toast.makeText(LoginUser.this, "Log In successful", Toast.LENGTH_SHORT).show();
+//                                       startActivity(new Intent(LoginUser.this, UserPage.class));
+//                                       finish();
+//                                   }
+//
+//                                   else {
+//                                       progressDialog.dismiss();
+//                                       firebaseUser.sendEmailVerification();
+//                                       Toast.makeText(LoginUser.this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+//                                       firebaseAuth.signOut();
+//                                   }
+//                               }
+
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (FirebaseAuthInvalidUserException e){
+                            emailLogUser.setError("The email.is not registered.");
+                            emailLogUser.requestFocus();
+                        } catch (FirebaseAuthInvalidCredentialsException e){
+                            passwordLogUser.setError("Invalid Password");
+                            passwordLogUser.requestFocus();
+                        } catch (Exception e) {
+                            Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    progressDialog.dismiss();
+                }
+            });
+        //}
     }
 
     //validate input data into the editText
@@ -133,51 +193,48 @@ public class LoginUser extends AppCompatActivity {
             emailLogUser.setError("Enter your Email Address");
             Toast.makeText(this, "Please enter your Email Address", Toast.LENGTH_SHORT).show();
             emailLogUser.requestFocus();
-        }
-
-        else if(!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()) {
             emailLogUser.setError("Enter a valid Email Address");
             Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             emailLogUser.requestFocus();
-        }
-
-        else if (passLog_User.isEmpty()){
+        } else if (passLog_User.isEmpty()) {
             passwordLogUser.setError("Enter your Password");
-            Toast.makeText(this, "Please enter your Password",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter your Password", Toast.LENGTH_SHORT).show();
             passwordLogUser.requestFocus();
         }
 
-        else if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
-            progressDialog.setMessage("Login Admin");
-            progressDialog.show();
-            startActivity(new Intent(LoginUser.this, AdminPage.class));
-            emailLogUser.setText("");
-            passwordLogUser.setText("");
-            progressDialog.dismiss();
-        }
-        else{
+//        else if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
+//            progressDialog.setMessage("Login Admin");
+//            progressDialog.show();
+//            startActivity(new Intent(LoginUser.this, AdminPage.class));
+//            emailLogUser.setText("");
+//            passwordLogUser.setText("");
+//            progressDialog.dismiss();
+//        }
+
+        else {
             result = true;
         }
         return result;
     }
 
     //check if the email has been verified
-    private void checkEmailVerification(){
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        assert firebaseUser != null;
-        boolean emailFlag = firebaseUser.isEmailVerified();
+    private void checkEmailVerification() {
 
-        progressDialog.dismiss();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
-        if(emailFlag){
-            finish();
-            Toast.makeText(LoginUser.this, "Log In successful", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginUser.this, RestaurantListShowRestCustomer.class));
-        }
+        if (firebaseUser != null){
+            boolean emailFlag = firebaseUser.isEmailVerified();
 
-        else{
-            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            firebaseAuth.signOut();
+            if (emailFlag) {
+                progressDialog.dismiss();
+                Toast.makeText(LoginUser.this, "Log In successful", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginUser.this, UserPage.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+                firebaseAuth.signOut();
+            }
         }
     }
 }

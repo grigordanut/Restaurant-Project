@@ -3,30 +3,22 @@ package com.example.danut.restaurant;
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.MimeTypeMap;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +37,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class UpdateMenu extends AppCompatActivity {
 
@@ -79,6 +73,8 @@ public class UpdateMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_menu);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Update Menu");
+
         storageRefUpdate = FirebaseStorage.getInstance().getReference("Menus");
         databaseRefUpdate = FirebaseDatabase.getInstance().getReference("Menus");
 
@@ -109,7 +105,7 @@ public class UpdateMenu extends AppCompatActivity {
                 .centerCrop()
                 .into(ivMenuUpdate);
 
-        tViewMenuUpdate.setText("Update " + menuNameUpdate + " Menu");
+        tViewMenuUpdate.setText("Update: " + menuNameUpdate + " menu");
 
         etMenuName_Update.setText(menuNameUpdate);
         etMenuDescription_Update.setText(menuDescriptionUpdate);
@@ -128,7 +124,7 @@ public class UpdateMenu extends AppCompatActivity {
         buttonSaveMenuUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //progressDialog.dismiss();
+
                 if (menuTaskUpdate != null && menuTaskUpdate.isInProgress()) {
                     Toast.makeText(UpdateMenu.this, "Update menu in progress", Toast.LENGTH_SHORT).show();
                 } else {
@@ -182,6 +178,8 @@ public class UpdateMenu extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(UpdateMenu.this, "Previous image deleted", Toast.LENGTH_SHORT).show();
+                ivMenuUpdate.setImageResource(R.drawable.add_menus_picture);
+                imageUriUpdate = null;
                 progressDialog.dismiss();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -195,9 +193,8 @@ public class UpdateMenu extends AppCompatActivity {
 
     //Upload the updated Menu into the Menu table
     public void updateMenuWithNewPicture() {
-        progressDialog.dismiss();
 
-        if (validateUpdateMenuDetails()) {
+        if (validateUpdateMenuWithNewPicture()) {
 
             menuName_Update = etMenuName_Update.getText().toString().trim();
             menuDescription_Update = etMenuDescription_Update.getText().toString().trim();
@@ -215,17 +212,23 @@ public class UpdateMenu extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(final Uri uri) {
 
-                                    Query query = databaseRefUpdate.orderByChild("menu_Name").equalTo(menuNameUpdate);
-                                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    //Query query = databaseRefUpdate.orderByChild("menu_Name").equalTo(menuNameUpdate);
+                                    databaseRefUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                                ds.getRef().child("menu_Name").setValue(menuName_Update);
-                                                ds.getRef().child("menu_Description").setValue(menuDescription_Update);
-                                                ds.getRef().child("menu_Price").setValue(menuPrice_Update);
-                                                ds.getRef().child("menu_Image").setValue(uri.toString());
+                                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                                                String menu_key = postSnapshot.getKey();
+                                                assert menu_key != null;
+
+                                                if (menu_key.equals(menuKeyUpdate)){
+                                                    postSnapshot.getRef().child("menu_Name").setValue(menuName_Update);
+                                                    postSnapshot.getRef().child("menu_Description").setValue(menuDescription_Update);
+                                                    postSnapshot.getRef().child("menu_Price").setValue(menuPrice_Update);
+                                                    postSnapshot.getRef().child("menu_Image").setValue(uri.toString());
+                                                }
                                             }
-                                            progressDialog.dismiss();
+
                                             Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(UpdateMenu.this, AdminPage.class));
                                             finish();
@@ -238,13 +241,11 @@ public class UpdateMenu extends AppCompatActivity {
                                     });
                                 }
                             });
-                            progressDialog.dismiss();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
                             Toast.makeText(UpdateMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -261,9 +262,8 @@ public class UpdateMenu extends AppCompatActivity {
     }
 
     private void uploadMenuWithOldPicture() {
-        progressDialog.dismiss();
 
-        if (validateUpdateMenuDetails()){
+        if (validateUpdateMenuWithOldPicture()){
 
             //Add a new Menu into the Menu's table
             menuName_Update = etMenuName_Update.getText().toString().trim();
@@ -273,19 +273,24 @@ public class UpdateMenu extends AppCompatActivity {
             progressDialog.setMessage("The Menu is updating");
             progressDialog.show();
 
-            Query query = databaseRefUpdate.orderByChild("menu_Name").equalTo(menuNameUpdate);
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRefUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        ds.getRef().child("menu_Name").setValue(menuName_Update);
-                        ds.getRef().child("menu_Description").setValue(menuDescription_Update);
-                        ds.getRef().child("menu_Price").setValue(menuPrice_Update);
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                        String menu_key = postSnapshot.getKey();
+                        assert menu_key != null;
+
+                        if (menu_key.equals(menuKeyUpdate)){
+                            postSnapshot.getRef().child("menu_Name").setValue(menuName_Update);
+                            postSnapshot.getRef().child("menu_Description").setValue(menuDescription_Update);
+                            postSnapshot.getRef().child("menu_Price").setValue(menuPrice_Update);
+                        }
                     }
-                    progressDialog.dismiss();
+
+                    finish();
                     Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(UpdateMenu.this, AdminPage.class));
-                    finish();
                 }
 
                 @Override
@@ -293,11 +298,38 @@ public class UpdateMenu extends AppCompatActivity {
                     Toast.makeText(UpdateMenu.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
-            progressDialog.dismiss();
         }
     }
 
-    public boolean validateUpdateMenuDetails() {
+    public boolean validateUpdateMenuWithNewPicture() {
+
+        boolean result = false;
+        final String upMenu_NameVal = etMenuName_Update.getText().toString().trim();
+        final String upMenu_DescriptionVal = etMenuDescription_Update.getText().toString().trim();
+        final String upMenu_PriceVal = etMenuPrice_Update.getText().toString().trim();
+
+        if (imageUriUpdate == null) {
+            alertDialogMenuPicture();
+        }
+
+        else if (TextUtils.isEmpty(upMenu_NameVal)) {
+            etMenuName_Update.setError("Please enter Menu name");
+            etMenuName_Update.requestFocus();
+        } else if (TextUtils.isEmpty(upMenu_DescriptionVal)) {
+            etMenuDescription_Update.setError("Please enter Menu description");
+            etMenuDescription_Update.requestFocus();
+        } else if (TextUtils.isEmpty(upMenu_PriceVal)) {
+            etMenuPrice_Update.setError("Please enter Menu price");
+            etMenuPrice_Update.requestFocus();
+        } else {
+            result = true;
+        }
+
+        return result;
+    }
+
+    public boolean validateUpdateMenuWithOldPicture() {
+
         boolean result = false;
         final String upMenu_NameVal = etMenuName_Update.getText().toString().trim();
         final String upMenu_DescriptionVal = etMenuDescription_Update.getText().toString().trim();
@@ -317,5 +349,19 @@ public class UpdateMenu extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    public void alertDialogMenuPicture() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setMessage("Please add a picture");
+        alertDialogBuilder.setPositiveButton("OK",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

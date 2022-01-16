@@ -21,13 +21,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MenuImageUpdateMenu"
+            android:name=".RestaurantImageCustomerShowRest"
             android:exported="false" />
         <activity
-            android:name=".MenuImageFullListAdmin"
+            android:name=".UserChangeEmail"
             android:exported="false" />
         <activity
-            android:name=".RestaurantImageUpdateMenus"
+            android:name=".UserChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".UserPage"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateMenuOld"
+            android:exported="false" />
+        <activity
+            android:name=".RestaurantImageAdminUpdateRest"
+            android:exported="false" />
+        <activity
+            android:name=".MenuImageAdminUpdateMenu"
+            android:exported="false" />
+        <activity
+            android:name=".MenuImageAdminFullList"
+            android:exported="false" />
+        <activity
+            android:name=".RestaurantImageAdminUpdateMenu"
             android:exported="false" />
         <activity
             android:name=".RegisterUser"
@@ -39,10 +57,10 @@
             android:name=".UpdateRestaurant"
             android:exported="false" />
         <activity
-            android:name=".RestaurantImageShowMenuAdmin"
+            android:name=".RestaurantImageAdminShowMenu"
             android:exported="false" />
         <activity
-            android:name=".RestaurantImageAddMenus"
+            android:name=".RestaurantImageAdminAddMenu"
             android:exported="false" />
         <activity
             android:name=".AddNewRestaurant"
@@ -51,7 +69,7 @@
             android:name=".AdminPage"
             android:exported="false" />
         <activity
-            android:name=".RestaurantImageShowRestAdmin"
+            android:name=".RestaurantImageAdminShowRest"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -67,11 +85,10 @@
         <activity android:name=".LoginUser" />
         <activity android:name=".ContactUs" />
         <activity android:name=".ResetPassword" />
-        <activity android:name=".Home" />
         <activity android:name=".MenuImageAdmin" />
-        <activity android:name=".UpdateUser" />
+        <activity android:name=".UserEditProfile" />
         <activity android:name=".AddNewMenu" />
-        <activity android:name=".RestaurantListShowRestCustomer" />
+        <activity android:name=".RestaurantImageCustomerShowMenu" />
         <activity android:name=".MenuImageCustomer" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

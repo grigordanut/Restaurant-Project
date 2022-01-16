@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,14 +25,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Objects;
+
 public class RegisterUser extends AppCompatActivity {
 
-    private TextInputEditText firstNameRegUser;
-    private TextInputEditText lastNameRegUser;
-    private TextInputEditText phoneNrRegUser;
-    private TextInputEditText emailRegUser;
-    private TextInputEditText passRegUser;
-    private TextInputEditText confPassRegUser;
+    private EditText firstNameRegUser, lastNameRegUser, phoneNrRegUser, emailRegUser, passRegUser, confPassRegUser;
     private String firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser, pass_regUser, confPass_regUser;
 
     private ProgressDialog progressDialog;
@@ -44,6 +42,13 @@ public class RegisterUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Register User");
+
+        progressDialog = new ProgressDialog(this);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
         firstNameRegUser = findViewById(R.id.etFirstNameRegUser);
         lastNameRegUser =  findViewById(R.id.etLastNameRegUser);
         phoneNrRegUser = findViewById(R.id.etPhoneNrRegUser);
@@ -51,40 +56,12 @@ public class RegisterUser extends AppCompatActivity {
         passRegUser = findViewById(R.id.etPassRegUser);
         confPassRegUser = findViewById(R.id.etConfPassRegUser);
 
-        progressDialog = new ProgressDialog(this);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        Button buttonRegister = (Button) findViewById(R.id.btnRegUser);
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
+        Button buttonRegUser = findViewById(R.id.btnRegUser);
+        buttonRegUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validateUserRegData()) {
-                    progressDialog.setMessage("Register User Details");
-                    progressDialog.show();
-
-                    firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        sendEmailVerification();
-                                        //clear input text fields
-                                        firstNameRegUser.setText("");
-                                        lastNameRegUser.setText("");
-                                        phoneNrRegUser.setText("");
-                                        emailRegUser.setText("");
-                                        passRegUser.setText("");
-                                        confPassRegUser.setText("");
-
-                                    } else {
-                                        progressDialog.dismiss();
-                                        alertDialogEmailUsed();
-                                    }
-                                }
-                            });
-                }
+                registerUser();
             }
         });
 
@@ -103,8 +80,8 @@ public class RegisterUser extends AppCompatActivity {
         });
 
         //Action TextView Log In
-        TextView textViewLogIn = findViewById(R.id.tvLogInUser);
-        textViewLogIn.setOnClickListener(new View.OnClickListener() {
+        Button buttonRegLogUser = findViewById(R.id.btnRegLogUser);
+        buttonRegLogUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent textLog =new Intent(RegisterUser.this,LoginUser.class);
@@ -113,7 +90,36 @@ public class RegisterUser extends AppCompatActivity {
         });
     }
 
-    private Boolean validateUserRegData() {
+    private void registerUser(){
+        if (validateRegUserData()) {
+            progressDialog.setMessage("Register User Details");
+            progressDialog.show();
+
+            firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser)
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        sendEmailVerification();
+
+                        //clear input text fields
+                        firstNameRegUser.setText("");
+                        lastNameRegUser.setText("");
+                        phoneNrRegUser.setText("");
+                        emailRegUser.setText("");
+                        passRegUser.setText("");
+                        confPassRegUser.setText("");
+
+                    } else {
+                        progressDialog.dismiss();
+                        alertDialogEmailUsed();
+                    }
+                }
+            });
+        }
+    }
+
+    private Boolean validateRegUserData() {
         boolean result = false;
         firstName_regUser = firstNameRegUser.getText().toString().trim();
         lastName_regUser = lastNameRegUser.getText().toString().trim();
@@ -129,7 +135,7 @@ public class RegisterUser extends AppCompatActivity {
             lastNameRegUser.setError("Last Name cannot be empty");
             lastNameRegUser.requestFocus();
         } else if (phoneNr_regUser.isEmpty()) {
-            phoneNrRegUser.setError("User Name cannot be empty");
+            phoneNrRegUser.setError("Phone Number cannot be empty");
             phoneNrRegUser.requestFocus();
         } else if (email_regUser.isEmpty()) {
             emailRegUser.setError("Email Address cannot be empty");
@@ -186,7 +192,7 @@ public class RegisterUser extends AppCompatActivity {
 
     private void alertDialogUserRegistered(){
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RegisterUser.this);
-        builderAlert.setMessage("Hi "+firstName_regUser+ " "+lastName_regUser+" you are successfully registered, Email verification was sent. Please verify your email before Log in");
+        builderAlert.setMessage("Hi " + firstName_regUser + " " + lastName_regUser + " you are successfully registered, Email verification was sent. Please verify your email before Log in");
         builderAlert.setCancelable(true);
         builderAlert.setPositiveButton(
                 "Ok",
@@ -199,8 +205,8 @@ public class RegisterUser extends AppCompatActivity {
                     }
                 });
 
-        AlertDialog alert1 = builderAlert.create();
-        alert1.show();
+        AlertDialog alertDialog = builderAlert.create();
+        alertDialog.show();
     }
 
     private void alertDialogEmailUsed(){
@@ -211,7 +217,7 @@ public class RegisterUser extends AppCompatActivity {
                 "Ok",
                 (arg0, arg1) -> emailRegUser.requestFocus());
 
-        AlertDialog alert1 = builderAlert.create();
-        alert1.show();
+        AlertDialog alertDialog = builderAlert.create();
+        alertDialog.show();
     }
 }
