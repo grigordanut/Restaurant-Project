@@ -199,7 +199,7 @@ public class UserChangeEmail extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        sendUserRegData();
+                        sendUserChangeEmailData();
                     } else {
                         Toast.makeText(UserChangeEmail.this, "Email verification  has not been sent", Toast.LENGTH_SHORT).show();
                     }
@@ -208,7 +208,7 @@ public class UserChangeEmail extends AppCompatActivity {
         }
     }
 
-    private void sendUserRegData() {
+    private void sendUserChangeEmailData() {
 
         userNew_Email = userNewEmail.getText().toString().trim();
 
