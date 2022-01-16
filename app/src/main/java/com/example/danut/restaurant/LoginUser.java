@@ -166,7 +166,7 @@ public class LoginUser extends AppCompatActivity {
                         try {
                             throw Objects.requireNonNull(task.getException());
                         } catch (FirebaseAuthInvalidUserException e){
-                            emailLogUser.setError("The email.is not registered.");
+                            emailLogUser.setError("This email is not registered.");
                             emailLogUser.requestFocus();
                         } catch (FirebaseAuthInvalidCredentialsException e){
                             passwordLogUser.setError("Invalid Password");
