@@ -55,7 +55,7 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
             @Override
             public void onClick(View v) {
                 LayoutInflater li = LayoutInflater.from(menuContext);
-                View promptsView = li.inflate(R.layout.image_menu_full_customer, null);
+                View promptsView = li.inflate(R.layout.image_menu_customer_full, null);
 
                 androidx.appcompat.app.AlertDialog.Builder
                         alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(menuContext);

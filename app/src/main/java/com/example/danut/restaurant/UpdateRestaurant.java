@@ -183,13 +183,15 @@ public class UpdateRestaurant extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()){
                     Menus menus_restUpdate = postSnapshot.getValue(Menus.class);
 
-                    assert menus_restUpdate != null;
-                    String menuRest_Key = menus_restUpdate.getRestaurant_Key();
+                    if (menus_restUpdate != null){
+                        String menuRest_Key = menus_restUpdate.getRestaurant_Key();
 
-                    if (menuRest_Key.equals(restKeyUpdate)){
-                        postSnapshot.getRef().child("restaurant_Name").setValue(menuRest_NameUp);
+                        if (menuRest_Key.equals(restKeyUpdate)){
+                            postSnapshot.getRef().child("restaurant_Name").setValue(menuRest_NameUp);
+                        }
                     }
                 }
+                
                 progressDialog.dismiss();
                 startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
                 finish();

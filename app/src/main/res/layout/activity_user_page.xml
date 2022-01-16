@@ -40,7 +40,7 @@
         <TextView
             android:id="@+id/tvUserShowDetails"
             android:layout_width="match_parent"
-            android:layout_height="165dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
@@ -48,21 +48,10 @@
             android:inputType="textMultiLine"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:textColor="#000000"
             android:textSize="24sp"
             tools:ignore="RtlSymmetry,TextViewEdits" />
-
-        <TextView
-            android:id="@+id/tvUserPersonalAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
-            android:text="@string/tv_userPersonalAccount"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="24sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,7 +80,7 @@
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:background="#ffffff"
-                android:text="@string/tv_doctorPatientsAv"
+                android:text="@string/tv_userRestsAv"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="24sp"
@@ -106,7 +95,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/user_page_header"
+        app:headerLayout="@layout/header_user_page"
         app:itemTextAppearance="?android:textAppearanceMedium"
         app:itemTextColor="@drawable/drawer_item_color"
         app:menu="@menu/menu_drawer_user_page" />

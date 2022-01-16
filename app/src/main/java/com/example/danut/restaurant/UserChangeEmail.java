@@ -220,6 +220,7 @@ public class UserChangeEmail extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
                     final FirebaseUser user_Key = firebaseAuth.getCurrentUser();
+
                     if (user_Key != null) {
                         if (user_Key.getUid().equals(postSnapshot.getKey())){
                             postSnapshot.getRef().child("user_email").setValue(userNew_Email);

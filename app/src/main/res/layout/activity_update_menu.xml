@@ -19,7 +19,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:text="@string/tv_MenuUpdate"
+            android:text="@string/tv_menuUpdate"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -111,7 +111,7 @@
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_left"
-                android:text="@string/btn_saveMenuUpdate"
+                android:text="@string/btn_menuSaveUpdate"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
@@ -126,7 +126,7 @@
                 android:layout_marginBottom="15dp"
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_right"
-                android:text="@string/btn_backAdminUpdate"
+                android:text="@string/btn_menuBackAdminUpdate"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />

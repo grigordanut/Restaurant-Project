@@ -128,7 +128,6 @@ public class AddNewMenu extends AppCompatActivity {
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             imageUri = data.getData();
             menuImg.setImageURI(imageUri);
-            //Picasso.with(this).load(imageView).into(imageView);
             Toast.makeText(AddNewMenu.this, "Image uploaded", Toast.LENGTH_SHORT).show();
         }
     }
@@ -172,12 +171,13 @@ public class AddNewMenu extends AppCompatActivity {
                                     menuImg.setImageResource(R.drawable.add_menus_picture);
 
                                     progressDialog.dismiss();
-                                    finish();
+
                                     Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
                                     Intent intentAdd = new Intent(AddNewMenu.this,MenuImageAdmin.class);
                                     intentAdd.putExtra("RName",menus.getRestaurant_Name());
                                     intentAdd.putExtra("RKey",menus.getRestaurant_Key());
                                     startActivity(intentAdd);
+                                    finish();
                                 }
                             });
                         }

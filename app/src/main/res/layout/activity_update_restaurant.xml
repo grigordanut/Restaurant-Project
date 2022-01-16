@@ -19,7 +19,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
-            android:text="@string/tv_updateRestDetails"
+            android:text="@string/tv_restUpdateDetails"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -33,7 +33,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
-            android:text="@string/tv_updateRestName"
+            android:text="@string/tv_restUpdateName"
             android:textAlignment="textStart"
             android:textColor="#000000"
             android:textSize="22sp"
@@ -49,7 +49,7 @@
             android:background="@drawable/et_round_corners"
             android:inputType="text|textCapWords"
             android:paddingStart="10dp"
-            android:text="@string/et_updateRestName"
+            android:text="@string/et_restUpdateName"
             android:textSize="22sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -61,7 +61,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="30dp"
-            android:text="@string/tv_updateRestAddress"
+            android:text="@string/tv_restUpdateAddress"
             android:textAlignment="textStart"
             android:textColor="#000000"
             android:textSize="22sp"
@@ -77,7 +77,7 @@
             android:background="@drawable/et_round_corners"
             android:inputType="text|textCapWords"
             android:paddingStart="10dp"
-            android:text="@string/et_updateRestAddress"
+            android:text="@string/et_restUpdateAddress"
             android:textSize="22sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -90,7 +90,7 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/btn_round_corners"
-            android:text="@string/btn_updateRestDetails"
+            android:text="@string/btn_restUpdateDetails"
             android:textSize="24sp"
             android:textStyle="bold" />
 

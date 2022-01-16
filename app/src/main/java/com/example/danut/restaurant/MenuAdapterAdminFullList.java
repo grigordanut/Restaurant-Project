@@ -30,7 +30,7 @@ public class MenuAdapterAdminFullList extends RecyclerView.Adapter<MenuAdapterAd
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(menuContext).inflate(R.layout.image_menu_full_list, parent, false);
+        View v = LayoutInflater.from(menuContext).inflate(R.layout.image_menu_admin_full_list, parent, false);
         return new ImageViewHolder(v);
     }
 

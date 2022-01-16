@@ -120,6 +120,7 @@ public class AdminPage extends AppCompatActivity {
                         Toast.makeText(AdminPage.this, "Edit Menus",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateMenu.class));
                         break;
+
                     default:
                         return true;
                 }

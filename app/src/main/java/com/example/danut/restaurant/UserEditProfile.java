@@ -159,6 +159,7 @@ public class UserEditProfile extends AppCompatActivity {
     }
 
     private void loadUserData() {
+
         progressDialog.setMessage("User details are displaying!!");
         progressDialog.show();
 
