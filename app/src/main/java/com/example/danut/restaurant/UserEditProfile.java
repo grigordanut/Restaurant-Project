@@ -33,6 +33,7 @@ public class UserEditProfile extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+
     private DatabaseReference databaseReference;
     private ValueEventListener eventListener;
 
@@ -51,7 +52,7 @@ public class UserEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit_profile);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Update User profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: Edit profile");
 
         progressDialog = new ProgressDialog(this);
 
@@ -74,7 +75,7 @@ public class UserEditProfile extends AppCompatActivity {
         });
 
         //save the user details in the database
-        Button buttonSaveUp = (Button) findViewById(R.id.btnSaveUp);
+        Button buttonSaveUp = findViewById(R.id.btnSaveUp);
         buttonSaveUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +104,7 @@ public class UserEditProfile extends AppCompatActivity {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                         final FirebaseUser user_Key = firebaseAuth.getCurrentUser();
+
                         if (user_Key != null) {
                             if (user_Key.getUid().equals(postSnapshot.getKey())) {
                                 postSnapshot.getRef().child("user_firstName").setValue(firstName_UserUp);
@@ -165,6 +167,7 @@ public class UserEditProfile extends AppCompatActivity {
 
         //Retrieve and load user details into the edit texts
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override

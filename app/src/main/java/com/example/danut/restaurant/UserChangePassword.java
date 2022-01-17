@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +53,7 @@ public class UserChangePassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_change_password);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Change User Password");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: change Password");
 
         progressDialog = new ProgressDialog(this);
 
@@ -80,7 +81,6 @@ public class UserChangePassword extends AppCompatActivity {
         });
 
         Button buttonAuthUserPass = findViewById(R.id.btnAuthUserPass);
-
         buttonAuthUserPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +110,17 @@ public class UserChangePassword extends AppCompatActivity {
 
                                 tVUserAuthChangePass.setText("Your profile is authenticated.\nYou can change the Password now!!");
                                 tVUserAuthChangePass.setTextColor(Color.BLACK);
-                                userOldPassword.setEnabled(false);
+
+                                userOldPassword.setOnKeyListener(new View.OnKeyListener() {
+                                    @Override
+                                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                        alertPassChangePassword();
+                                        userNewPassword.requestFocus();
+                                        return true;
+                                    }
+                                });
+
+                                //userOldPassword.setEnabled(false);
                                 buttonAuthUserPass.setEnabled(false);
                                 buttonAuthUserPass.setText("Disabled");
                                 userNewPassword.requestFocus();
@@ -177,6 +187,23 @@ public class UserChangePassword extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Password!!")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    private void alertPassChangePassword(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage("Password cannot be changed after user authentication!")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
                         new DialogInterface.OnClickListener() {

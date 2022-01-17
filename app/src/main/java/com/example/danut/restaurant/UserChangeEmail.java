@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,7 +58,7 @@ public class UserChangeEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_change_email);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Change User Email");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: change Email");
 
         progressDialog = new ProgressDialog(this);
 
@@ -113,7 +114,17 @@ public class UserChangeEmail extends AppCompatActivity {
 
                                 tVUserAuthChangeEmail.setText("Your profile is authenticated.\nYou can change the Email now!!");
                                 tVUserAuthChangeEmail.setTextColor(Color.BLACK);
-                                userPassword.setEnabled(false);
+
+                                userPassword.setOnKeyListener(new View.OnKeyListener() {
+                                    @Override
+                                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+                                        alertPassChangeEmail();
+                                        userNewEmail.requestFocus();
+                                        return true;
+                                    }
+                                });
+
+                                //userPassword.setEnabled(false);
                                 buttonAuthUser.setEnabled(false);
                                 buttonAuthUser.setText("Disabled");
                                 userNewEmail.requestFocus();
@@ -188,6 +199,23 @@ public class UserChangeEmail extends AppCompatActivity {
         alertDialog.show();
     }
 
+    private void alertPassChangeEmail(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setMessage("Password cannot be changed after user authentication!")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     private void sendEmailVerification() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser != null) {
@@ -225,7 +253,7 @@ public class UserChangeEmail extends AppCompatActivity {
                 }
 
                 progressDialog.dismiss();
-                Toast.makeText(UserChangeEmail.this, "Email will be changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
                 firebaseAuth.signOut();
                 startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
                 finish();
