@@ -67,7 +67,7 @@ public class UserChangeEmail extends AppCompatActivity {
 
         userOdlEmail = findViewById(R.id.etUserOldEmail);
         userOdlEmail.setEnabled(false);
-        userPassword = findViewById(R.id.etUserPassword);
+        userPassword = findViewById(R.id.etUserPassEmail);
         userNewEmail = findViewById(R.id.etUserNewEmail);
 
         tVUserAuthChangeEmail = findViewById(R.id.tvUserAuthChangeEmail);
@@ -115,16 +115,7 @@ public class UserChangeEmail extends AppCompatActivity {
                                 tVUserAuthChangeEmail.setText("Your profile is authenticated.\nYou can change the Email now!!");
                                 tVUserAuthChangeEmail.setTextColor(Color.BLACK);
 
-                                userPassword.setOnKeyListener(new View.OnKeyListener() {
-                                    @Override
-                                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                        alertPassChangeEmail();
-                                        userNewEmail.requestFocus();
-                                        return true;
-                                    }
-                                });
-
-                                //userPassword.setEnabled(false);
+                                userPassword.setEnabled(false);
                                 buttonAuthUser.setEnabled(false);
                                 buttonAuthUser.setText("Disabled");
                                 userNewEmail.requestFocus();
@@ -274,8 +265,8 @@ public class UserChangeEmail extends AppCompatActivity {
     }
 
     private void userChangeEmailGoBack(){
-        finish();
         startActivity(new Intent(UserChangeEmail.this, UserPage.class));
+        finish();
     }
 
     @SuppressLint("NonConstantResourceId")

@@ -34,11 +34,9 @@ import java.util.Objects;
 
 public class UserChangePassword extends AppCompatActivity {
 
-    private DatabaseReference databaseReference;
-    private ValueEventListener eventListener;
-
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+
     private TextView tVUserAuthChangePass;
 
     private EditText userEmail, userOldPassword, userNewPassword;
@@ -111,16 +109,7 @@ public class UserChangePassword extends AppCompatActivity {
                                 tVUserAuthChangePass.setText("Your profile is authenticated.\nYou can change the Password now!!");
                                 tVUserAuthChangePass.setTextColor(Color.BLACK);
 
-                                userOldPassword.setOnKeyListener(new View.OnKeyListener() {
-                                    @Override
-                                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-                                        alertPassChangePassword();
-                                        userNewPassword.requestFocus();
-                                        return true;
-                                    }
-                                });
-
-                                //userOldPassword.setEnabled(false);
+                                userOldPassword.setEnabled(false);
                                 buttonAuthUserPass.setEnabled(false);
                                 buttonAuthUserPass.setText("Disabled");
                                 userNewPassword.requestFocus();
@@ -225,8 +214,8 @@ public class UserChangePassword extends AppCompatActivity {
     }
 
     private void userChangePassGoBack(){
-        finish();
         startActivity(new Intent(UserChangePassword.this, UserPage.class));
+        finish();
     }
 
     @SuppressLint("NonConstantResourceId")
