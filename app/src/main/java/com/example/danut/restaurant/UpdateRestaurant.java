@@ -71,7 +71,7 @@ public class UpdateRestaurant extends AppCompatActivity {
             restKeyUpdate =  bundleRest.getString("RKey");
         }
 
-        tVRestUpdate.setText("Update: " + restNameUpdate + " Restaurant");
+        tVRestUpdate.setText("Update Restaurant: " + restNameUpdate);
 
         restNameUp.setText(restNameUpdate);
         restAddressUp.setText(restAddressUpdate);

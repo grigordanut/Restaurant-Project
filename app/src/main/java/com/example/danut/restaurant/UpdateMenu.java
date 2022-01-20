@@ -105,7 +105,7 @@ public class UpdateMenu extends AppCompatActivity {
                 .centerCrop()
                 .into(ivMenuUpdate);
 
-        tViewMenuUpdate.setText("Update: " + menuNameUpdate + " menu");
+        tViewMenuUpdate.setText("Update Menu: " + menuNameUpdate);
 
         etMenuName_Update.setText(menuNameUpdate);
         etMenuDescription_Update.setText(menuDescriptionUpdate);

@@ -82,7 +82,7 @@ public class RestaurantImageAdminUpdateRest extends AppCompatActivity implements
                     assert restaurants != null;
                     restaurants.setRest_Key(postSnapshot.getKey());
                     restaurantsList.add(restaurants);
-                    tVRestImageUpdateRest.setText("Select your restaurant");
+                    tVRestImageUpdateRest.setText("Select your Restaurant");
                 }
 
                 restaurantAdapterAdmin.notifyDataSetChanged();

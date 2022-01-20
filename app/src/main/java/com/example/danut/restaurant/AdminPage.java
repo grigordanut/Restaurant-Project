@@ -215,6 +215,7 @@ public class AdminPage extends AppCompatActivity {
     public void loadMenusAv(){
 
         databaseRefMenuAv = FirebaseDatabase.getInstance().getReference("Menus");
+
         eventListenerMenuAv = databaseRefMenuAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

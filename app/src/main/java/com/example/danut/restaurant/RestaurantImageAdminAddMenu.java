@@ -82,7 +82,7 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
                     assert restaurants != null;
                     restaurants.setRest_Key(postSnapshot.getKey());
                     restaurantsList.add(restaurants);
-                    tVRestImageAddMenus.setText("Select your restaurant");
+                    tVRestImageAddMenus.setText("Select your Restaurant");
                 }
 
                 restaurantAdapterAdmin.notifyDataSetChanged();

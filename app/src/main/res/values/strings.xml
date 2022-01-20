@@ -183,7 +183,7 @@
     <string name="tv_priceMenu">Price</string>
 
     <!--    Image Menu Admin Full List-->
-    <string name="tv_restNameFull">Restaurant Name: </string>
+    <string name="tv_restNameFull">Restaurant:</string>
     <string name="tv_nameMenuFull">Name</string>
     <string name="tv_descriptionMenuFull">Description</string>
     <string name="tv_ratingMenuFull">4.7</string>

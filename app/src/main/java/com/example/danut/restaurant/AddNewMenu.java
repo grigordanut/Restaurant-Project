@@ -83,7 +83,7 @@ public class AddNewMenu extends AppCompatActivity {
             restKey = bundle.getString("RKey");
         }
 
-        tVMenuRestName.setText(restName + " Restaurant");
+        tVMenuRestName.setText("Restaurant: " + restName);
 
         menuImg.setOnClickListener(new View.OnClickListener() {
             @Override

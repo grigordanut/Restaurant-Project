@@ -75,7 +75,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         }
 
         //Set textview
-        tVRestName.setText(restaurantName + " Restaurant");
+        tVRestName.setText("Restaurant: " + restaurantName);
         tVMenusAvAdmin.setText("No Menus available");
 
         //Action button new Menus
@@ -214,8 +214,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                 .setNegativeButton("No",
                         (dialog, which) -> dialog.cancel());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @SuppressLint("SetTextI18n")

@@ -65,7 +65,7 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
             restaurantKey = bundle.getString("RKey");
         }
 
-        tVMenuImageUpdateMenuRestName.setText(restaurantName + " Restaurant ");
+        tVMenuImageUpdateMenuRestName.setText( "Restaurant: " + restaurantName);
         tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -96,7 +96,7 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
                         if( menus.getRestaurant_Key().equals(restaurantKey)) {
                             menus.setMenu_Key(postSnapshot.getKey());
                             menusList.add(menus);
-                            tVMenuImageUpdateMenuMenusAv.setText(menusList.size()+" Menus Available");
+                            tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
                         }
                     }
                 }
