@@ -57,7 +57,7 @@ public class ResetPassword extends AppCompatActivity {
     private void resetPassword(){
         if(validateResetPassData()){
 
-            progressDialog.setMessage("The password will be rest");
+            progressDialog.setMessage("The password is reset!!");
             progressDialog.show();
 
             firebaseAuth.sendPasswordResetEmail(emailReset_Pass).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -74,7 +74,7 @@ public class ResetPassword extends AppCompatActivity {
                         try {
                             throw Objects.requireNonNull(task.getException());
                         } catch (FirebaseAuthInvalidUserException e){
-                            emailResetPass.setError("This email.is not registered.");
+                            emailResetPass.setError("This email is not registered.");
                             emailResetPass.requestFocus();
                         } catch (Exception e) {
                             Toast.makeText(ResetPassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
