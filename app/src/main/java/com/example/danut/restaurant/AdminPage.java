@@ -151,7 +151,7 @@ public class AdminPage extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.logOutAdmin) {
+        if (item.getItemId() == R.id.admin_logOut) {
             alertDialogAdminLogout();
         }
 

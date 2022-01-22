@@ -194,23 +194,19 @@ public class UserPage extends AppCompatActivity {
             return true;
         }
 
-        if (item.getItemId() == R.id.userLogOut) {
+        if (item.getItemId() == R.id.user_logOut) {
             alertDialogUserLogout();
         }
 
-        if (item.getItemId() == R.id.userEditProfile) {
+        if (item.getItemId() == R.id.user_editProfile) {
             userEditProfile();
         }
 
-        if (item.getItemId() == R.id.userEditProfile) {
-            userEditProfile();
-        }
-
-        if (item.getItemId() == R.id.userChangeEmail) {
+        if (item.getItemId() == R.id.user_changeEmail) {
             userChangeEmail();
         }
 
-        if (item.getItemId() == R.id.userChangePassword) {
+        if (item.getItemId() == R.id.user_changePassword) {
             userChangePassword();
         }
 
