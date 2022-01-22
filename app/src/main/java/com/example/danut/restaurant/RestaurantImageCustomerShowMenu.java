@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantImageCustomerShowMenu extends AppCompatActivity implements RestaurantAdapterCustomer.OnItemClickListener{
+public class RestaurantImageCustomerShowMenu extends AppCompatActivity implements RestaurantAdapterCustomer.OnItemClickListener {
 
     private DatabaseReference databaseRefRest;
     private ValueEventListener eventListenerRest;
@@ -60,7 +60,7 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         customerRecyclerView.setHasFixedSize(true);
         customerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        restaurantAdapterCustomer = new RestaurantAdapterCustomer(RestaurantImageCustomerShowMenu.this,customRestList);
+        restaurantAdapterCustomer = new RestaurantAdapterCustomer(RestaurantImageCustomerShowMenu.this, customRestList);
         customerRecyclerView.setAdapter(restaurantAdapterCustomer);
         restaurantAdapterCustomer.setOnItmClickListener(RestaurantImageCustomerShowMenu.this);
 
@@ -120,8 +120,8 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         Restaurants selected_Rest = customRestList.get(position);
 
         Intent intent_Update = new Intent(RestaurantImageCustomerShowMenu.this, MenuImageCustomer.class);
-        intent_Update.putExtra("RName",selected_Rest.getRest_Name());
-        intent_Update.putExtra("RKey",selected_Rest.getRest_Key());
+        intent_Update.putExtra("RName", selected_Rest.getRest_Name());
+        intent_Update.putExtra("RKey", selected_Rest.getRest_Key());
         startActivity(intent_Update);
     }
 }

@@ -57,7 +57,7 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
 
         restaurantsRecyclerView = findViewById(R.id.evRecyclerView);
         restaurantsRecyclerView.setHasFixedSize(true);
-        restaurantsRecyclerView .setLayoutManager(new LinearLayoutManager(this));
+        restaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         restaurantAdapterAdmin = new RestaurantAdapterAdmin(RestaurantImageAdminAddMenu.this, restaurantsList);
         restaurantsRecyclerView.setAdapter(restaurantAdapterAdmin);
@@ -70,14 +70,14 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
         loadRestListAddMenus();
     }
 
-    private void loadRestListAddMenus(){
+    private void loadRestListAddMenus() {
 
         restaurantsEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 restaurantsList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
                     assert restaurants != null;
                     restaurants.setRest_Key(postSnapshot.getKey());
@@ -91,7 +91,7 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RestaurantImageAdminAddMenu.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(RestaurantImageAdminAddMenu.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -101,9 +101,9 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
     public void onItemClick(int position) {
         Restaurants selected_Rest = restaurantsList.get(position);
 
-        Intent intentAdd = new Intent(RestaurantImageAdminAddMenu.this,AddNewMenu.class);
-        intentAdd.putExtra("RName",selected_Rest.getRest_Name());
-        intentAdd.putExtra("RKey",selected_Rest.getRest_Key());
+        Intent intentAdd = new Intent(RestaurantImageAdminAddMenu.this, AddNewMenu.class);
+        intentAdd.putExtra("RName", selected_Rest.getRest_Name());
+        intentAdd.putExtra("RKey", selected_Rest.getRest_Key());
         startActivity(intentAdd);
     }
 }

@@ -19,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapterAdmin.ImageViewHolder>{
+public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapterAdmin.ImageViewHolder> {
 
     private Context restaurantsContext;
     private List<Restaurants> restaurantsUploads;
@@ -34,7 +34,7 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
 
     private OnItemClickListener clickListener;
 
-    public RestaurantAdapterAdmin(Context restaurants_context, List<Restaurants> restaurants_uploads){
+    public RestaurantAdapterAdmin(Context restaurants_context, List<Restaurants> restaurants_uploads) {
         restaurantsContext = restaurants_context;
         restaurantsUploads = restaurants_uploads;
     }
@@ -42,7 +42,7 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(restaurantsContext).inflate(R.layout.image_restaurant_admin,parent, false);
+        View view = LayoutInflater.from(restaurantsContext).inflate(R.layout.image_restaurant_admin, parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -96,16 +96,16 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
 
             tVRestName = itemView.findViewById(R.id.tvRestName);
             tVRestAddress = itemView.findViewById(R.id.tvRestAddress);
-            tVMenusAvailable =  itemView.findViewById(R.id.tvMenusAvailable);
+            tVMenusAvailable = itemView.findViewById(R.id.tvMenusAvailable);
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if(clickListener !=null){
+            if (clickListener != null) {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
+                if (position != RecyclerView.NO_POSITION) {
                     clickListener.onItemClick(position);
                 }
             }
@@ -116,7 +116,7 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
         void onItemClick(int position);
     }
 
-    public void setOnItmClickListener(OnItemClickListener listener){
+    public void setOnItmClickListener(OnItemClickListener listener) {
         clickListener = listener;
     }
 }

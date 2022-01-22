@@ -83,15 +83,14 @@ public class UserChangePassword extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                user_Email =  userEmail.getText().toString().trim();
+                user_Email = userEmail.getText().toString().trim();
 
                 userOld_Password = userOldPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(userOld_Password)) {
                     userOldPassword.setError("Enter your password");
                     userOldPassword.requestFocus();
-                }
-                else{
+                } else {
 
                     progressDialog.setMessage("The user is authenticating!");
                     progressDialog.show();
@@ -102,7 +101,7 @@ public class UserChangePassword extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
 
                                 progressDialog.dismiss();
 
@@ -120,15 +119,13 @@ public class UserChangePassword extends AppCompatActivity {
 
                                         userNew_Password = userNewPassword.getText().toString().trim();
 
-                                        if (TextUtils.isEmpty(userNew_Password)){
+                                        if (TextUtils.isEmpty(userNew_Password)) {
                                             userNewPassword.setError("Enter your new Password");
                                             userNewPassword.requestFocus();
-                                        }
-                                        else if (userNew_Password.length() < 6) {
+                                        } else if (userNew_Password.length() < 6) {
                                             userNewPassword.setError("The password is too short, enter minimum 6 character long");
                                             Toast.makeText(UserChangePassword.this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else{
+                                        } else {
 
                                             progressDialog.setMessage("The user Password is changing!");
                                             progressDialog.show();
@@ -136,7 +133,7 @@ public class UserChangePassword extends AppCompatActivity {
                                             firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()){
+                                                    if (task.isSuccessful()) {
 
                                                         progressDialog.dismiss();
                                                         Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
@@ -150,12 +147,10 @@ public class UserChangePassword extends AppCompatActivity {
                                         }
                                     }
                                 });
-                            }
-
-                            else{
+                            } else {
                                 try {
                                     throw Objects.requireNonNull(task.getException());
-                                } catch (FirebaseAuthInvalidCredentialsException e){
+                                } catch (FirebaseAuthInvalidCredentialsException e) {
                                     userOldPassword.setError("Invalid Password");
                                     userOldPassword.requestFocus();
                                     tVUserAuthChangePass.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the Password!!");
@@ -172,19 +167,13 @@ public class UserChangePassword extends AppCompatActivity {
         });
     }
 
-    private void alertUserNotAuthPassword(){
+    private void alertUserNotAuthPassword() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("Authenticate User")
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Password!!")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -197,7 +186,7 @@ public class UserChangePassword extends AppCompatActivity {
         return true;
     }
 
-    private void userChangePassGoBack(){
+    private void userChangePassGoBack() {
         startActivity(new Intent(UserChangePassword.this, UserPage.class));
         finish();
     }

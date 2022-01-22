@@ -22,7 +22,7 @@ public class MenuAdapterAdminFullList extends RecyclerView.Adapter<MenuAdapterAd
     private final List<Menus> menuUploads;
     private OnItemClickListener clickListener;
 
-    public MenuAdapterAdminFullList(Context menu_context, List<Menus> menu_uploads){
+    public MenuAdapterAdminFullList(Context menu_context, List<Menus> menu_uploads) {
         menuContext = menu_context;
         menuUploads = menu_uploads;
     }
@@ -40,9 +40,9 @@ public class MenuAdapterAdminFullList extends RecyclerView.Adapter<MenuAdapterAd
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
         Menus uploadCurrent = menuUploads.get(position);
         holder.tVRestNameFulList.setText(uploadCurrent.getRestaurant_Name());
-        holder.textViewName.setText("Menu Name: "+uploadCurrent.getMenu_Name());
-        holder.textViewDescription.setText("Description: "+uploadCurrent.getMenu_Description());
-        holder.textViewPrice.setText("Price: € "+uploadCurrent.getMenu_Price());
+        holder.textViewName.setText("Menu Name: " + uploadCurrent.getMenu_Name());
+        holder.textViewDescription.setText("Description: " + uploadCurrent.getMenu_Description());
+        holder.textViewPrice.setText("Price: € " + uploadCurrent.getMenu_Price());
 
         Picasso.get()
                 .load(uploadCurrent.getMenu_Image())
@@ -58,7 +58,7 @@ public class MenuAdapterAdminFullList extends RecyclerView.Adapter<MenuAdapterAd
         return menuUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView tVRestNameFulList;
         public TextView textViewName;
         public TextView textViewDescription;
@@ -91,7 +91,7 @@ public class MenuAdapterAdminFullList extends RecyclerView.Adapter<MenuAdapterAd
         void onItemClick(int position);
     }
 
-    public void setOnItmClickListener(MenuAdapterAdminFullList.OnItemClickListener listener){
+    public void setOnItmClickListener(MenuAdapterAdminFullList.OnItemClickListener listener) {
         clickListener = listener;
     }
 }

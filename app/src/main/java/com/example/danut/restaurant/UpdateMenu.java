@@ -128,10 +128,9 @@ public class UpdateMenu extends AppCompatActivity {
                 if (menuTaskUpdate != null && menuTaskUpdate.isInProgress()) {
                     Toast.makeText(UpdateMenu.this, "Update menu in progress", Toast.LENGTH_SHORT).show();
                 } else {
-                    if (imageUriUpdate == null){
+                    if (imageUriUpdate == null) {
                         uploadMenuWithOldPicture();
-                    }
-                    else{
+                    } else {
                         updateMenuWithNewPicture();
                     }
                 }
@@ -221,7 +220,7 @@ public class UpdateMenu extends AppCompatActivity {
                                                 String menu_key = postSnapshot.getKey();
                                                 assert menu_key != null;
 
-                                                if (menu_key.equals(menuKeyUpdate)){
+                                                if (menu_key.equals(menuKeyUpdate)) {
                                                     postSnapshot.getRef().child("menu_Name").setValue(menuName_Update);
                                                     postSnapshot.getRef().child("menu_Description").setValue(menuDescription_Update);
                                                     postSnapshot.getRef().child("menu_Price").setValue(menuPrice_Update);
@@ -263,7 +262,7 @@ public class UpdateMenu extends AppCompatActivity {
 
     private void uploadMenuWithOldPicture() {
 
-        if (validateUpdateMenuWithOldPicture()){
+        if (validateUpdateMenuWithOldPicture()) {
 
             //Add a new Menu into the Menu's table
             menuName_Update = etMenuName_Update.getText().toString().trim();
@@ -281,7 +280,7 @@ public class UpdateMenu extends AppCompatActivity {
                         String menu_key = postSnapshot.getKey();
                         assert menu_key != null;
 
-                        if (menu_key.equals(menuKeyUpdate)){
+                        if (menu_key.equals(menuKeyUpdate)) {
                             postSnapshot.getRef().child("menu_Name").setValue(menuName_Update);
                             postSnapshot.getRef().child("menu_Description").setValue(menuDescription_Update);
                             postSnapshot.getRef().child("menu_Price").setValue(menuPrice_Update);
@@ -310,9 +309,7 @@ public class UpdateMenu extends AppCompatActivity {
 
         if (imageUriUpdate == null) {
             alertDialogMenuPicture();
-        }
-
-        else if (TextUtils.isEmpty(upMenu_NameVal)) {
+        } else if (TextUtils.isEmpty(upMenu_NameVal)) {
             etMenuName_Update.setError("Please enter Menu name");
             etMenuName_Update.requestFocus();
         } else if (TextUtils.isEmpty(upMenu_DescriptionVal)) {
@@ -357,12 +354,7 @@ public class UpdateMenu extends AppCompatActivity {
                 .setTitle("Update menu picture.")
                 .setMessage("Please add a picture")
                 .setCancelable(false)
-                .setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                    }
-                });
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

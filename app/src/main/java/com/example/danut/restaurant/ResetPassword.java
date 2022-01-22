@@ -2,8 +2,10 @@ package com.example.danut.restaurant;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -54,9 +56,9 @@ public class ResetPassword extends AppCompatActivity {
         });
     }
 
-    private void resetPassword(){
+    private void resetPassword() {
 
-        if(validateResetPassData()){
+        if (validateResetPassData()) {
 
             progressDialog.setMessage("The password is reset!!");
             progressDialog.show();
@@ -64,17 +66,16 @@ public class ResetPassword extends AppCompatActivity {
             firebaseAuth.sendPasswordResetEmail(emailReset_Pass).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()){
+                    if (task.isSuccessful()) {
 
                         progressDialog.dismiss();
-                        Toast.makeText(ResetPassword.this, "The password reset email was sent",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ResetPassword.this, "The password reset email was sent", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ResetPassword.this, LoginUser.class));
                         finish();
-                    }
-                    else{
+                    } else {
                         try {
                             throw Objects.requireNonNull(task.getException());
-                        } catch (FirebaseAuthInvalidUserException e){
+                        } catch (FirebaseAuthInvalidUserException e) {
                             emailResetPass.setError("This email is not registered.");
                             emailResetPass.requestFocus();
                         } catch (Exception e) {
@@ -87,25 +88,21 @@ public class ResetPassword extends AppCompatActivity {
         }
     }
 
-    private Boolean validateResetPassData(){
+    private Boolean validateResetPassData() {
 
         boolean result = false;
 
         emailReset_Pass = emailResetPass.getText().toString().trim();
 
         //check the input fields
-        if (TextUtils.isEmpty(emailReset_Pass)){
+        if (TextUtils.isEmpty(emailReset_Pass)) {
             emailResetPass.setError("Please enter your registered email");
             emailResetPass.requestFocus();
-        }
-
-        else if(!Patterns.EMAIL_ADDRESS.matcher(emailReset_Pass).matches()){
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailReset_Pass).matches()) {
             Toast.makeText(ResetPassword.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             emailResetPass.setError("Enter a valid Email Address");
             emailResetPass.requestFocus();
-        }
-
-        else{
+        } else {
             result = true;
         }
         return result;

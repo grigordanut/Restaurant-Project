@@ -71,7 +71,7 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
         rVFullList.setHasFixedSize(true);
         rVFullList.setLayoutManager(new LinearLayoutManager(this));
 
-        menuAdapterAdminFullList = new MenuAdapterAdminFullList(MenuImageAdminFullList.this,  menusList);
+        menuAdapterAdminFullList = new MenuAdapterAdminFullList(MenuImageAdminFullList.this, menusList);
         rVFullList.setAdapter(menuAdapterAdminFullList);
         menuAdapterAdminFullList.setOnItmClickListener(MenuImageAdminFullList.this);
 
@@ -81,8 +81,8 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MenuImageAdminFullList.this, AddNewMenu.class);
-                i.putExtra("RName",restaurantName);
-                i.putExtra("RKey",restaurantKey);
+                i.putExtra("RName", restaurantName);
+                i.putExtra("RKey", restaurantKey);
                 startActivity(i);
             }
         });
@@ -109,12 +109,12 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Menus menus = postSnapshot.getValue(Menus.class);
-                    if(menus != null) {
+                    if (menus != null) {
                         menus.setMenu_Key(postSnapshot.getKey());
                         menusList.add(menus);
-                        tVMenusAvFullListAdmin.setText(menusList.size()+" Menus available");
+                        tVMenusAvFullListAdmin.setText(menusList.size() + " Menus available");
                         restaurantName = menus.getRestaurant_Name();
                         restaurantKey = menus.getRestaurant_Key();
                     }
@@ -126,47 +126,42 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MenuImageAdminFullList.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuImageAdminFullList.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    //Action on menus onClick
+    //Action on Menus onClick
     @Override
     public void onItemClick(final int position) {
         showOptionMenu(position);
     }
 
     public void showOptionMenu(final int position) {
+
+        Menus selected_Menu = menusList.get(position);
+
         final String[] options = {"Update this Menu", "Delete this Menu"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
-        Menus selected_Menu =  menusList.get(position);
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("You selected the menu: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
                 .setCancelable(false)
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setAdapter(adapter, (dialog, id) -> {
 
-                        if (which == 0) {
-                            updateMenus(position);
-                        }
-                        if (which == 1) {
-                            confirmDeletion(position);
-                        }
+                    if (id == 0) {
+                        updateMenus(position);
+                    }
+
+                    if (id == 1) {
+                        confirmDeletion(position);
                     }
                 })
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
 
-        final android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
@@ -213,6 +208,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
     protected void onDestroy() {
         super.onDestroy();
         databaseRefMenu.removeEventListener(menuEventListener);
-        tVMenusAvFullListAdmin.setText(menusList.size()+" Menus available");
+        tVMenusAvFullListAdmin.setText(menusList.size() + " Menus available");
     }
 }

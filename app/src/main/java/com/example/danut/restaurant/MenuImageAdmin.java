@@ -8,7 +8,9 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -69,7 +71,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         tVMenusAvAdmin = findViewById(R.id.tvMenusAvAdmin);
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
+        if (bundle != null) {
             restaurantName = bundle.getString("RName");
             restaurantKey = bundle.getString("RKey");
         }
@@ -84,8 +86,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MenuImageAdmin.this, AddNewMenu.class);
-                i.putExtra("RName",restaurantName);
-                i.putExtra("RKey",restaurantKey);
+                i.putExtra("RName", restaurantName);
+                i.putExtra("RKey", restaurantKey);
                 startActivity(i);
             }
         });
@@ -103,7 +105,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        menuAdapterAdmin = new MenuAdapterAdmin(MenuImageAdmin.this,  menusList);
+        menuAdapterAdmin = new MenuAdapterAdmin(MenuImageAdmin.this, menusList);
         recyclerView.setAdapter(menuAdapterAdmin);
         menuAdapterAdmin.setOnItmClickListener(MenuImageAdmin.this);
     }
@@ -120,13 +122,13 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Menus menus = postSnapshot.getValue(Menus.class);
-                    if(menus != null) {
-                        if( menus.getRestaurant_Key().equals(restaurantKey)) {
+                    if (menus != null) {
+                        if (menus.getRestaurant_Key().equals(restaurantKey)) {
                             menus.setMenu_Key(postSnapshot.getKey());
                             menusList.add(menus);
-                            tVMenusAvAdmin.setText( menusList.size()+" Menus available");
+                            tVMenusAvAdmin.setText(menusList.size() + " Menus available");
                         }
                     }
                 }
@@ -137,7 +139,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MenuImageAdmin.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -151,33 +153,25 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     public void showOptionMenu(final int position) {
         final String[] options = {"Update this Menu", "Delete this Menu"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
-        Menus selected_Menu =  menusList.get(position);
+        Menus selected_Menu = menusList.get(position);
 
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("You selected the menu: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
                 .setCancelable(false)
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setAdapter(adapter, (dialog, id) -> {
 
-                        if (which == 0) {
-                            updateMenus(position);
-                        }
-                        if (which == 1) {
-                            confirmDeletion(position);
-                        }
+                    if (id == 0) {
+                        updateMenus(position);
+                    }
+                    if (id == 1) {
+                        confirmDeletion(position);
                     }
                 })
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
 
-        final android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 
@@ -193,27 +187,26 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     }
 
     public void confirmDeletion(final int position) {
+
         Menus selected_Menu = menusList.get(position);
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuImageAdmin.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuImageAdmin.this);
         alertDialogBuilder
                 .setTitle("Delete menu from restaurant.")
                 .setMessage("Are sure to delete the menu: " + selected_Menu.getMenu_Name() + "?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                final String selectedMenuKey = selected_Menu.getMenu_Key();
-                                StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
-                                imageReference.delete().addOnSuccessListener(aVoid -> {
-                                    databaseRefMenu.child(selectedMenuKey).removeValue();
-                                    Toast.makeText(MenuImageAdmin.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
-                                });
-                            }
-                        })
+                .setPositiveButton("Yes", (dialog, id) -> {
 
-                .setNegativeButton("No",
-                        (dialog, which) -> dialog.cancel());
+                    String selectedMenuKey = selected_Menu.getMenu_Key();
+
+                    StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
+                    imageReference.delete().addOnSuccessListener(aVoid -> {
+                        databaseRefMenu.child(selectedMenuKey).removeValue();
+                        Toast.makeText(MenuImageAdmin.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
+                    });
+                })
+
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -224,6 +217,6 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     protected void onDestroy() {
         super.onDestroy();
         databaseRefMenu.removeEventListener(menuEventListener);
-        tVMenusAvAdmin.setText(menusList.size()+" Menus available");
+        tVMenusAvAdmin.setText(menusList.size() + " Menus available");
     }
 }

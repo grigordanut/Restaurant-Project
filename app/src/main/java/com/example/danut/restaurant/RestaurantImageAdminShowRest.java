@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantImageAdminShowRest extends AppCompatActivity implements RestaurantAdapterAdminShowRest.OnItemClickListener{
+public class RestaurantImageAdminShowRest extends AppCompatActivity implements RestaurantAdapterAdminShowRest.OnItemClickListener {
 
     private DatabaseReference databaseReference;
     private ValueEventListener restaurantEventListener;
@@ -101,7 +101,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
                     assert rest != null;
                     rest.setRest_Key(postSnapshot.getKey());
                     restaurantList.add(rest);
-                    tVRestImageShowRestAdmin.setText(restaurantList.size()+" Restaurants available");
+                    tVRestImageShowRestAdmin.setText(restaurantList.size() + " Restaurants available");
                 }
 
                 restaurantAdapterAdminShowRest.notifyDataSetChanged();
@@ -143,42 +143,39 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
     //Action of the menu Delete and alert dialog
     @Override
     public void onDeleteRestClick(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
+
         Restaurants selectedRest = restaurantList.get(position);
+
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
         builderAlert
                 .setTitle("Delete Restaurant")
                 .setMessage("Are sure to delete the restaurant: " + selectedRest.getRest_Name() + "?")
                 .setCancelable(true)
-                .setPositiveButton(
-                "Yes",
-                (dialog, id) -> {
+                .setPositiveButton("Yes", (dialog, id) -> {
                     String selectedRestKey = selectedRest.getRest_Key();
                     databaseReference.child(selectedRestKey).removeValue();
                     Toast.makeText(RestaurantImageAdminShowRest.this, "The Restaurant " + selectedRest.getRest_Name() + " has been deleted successfully", Toast.LENGTH_SHORT).show();
-
                 })
 
-                .setNegativeButton(
-                "No",
-                (dialog, id) -> dialog.cancel());
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
 
-        AlertDialog alert1 = builderAlert.create();
-        alert1.show();
+        AlertDialog alertDialog = builderAlert.create();
+        alertDialog.show();
     }
 
     @Override
     public void alertDialogRestaurantNotEmpty(final int position) {
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
-        Restaurants selected_rest = restaurantList.get(position);
-        builderAlert.setMessage("The " +selected_rest.getRest_Name()+ " Restaurant still has Menus and cannot be deleted \nDelete the Menus first and after delete the Restaurant");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
-                (arg0, arg1) -> {
-                });
 
-        AlertDialog alert1 = builderAlert.create();
-        alert1.show();
+        Restaurants selected_rest = restaurantList.get(position);
+
+        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
+        builderAlert
+                .setMessage("The " + selected_rest.getRest_Name() + " Restaurant still has Menus and cannot be deleted \nDelete the Menus first and after delete the Restaurant.")
+                .setCancelable(true)
+                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = builderAlert.create();
+        alertDialog.show();
     }
 
     @SuppressLint("SetTextI18n")
@@ -186,6 +183,6 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
     protected void onDestroy() {
         super.onDestroy();
         databaseReference.removeEventListener(restaurantEventListener);
-        tVRestImageShowRestAdmin.setText(restaurantList.size()+" Restaurants available");
+        tVRestImageShowRestAdmin.setText(restaurantList.size() + " Restaurants available");
     }
 }

@@ -3,31 +3,31 @@
 
     <group android:checkableBehavior="single">
 
-        <item android:title="Restauran Options">
+        <item android:title="@string/menuDAdmin_restOptions">
             <menu>
-        <item
-            android:id="@+id/adminAdd_restaurant"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDAdmin_addRestaurant" />
+                <item
+                    android:id="@+id/adminAdd_restaurant"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    android:title="@string/menuDAdmin_addRestaurant" />
 
-        <item
-            android:id="@+id/adminShow_restaurant"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDAdmin_showRestaurant" />
+                <item
+                    android:id="@+id/adminShow_restaurant"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    android:title="@string/menuDAdmin_showRestaurant" />
 
-        <item
-            android:id="@+id/adminUpdate_restaurant"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDAdmin_updateRestaurant" />
+                <item
+                    android:id="@+id/adminUpdate_restaurant"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    android:title="@string/menuDAdmin_updateRestaurant" />
 
-        <item
-            android:id="@+id/adminAdd_menu"
-            android:icon="@drawable/ic_launcher_foreground"
-            android:title="@string/menuDAdmin_addMenus" />
+                <item
+                    android:id="@+id/adminAdd_menu"
+                    android:icon="@drawable/ic_launcher_foreground"
+                    android:title="@string/menuDAdmin_addMenus" />
             </menu>
         </item>
 
-        <item android:title="Menu Options">
+        <item android:title="@string/menuDAdmin_menuOptions">
             <menu>
                 <item
                     android:id="@+id/adminShow_menus"

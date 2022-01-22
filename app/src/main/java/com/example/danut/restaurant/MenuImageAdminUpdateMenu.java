@@ -28,7 +28,7 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
     private DatabaseReference databaseRefMenu;
     private ValueEventListener eventListenerMenu;
 
-    private String restaurantName ="";
+    private String restaurantName = "";
     private String restaurantKey = "";
 
     private RecyclerView recyclerView;
@@ -62,7 +62,7 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
             restaurantKey = bundle.getString("RKey");
         }
 
-        tVMenuImageUpdateMenuRestName.setText( "Restaurant: " + restaurantName);
+        tVMenuImageUpdateMenuRestName.setText("Restaurant: " + restaurantName);
         tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -80,7 +80,7 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
         loadMenuDataUpdateMenus();
     }
 
-    private void loadMenuDataUpdateMenus(){
+    private void loadMenuDataUpdateMenus() {
 
         //Retrieve data from Menus database
         databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
@@ -90,10 +90,10 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Menus menus = postSnapshot.getValue(Menus.class);
-                    if(menus != null) {
-                        if( menus.getRestaurant_Key().equals(restaurantKey)) {
+                    if (menus != null) {
+                        if (menus.getRestaurant_Key().equals(restaurantKey)) {
                             menus.setMenu_Key(postSnapshot.getKey());
                             menusList.add(menus);
                             tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
@@ -107,12 +107,12 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MenuImageAdminUpdateMenu.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuImageAdminUpdateMenu.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    //Action on menus onClick
+    //Action on Menus onClick
     @Override
     public void onItemClick(final int position) {
         Menus selected_Menu = menusList.get(position);

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RestaurantImageCustomerShowRest extends AppCompatActivity implements RestaurantAdapterCustomer.OnItemClickListener{
+public class RestaurantImageCustomerShowRest extends AppCompatActivity implements RestaurantAdapterCustomer.OnItemClickListener {
 
     private DatabaseReference databaseRefRest;
     private ValueEventListener eventListenerRest;
@@ -62,7 +62,7 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
         customerRecyclerView.setHasFixedSize(true);
         customerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        restaurantAdapterCustomer = new RestaurantAdapterCustomer(RestaurantImageCustomerShowRest.this,customRestList);
+        restaurantAdapterCustomer = new RestaurantAdapterCustomer(RestaurantImageCustomerShowRest.this, customRestList);
         customerRecyclerView.setAdapter(restaurantAdapterCustomer);
         restaurantAdapterCustomer.setOnItmClickListener(RestaurantImageCustomerShowRest.this);
     }
@@ -111,40 +111,32 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
     public void onItemClick(final int position) {
 
         final String[] options = {"Show Menus", "Back User Page"};
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
-        Restaurants selected_Rest =  customRestList.get(position);
+        Restaurants selected_Rest = customRestList.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("You selected "+ selected_Rest.getRest_Name()+" Restaurant"+"\nSelect an option:")
+                .setTitle("You selected " + selected_Rest.getRest_Name() + " Restaurant" + "\nSelect an option:")
                 .setCancelable(false)
-                .setAdapter(adapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setAdapter(adapter, (dialog, id) -> {
 
-                        if (which == 0) {
-                            Toast.makeText(RestaurantImageCustomerShowRest.this, "Show Restaurant Menus", Toast.LENGTH_SHORT).show();
-                            Intent intent_Update = new Intent(RestaurantImageCustomerShowRest.this, MenuImageCustomer.class);
-                            intent_Update.putExtra("RName",selected_Rest.getRest_Name());
-                            intent_Update.putExtra("RKey",selected_Rest.getRest_Key());
-                            startActivity(intent_Update);
-                            customRestList.clear();
-                        }
+                    if (id == 0) {
+                        Toast.makeText(RestaurantImageCustomerShowRest.this, "Show Restaurant Menus", Toast.LENGTH_SHORT).show();
+                        Intent intent_Update = new Intent(RestaurantImageCustomerShowRest.this, MenuImageCustomer.class);
+                        intent_Update.putExtra("RName", selected_Rest.getRest_Name());
+                        intent_Update.putExtra("RKey", selected_Rest.getRest_Key());
+                        startActivity(intent_Update);
+                        customRestList.clear();
+                    }
 
-                        if (which == 1) {
-                            Toast.makeText(RestaurantImageCustomerShowRest.this, "Back to User page", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RestaurantImageCustomerShowRest.this, UserPage.class));
-                        }
+                    if (id == 1) {
+                        Toast.makeText(RestaurantImageCustomerShowRest.this, "Back to User page", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RestaurantImageCustomerShowRest.this, UserPage.class));
                     }
                 })
 
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
         final AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

@@ -190,7 +190,7 @@ public class UserPage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        if (drawerToggleUser.onOptionsItemSelected(item)){
+        if (drawerToggleUser.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -235,7 +235,7 @@ public class UserPage extends AppCompatActivity {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
 
-                    if (rest_Data != null){
+                    if (rest_Data != null) {
                         rest_Data.setRest_Key(postSnapshot.getKey());
                         restaurantsList.add(rest_Data);
                         numberRestsAv = restaurantsList.size();
@@ -252,26 +252,16 @@ public class UserPage extends AppCompatActivity {
         });
     }
 
-    private void alertDialogUserLogout(){
+    private void alertDialogUserLogout() {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
         alertDialogBuilder
-                .setTitle("Log out customer.")
+                .setTitle("Log out Customer.")
                 .setMessage("Are sure to Log Out?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                userLogOut();
-                            }
-                        })
+                .setPositiveButton("Yes", (dialog, id) -> userLogOut())
 
-                .setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

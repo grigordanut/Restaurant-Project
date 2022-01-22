@@ -2,7 +2,9 @@ package com.example.danut.restaurant;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
@@ -37,27 +39,20 @@ public class ContactForm extends AppCompatActivity {
                 String subject = mySubject.getText().toString();
                 String message = myMessage.getText().toString();
 
-                if (TextUtils.isEmpty(name)){
+                if (TextUtils.isEmpty(name)) {
                     myName.setError("Enter Your Name");
                     myName.requestFocus();
-                }
-
-                else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(ContactForm.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                     myEmail.setError("Enter a valid Email Address");
                     myEmail.requestFocus();
-                }
-
-                else if (TextUtils.isEmpty(subject)){
+                } else if (TextUtils.isEmpty(subject)) {
                     mySubject.setError("Enter Your Subject");
                     mySubject.requestFocus();
-                }
-
-                else if (TextUtils.isEmpty(message)){
+                } else if (TextUtils.isEmpty(message)) {
                     myMessage.setError("Enter Your Message");
                     myMessage.requestFocus();
-                }
-                else {
+                } else {
                     Intent sendEmail = new Intent(android.content.Intent.ACTION_SEND);
 
                     /* insert email Data */

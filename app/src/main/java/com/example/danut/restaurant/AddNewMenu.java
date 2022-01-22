@@ -78,7 +78,7 @@ public class AddNewMenu extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
 
-        if (bundle !=null){
+        if (bundle != null) {
             restName = bundle.getString("RName");
             restKey = bundle.getString("RKey");
         }
@@ -97,10 +97,9 @@ public class AddNewMenu extends AppCompatActivity {
         buttonAddMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (menuUploadTask != null && menuUploadTask.isInProgress()){
+                if (menuUploadTask != null && menuUploadTask.isInProgress()) {
                     Toast.makeText(AddNewMenu.this, "Upload menu in progress", Toast.LENGTH_SHORT).show();
-                }
-                else{
+                } else {
                     uploadMenuData();
                 }
             }
@@ -173,9 +172,9 @@ public class AddNewMenu extends AppCompatActivity {
                                     progressDialog.dismiss();
 
                                     Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
-                                    Intent intentAdd = new Intent(AddNewMenu.this,MenuImageAdmin.class);
-                                    intentAdd.putExtra("RName",menus.getRestaurant_Name());
-                                    intentAdd.putExtra("RKey",menus.getRestaurant_Key());
+                                    Intent intentAdd = new Intent(AddNewMenu.this, MenuImageAdmin.class);
+                                    intentAdd.putExtra("RName", menus.getRestaurant_Name());
+                                    intentAdd.putExtra("RKey", menus.getRestaurant_Key());
                                     startActivity(intentAdd);
                                     finish();
                                 }
@@ -230,13 +229,7 @@ public class AddNewMenu extends AppCompatActivity {
                 .setTitle("Add menu picture.")
                 .setMessage("Please add a picture!")
                 .setCancelable(false)
-                .setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

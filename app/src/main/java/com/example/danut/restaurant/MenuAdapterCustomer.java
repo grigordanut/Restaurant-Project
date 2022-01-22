@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustomer.ImageViewHolder>{
+public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustomer.ImageViewHolder> {
 
     //declare variables
     private final Context menuContext;
@@ -25,7 +25,7 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
 
     private OnItemClickListener clickListener;
 
-    public MenuAdapterCustomer(Context menu_context, List<Menus> menu_uploads){
+    public MenuAdapterCustomer(Context menu_context, List<Menus> menu_uploads) {
         menuContext = menu_context;
         menuUploads = menu_uploads;
     }
@@ -42,9 +42,9 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Menus uploadCurrent = menuUploads.get(position);
-        holder.tVNameMenu.setText("Menu Name: "+uploadCurrent.getMenu_Name());
-        holder.tVDescriptionMenu.setText("Description: "+uploadCurrent.getMenu_Description());
-        holder.tVPriceMenu.setText("Price: € "+uploadCurrent.getMenu_Price());
+        holder.tVNameMenu.setText("Menu Name: " + uploadCurrent.getMenu_Name());
+        holder.tVDescriptionMenu.setText("Description: " + uploadCurrent.getMenu_Description());
+        holder.tVPriceMenu.setText("Price: € " + uploadCurrent.getMenu_Price());
 
         Picasso.get()
                 .load(uploadCurrent.getMenu_Image())
@@ -99,7 +99,7 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
         return menuUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView tVNameMenu;
         public TextView tVDescriptionMenu;
@@ -118,9 +118,9 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
 
         @Override
         public void onClick(View v) {
-            if(clickListener != null){
+            if (clickListener != null) {
                 int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION){
+                if (position != RecyclerView.NO_POSITION) {
                     clickListener.onItemClick(position);
                 }
             }
@@ -131,7 +131,7 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
         void onItemClick(int position);
     }
 
-    public void setOnItmClickListener(OnItemClickListener listener){
+    public void setOnItmClickListener(OnItemClickListener listener) {
         clickListener = listener;
     }
 }

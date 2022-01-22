@@ -90,14 +90,13 @@ public class UserChangeEmail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                userOdl_Email =  userOdlEmail.getText().toString().trim();
+                userOdl_Email = userOdlEmail.getText().toString().trim();
                 user_Password = userPassword.getText().toString().trim();
 
                 if (TextUtils.isEmpty(user_Password)) {
                     userPassword.setError("Enter your password");
                     userPassword.requestFocus();
-                }
-                else{
+                } else {
 
                     progressDialog.setMessage("The user is authenticating!");
                     progressDialog.show();
@@ -108,7 +107,7 @@ public class UserChangeEmail extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
-                            if (task.isSuccessful()){
+                            if (task.isSuccessful()) {
 
                                 progressDialog.dismiss();
 
@@ -126,16 +125,14 @@ public class UserChangeEmail extends AppCompatActivity {
 
                                         userNew_Email = userNewEmail.getText().toString().trim();
 
-                                        if (TextUtils.isEmpty(userNew_Email)){
+                                        if (TextUtils.isEmpty(userNew_Email)) {
                                             userNewEmail.setError("Enter your new Email Address");
                                             userNewEmail.requestFocus();
-                                        }
-                                        else if (!Patterns.EMAIL_ADDRESS.matcher(userNew_Email).matches()) {
+                                        } else if (!Patterns.EMAIL_ADDRESS.matcher(userNew_Email).matches()) {
                                             Toast.makeText(UserChangeEmail.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                                             userNewEmail.setError("Enter a valid Email Address");
                                             userNewEmail.requestFocus();
-                                        }
-                                        else{
+                                        } else {
 
                                             progressDialog.setMessage("The user Email is changing!");
                                             progressDialog.show();
@@ -143,7 +140,7 @@ public class UserChangeEmail extends AppCompatActivity {
                                             firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()){
+                                                    if (task.isSuccessful()) {
                                                         sendEmailVerification();
                                                     }
                                                 }
@@ -151,12 +148,10 @@ public class UserChangeEmail extends AppCompatActivity {
                                         }
                                     }
                                 });
-                            }
-
-                            else{
+                            } else {
                                 try {
                                     throw Objects.requireNonNull(task.getException());
-                                } catch (FirebaseAuthInvalidCredentialsException e){
+                                } catch (FirebaseAuthInvalidCredentialsException e) {
                                     userPassword.setError("Invalid Password");
                                     userPassword.requestFocus();
                                     tVUserAuthChangeEmail.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the email!!");
@@ -173,19 +168,13 @@ public class UserChangeEmail extends AppCompatActivity {
         });
     }
 
-    private void alertUserNotAuthEmail(){
+    private void alertUserNotAuthEmail() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("Authenticate User")
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Email!!")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -221,7 +210,7 @@ public class UserChangeEmail extends AppCompatActivity {
                     final FirebaseUser user_Key = firebaseAuth.getCurrentUser();
 
                     if (user_Key != null) {
-                        if (user_Key.getUid().equals(postSnapshot.getKey())){
+                        if (user_Key.getUid().equals(postSnapshot.getKey())) {
                             postSnapshot.getRef().child("user_email").setValue(userNew_Email);
                         }
                     }
@@ -248,7 +237,7 @@ public class UserChangeEmail extends AppCompatActivity {
         return true;
     }
 
-    private void userChangeEmailGoBack(){
+    private void userChangeEmailGoBack() {
         startActivity(new Intent(UserChangeEmail.this, UserPage.class));
         finish();
     }

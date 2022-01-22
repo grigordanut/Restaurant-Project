@@ -70,14 +70,14 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
         loadBikeStoresListAdmin();
     }
 
-    private void loadBikeStoresListAdmin(){
+    private void loadBikeStoresListAdmin() {
 
         restaurantEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 restaurantsList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
                     assert restaurants != null;
                     restaurants.setRest_Key(postSnapshot.getKey());
@@ -91,7 +91,7 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RestaurantImageAdminShowMenu.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(RestaurantImageAdminShowMenu.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -101,9 +101,9 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
     public void onItemClick(int position) {
         Restaurants selected_Rest = restaurantsList.get(position);
 
-        Intent intentAdd = new Intent(RestaurantImageAdminShowMenu.this,MenuImageAdmin.class);
-        intentAdd.putExtra("RName",selected_Rest.getRest_Name());
-        intentAdd.putExtra("RKey",selected_Rest.getRest_Key());
+        Intent intentAdd = new Intent(RestaurantImageAdminShowMenu.this, MenuImageAdmin.class);
+        intentAdd.putExtra("RName", selected_Rest.getRest_Name());
+        intentAdd.putExtra("RKey", selected_Rest.getRest_Key());
         startActivity(intentAdd);
     }
 }

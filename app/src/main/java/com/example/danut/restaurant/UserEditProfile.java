@@ -203,14 +203,7 @@ public class UserEditProfile extends AppCompatActivity {
                 .setTitle("Change User Email")
                 .setMessage("The Email Address cannot be change here.\nPlease use Change Email option!")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-
-                            }
-                        });
+                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -223,7 +216,7 @@ public class UserEditProfile extends AppCompatActivity {
         return true;
     }
 
-    private void userEditProfileGoBack(){
+    private void userEditProfileGoBack() {
         startActivity(new Intent(UserEditProfile.this, UserPage.class));
         finish();
     }

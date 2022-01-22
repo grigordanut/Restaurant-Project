@@ -21,9 +21,9 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     String url;
 
     @Override
-    protected String doInBackground(Object... objects){
-        mMap = (GoogleMap)objects[0];
-        url = (String)objects[1];
+    protected String doInBackground(Object... objects) {
+        mMap = (GoogleMap) objects[0];
+        url = (String) objects[1];
 
         //Download From Url
         DownloadURL downloadURL = new DownloadURL();
@@ -37,19 +37,17 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String s){
+    protected void onPostExecute(String s) {
 
         List<HashMap<String, String>> nearbyPlaceList;
         DataParser parser = new DataParser();
         nearbyPlaceList = parser.parse(s);
-        Log.d("nearbyplacesdata","called parse method");
+        Log.d("nearbyplacesdata", "called parse method");
         showNearbyPlaces(nearbyPlaceList);
     }
 
-    private void showNearbyPlaces(List<HashMap<String, String>> nearbyPlaceList)
-    {
-        for(int i = 0; i < nearbyPlaceList.size(); i++)
-        {
+    private void showNearbyPlaces(List<HashMap<String, String>> nearbyPlaceList) {
+        for (int i = 0; i < nearbyPlaceList.size(); i++) {
             MarkerOptions markerOptions = new MarkerOptions();
             HashMap<String, String> googlePlace = nearbyPlaceList.get(i);
 
@@ -58,9 +56,9 @@ class GetNearbyPlacesData extends AsyncTask<Object, String, String> {
             double lat = Double.parseDouble(Objects.requireNonNull(googlePlace.get("lat")));
             double lng = Double.parseDouble(Objects.requireNonNull(googlePlace.get("lng")));
 
-            LatLng latLng = new LatLng( lat, lng);
+            LatLng latLng = new LatLng(lat, lng);
             markerOptions.position(latLng);
-            markerOptions.title(placeName + " : "+ vicinity);
+            markerOptions.title(placeName + " : " + vicinity);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
 
             mMap.addMarker(markerOptions);

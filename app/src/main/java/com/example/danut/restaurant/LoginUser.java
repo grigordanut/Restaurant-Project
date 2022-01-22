@@ -104,17 +104,13 @@ public class LoginUser extends AppCompatActivity {
                     passwordLogUser.setError("Enter your Password");
                     Toast.makeText(LoginUser.this, "Please enter your Password", Toast.LENGTH_SHORT).show();
                     passwordLogUser.requestFocus();
-                }
-
-                else{
+                } else {
                     if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
                         progressDialog.setMessage("Login Admin");
                         progressDialog.show();
                         startActivity(new Intent(LoginUser.this, AdminPage.class));
                         finish();
-                    }
-
-                    else {
+                    } else {
                         logInUser();
                     }
                 }
@@ -126,18 +122,18 @@ public class LoginUser extends AppCompatActivity {
         //log in a new user
         //if (validateUserData()) {
 
-            progressDialog.setMessage("Welcome to restaurant");
-            progressDialog.show();
+        progressDialog.setMessage("Welcome to restaurant");
+        progressDialog.show();
 
-            firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+        firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
 
-                    if (task.isSuccessful()) {
+                if (task.isSuccessful()) {
 
-                        checkEmailVerification();
+                    checkEmailVerification();
 
-                        //firebaseUser = firebaseAuth.getCurrentUser();
+                    //firebaseUser = firebaseAuth.getCurrentUser();
 
 //                               if (firebaseUser != null){
 //
@@ -162,22 +158,22 @@ public class LoginUser extends AppCompatActivity {
 //                                   }
 //                               }
 
-                    } else {
-                        try {
-                            throw Objects.requireNonNull(task.getException());
-                        } catch (FirebaseAuthInvalidUserException e){
-                            emailLogUser.setError("This email is not registered.");
-                            emailLogUser.requestFocus();
-                        } catch (FirebaseAuthInvalidCredentialsException e){
-                            passwordLogUser.setError("Invalid Password");
-                            passwordLogUser.requestFocus();
-                        } catch (Exception e) {
-                            Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (FirebaseAuthInvalidUserException e) {
+                        emailLogUser.setError("This email is not registered.");
+                        emailLogUser.requestFocus();
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        passwordLogUser.setError("Invalid Password");
+                        passwordLogUser.requestFocus();
+                    } catch (Exception e) {
+                        Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-                    progressDialog.dismiss();
                 }
-            });
+                progressDialog.dismiss();
+            }
+        });
         //}
     }
 
@@ -223,7 +219,7 @@ public class LoginUser extends AppCompatActivity {
 
         firebaseUser = firebaseAuth.getCurrentUser();
 
-        if (firebaseUser != null){
+        if (firebaseUser != null) {
             boolean emailFlag = firebaseUser.isEmailVerified();
 
             if (emailFlag) {

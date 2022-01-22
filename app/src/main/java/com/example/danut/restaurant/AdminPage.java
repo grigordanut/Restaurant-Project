@@ -64,7 +64,7 @@ public class AdminPage extends AppCompatActivity {
         drawerLayoutAdmin = findViewById(R.id.activity_admin_page);
         navigationViewAdmin = findViewById(R.id.navViewAdmin);
 
-        drawerToggleAdmin = new ActionBarDrawerToggle(this,drawerLayoutAdmin, R.string.open_adminPage, R.string.close_adminPage);
+        drawerToggleAdmin = new ActionBarDrawerToggle(this, drawerLayoutAdmin, R.string.open_adminPage, R.string.close_adminPage);
 
         drawerLayoutAdmin.addDrawerListener(drawerToggleAdmin);
         drawerToggleAdmin.syncState();
@@ -77,47 +77,47 @@ public class AdminPage extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                switch (id){
+                switch (id) {
 
                     //Add new Restaurant
                     case R.id.adminAdd_restaurant:
-                        Toast.makeText(AdminPage.this, "Add New Restaurant",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Add New Restaurant", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, AddNewRestaurant.class));
                         break;
 
                     //Show the list of Restaurants available
                     case R.id.adminShow_restaurant:
-                        Toast.makeText(AdminPage.this, "Show Restaurants",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Show Restaurants", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowRest.class));
                         break;
 
                     //Edit the Restaurants available
                     case R.id.adminUpdate_restaurant:
-                        Toast.makeText(AdminPage.this, "Update Restaurant",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Update Restaurant", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateRest.class));
                         break;
 
                     //Add Menus to the Restaurants available
                     case R.id.adminAdd_menu:
-                        Toast.makeText(AdminPage.this, "Add Menu to Restaurant",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Add Menu to Restaurant", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, RestaurantImageAdminAddMenu.class));
                         break;
 
                     //Show the list of Menus available ordered by Restaurants
                     case R.id.adminShow_menus:
-                        Toast.makeText(AdminPage.this, "Show list of Menus",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Show list of Menus", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowMenu.class));
                         break;
 
                     //Show the full list of Menus available
                     case R.id.adminShow_menusFullList:
-                        Toast.makeText(AdminPage.this, "Show full list of Menus",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Show full list of Menus", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, MenuImageAdminFullList.class));
                         break;
 
                     //Edit the Menus available ordered by Restaurants
                     case R.id.adminUpdate_menu:
-                        Toast.makeText(AdminPage.this, "Edit Menus",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminPage.this, "Edit Menus", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateMenu.class));
                         break;
 
@@ -136,7 +136,7 @@ public class AdminPage extends AppCompatActivity {
         return true;
     }
 
-    private void adminLogOut(){
+    private void adminLogOut() {
         startActivity(new Intent(AdminPage.this, LoginUser.class));
         finish();
     }
@@ -147,7 +147,7 @@ public class AdminPage extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
 
-        if(drawerToggleAdmin.onOptionsItemSelected(item)) {
+        if (drawerToggleAdmin.onOptionsItemSelected(item)) {
             return true;
         }
 
@@ -158,26 +158,16 @@ public class AdminPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void alertDialogAdminLogout(){
+    private void alertDialogAdminLogout() {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
         alertDialogBuilder
-                .setTitle("Log out admin.")
+                .setTitle("Log out Admin.")
                 .setMessage("Are sure to Log out?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                adminLogOut();
-                            }
-                        })
+                .setPositiveButton("Yes", (dialog, id) -> adminLogOut())
 
-                .setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -190,14 +180,14 @@ public class AdminPage extends AppCompatActivity {
         loadMenusAv();
     }
 
-    public void loadRestaurantsAv(){
+    public void loadRestaurantsAv() {
 
         databaseRefRestAv = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         eventListenerRestAv = databaseRefRestAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
 
                     restListAv.add(rest_Data);
@@ -213,14 +203,14 @@ public class AdminPage extends AppCompatActivity {
         });
     }
 
-    public void loadMenusAv(){
+    public void loadMenusAv() {
 
         databaseRefMenuAv = FirebaseDatabase.getInstance().getReference("Menus");
 
         eventListenerMenuAv = databaseRefMenuAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Menus menu_data = postSnapshot.getValue(Menus.class);
                     menuListAv.add(menu_data);
                     numberMenuAv = menuListAv.size();

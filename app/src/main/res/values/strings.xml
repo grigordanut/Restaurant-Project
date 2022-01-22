@@ -210,10 +210,12 @@
     <!--    Menu Drawer Admin-->
     <string name="open_adminPage">Open</string>
     <string name="close_adminPage">Close</string>
+    <string name="menuDAdmin_restOptions">Restaurant Options:</string>
     <string name="menuDAdmin_addRestaurant">Add Restaurant</string>
     <string name="menuDAdmin_showRestaurant">Show Restaurant</string>
     <string name="menuDAdmin_updateRestaurant">Update Restaurant</string>
     <string name="menuDAdmin_addMenus">Add Menus</string>
+    <string name="menuDAdmin_menuOptions">Menu Options:</string>
     <string name="menuDAdmin_showMenus">Show Menus</string>
     <string name="menuDAdmin_showMenusFullList">List of all Menus</string>
     <string name="menuDAdmin_updateMenu">Update Menu</string>

@@ -2,8 +2,10 @@ package com.example.danut.restaurant;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,11 +26,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Action button Deals
-        Button buttonMainDeals = (Button)findViewById(R.id.btnMainDeals);
+        Button buttonMainDeals = findViewById(R.id.btnMainDeals);
         buttonMainDeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent deals = new Intent(MainActivity.this,AdminPage.class);
+                Intent deals = new Intent(MainActivity.this, AdminPage.class);
                 startActivity(deals);
             }
         });
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         //Action button LogIn/RegisterUser
         Button buttonMainReg = findViewById(R.id.btnMainReg);
         buttonMainReg.setOnClickListener(view -> {
-            Intent logReg =new Intent(MainActivity.this, RegisterUser.class);
+            Intent logReg = new Intent(MainActivity.this, RegisterUser.class);
             startActivity(logReg);
         });
 
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         buttonContUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent contactUs =new Intent(MainActivity.this, ContactUs.class);
+                Intent contactUs = new Intent(MainActivity.this, ContactUs.class);
                 startActivity(contactUs);
             }
         });

@@ -65,7 +65,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         if (bundleRest != null) {
             restNameUpdate = bundleRest.getString("RName");
             restAddressUpdate = bundleRest.getString("RAddress");
-            restKeyUpdate =  bundleRest.getString("RKey");
+            restKeyUpdate = bundleRest.getString("RKey");
         }
 
         tVRestUpdate.setText("Update Restaurant: " + restNameUpdate);
@@ -127,7 +127,7 @@ public class UpdateRestaurant extends AppCompatActivity {
                         String rest_Key = postSnapshot.getKey();
                         assert rest_Key != null;
 
-                        if (rest_Key.equals(restKeyUpdate)){
+                        if (rest_Key.equals(restKeyUpdate)) {
                             postSnapshot.getRef().child("rest_Name").setValue(rest_NameUp);
                             postSnapshot.getRef().child("rest_Address").setValue(rest_AddressUp);
                         }
@@ -177,13 +177,13 @@ public class UpdateRestaurant extends AppCompatActivity {
         databaseRefMenuCheck.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()){
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Menus menus_restUpdate = postSnapshot.getValue(Menus.class);
 
-                    if (menus_restUpdate != null){
+                    if (menus_restUpdate != null) {
                         String menuRest_Key = menus_restUpdate.getRestaurant_Key();
 
-                        if (menuRest_Key.equals(restKeyUpdate)){
+                        if (menuRest_Key.equals(restKeyUpdate)) {
                             postSnapshot.getRef().child("restaurant_Name").setValue(menuRest_NameUp);
                         }
                     }
@@ -201,20 +201,16 @@ public class UpdateRestaurant extends AppCompatActivity {
         });
     }
 
-    private void alertDialogRestExist(){
+    private void alertDialogRestExist() {
+
         final String rest_alertNameCheck = restNameUp.getText().toString().trim();
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("Check restaurant name.")
                 .setMessage("The Restaurant " + rest_alertNameCheck + " already exists!")
                 .setCancelable(false)
-                .setPositiveButton("Ok",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
+                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

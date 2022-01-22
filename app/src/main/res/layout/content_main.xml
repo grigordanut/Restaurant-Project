@@ -33,6 +33,7 @@
 
             <Button
                 android:id="@+id/btnMainLogIn"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -44,11 +45,11 @@
                 android:textColor="#ffffff"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText"
-                style="?android:attr/buttonBarButtonStyle" />
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/btnMainDeals"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -60,8 +61,7 @@
                 android:textColor="#ffffff"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText"
-                style="?android:attr/buttonBarButtonStyle" />
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -72,6 +72,7 @@
 
             <Button
                 android:id="@+id/btnMainReg"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -83,11 +84,11 @@
                 android:textColor="#ffffff"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText"
-                style="?android:attr/buttonBarButtonStyle" />
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/btnContUs"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -99,8 +100,7 @@
                 android:textColor="#ffffff"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                tools:ignore="HardcodedText"
-                style="?android:attr/buttonBarButtonStyle" />
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

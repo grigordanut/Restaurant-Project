@@ -57,7 +57,7 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
 
         restaurantsRecyclerView = findViewById(R.id.evRecyclerView);
         restaurantsRecyclerView.setHasFixedSize(true);
-        restaurantsRecyclerView .setLayoutManager(new LinearLayoutManager(this));
+        restaurantsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         restaurantAdapterAdmin = new RestaurantAdapterAdmin(RestaurantImageAdminUpdateMenu.this, restaurantsList);
         restaurantsRecyclerView.setAdapter(restaurantAdapterAdmin);
@@ -70,7 +70,7 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
         loadRestaurantsListAdmin();
     }
 
-    private void loadRestaurantsListAdmin(){
+    private void loadRestaurantsListAdmin() {
 
 
         restaurantsEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
@@ -78,7 +78,7 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 restaurantsList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
                     assert restaurants != null;
                     restaurants.setRest_Key(postSnapshot.getKey());
@@ -92,7 +92,7 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RestaurantImageAdminUpdateMenu.this,databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(RestaurantImageAdminUpdateMenu.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -103,8 +103,8 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
         Restaurants selected_Rest = restaurantsList.get(position);
 
         Intent intent_Update = new Intent(RestaurantImageAdminUpdateMenu.this, MenuImageAdminUpdateMenu.class);
-        intent_Update.putExtra("RName",selected_Rest.getRest_Name());
-        intent_Update.putExtra("RKey",selected_Rest.getRest_Key());
+        intent_Update.putExtra("RName", selected_Rest.getRest_Name());
+        intent_Update.putExtra("RKey", selected_Rest.getRest_Key());
         startActivity(intent_Update);
     }
 }

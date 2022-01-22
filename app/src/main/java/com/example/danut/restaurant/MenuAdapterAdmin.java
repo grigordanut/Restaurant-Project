@@ -22,14 +22,14 @@ import static com.example.danut.restaurant.R.*;
  * Created by danut on 24/03/2018.
  */
 
-public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.ImageViewHolder>{
+public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.ImageViewHolder> {
 
     //declare variables
     private final Context menuContext;
     private final List<Menus> menuUploads;
     private OnItemClickListener clickListener;
 
-    public MenuAdapterAdmin(Context menu_context, List<Menus> menu_uploads){
+    public MenuAdapterAdmin(Context menu_context, List<Menus> menu_uploads) {
         menuContext = menu_context;
         menuUploads = menu_uploads;
     }
@@ -46,16 +46,16 @@ public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.Imag
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         Menus uploadCurrent = menuUploads.get(position);
-        holder.tVNameMenu.setText("Menu Name: "+uploadCurrent.getMenu_Name());
-        holder.tVDescriptionMenu.setText("Description: "+uploadCurrent.getMenu_Description());
-        holder.tVPriceMenu.setText("Price: € "+uploadCurrent.getMenu_Price());
+        holder.tVNameMenu.setText("Menu Name: " + uploadCurrent.getMenu_Name());
+        holder.tVDescriptionMenu.setText("Description: " + uploadCurrent.getMenu_Description());
+        holder.tVPriceMenu.setText("Price: € " + uploadCurrent.getMenu_Price());
 
         Picasso.get()
-            .load(uploadCurrent.getMenu_Image())
-            .placeholder(mipmap.ic_launcher)
-            .fit()
-            .centerCrop()
-            .into(holder.imageShowMenu);
+                .load(uploadCurrent.getMenu_Image())
+                .placeholder(mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
+                .into(holder.imageShowMenu);
     }
 
     //assign the values of textViews
@@ -64,7 +64,7 @@ public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.Imag
         return menuUploads.size();
     }
 
-    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView tVNameMenu;
         public TextView tVDescriptionMenu;
@@ -96,7 +96,7 @@ public class MenuAdapterAdmin extends RecyclerView.Adapter<MenuAdapterAdmin.Imag
         void onItemClick(int position);
     }
 
-    public void setOnItmClickListener(OnItemClickListener listener){
+    public void setOnItmClickListener(OnItemClickListener listener) {
         clickListener = listener;
     }
 }

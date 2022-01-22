@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterCustomer.OnItemClickListener{
+public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterCustomer.OnItemClickListener {
 
     //Declare variables
     private DatabaseReference databaseRefMenu;
@@ -66,7 +67,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
         tVMenusAvCustomer = findViewById(R.id.tvMenusAvCustomer);
 
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
+        if (bundle != null) {
             restaurantName = bundle.getString("RName");
             restaurantKey = bundle.getString("RKey");
         }
@@ -89,7 +90,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
         loadMenuDataCustomer();
     }
 
-    private void loadMenuDataCustomer(){
+    private void loadMenuDataCustomer() {
 
         //Retrieve data from Menus database
         databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
@@ -99,13 +100,13 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Menus menu_Data = postSnapshot.getValue(Menus.class);
-                    if(menu_Data != null) {
-                        if( menu_Data.getRestaurant_Key().equals(restaurantKey)) {
+                    if (menu_Data != null) {
+                        if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
                             menu_Data.setMenu_Key(postSnapshot.getKey());
                             menusList.add(menu_Data);
-                            tVMenusAvCustomer.setText(menusList.size()+" Menus available");
+                            tVMenusAvCustomer.setText(menusList.size() + " Menus available");
                         }
                     }
                 }
@@ -116,7 +117,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MenuImageCustomer.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(MenuImageCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -146,12 +147,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                 .setTitle("Menu Name: " + selected_Menu.getMenu_Name())
                 .setView(promptsView)
                 .setCancelable(false)
-                .setNegativeButton("CLOSE",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
+                .setNegativeButton("CLOSE", (dialog, id) -> dialog.cancel());
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();

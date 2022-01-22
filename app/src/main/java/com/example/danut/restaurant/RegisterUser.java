@@ -214,11 +214,10 @@ public class RegisterUser extends AppCompatActivity {
                 .setTitle("Register User.")
                 .setMessage("Registration failed, the email: \n" + email_regUser + " was already used to open an account on this app.")
                 .setCancelable(true)
-                .setPositiveButton("Ok",
-                        (dialog, which) -> {
-                            emailRegUser.requestFocus();
-                            dialog.dismiss();
-                        });
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    emailRegUser.requestFocus();
+                    dialog.dismiss();
+                });
 
         AlertDialog alertDialog = builderAlert.create();
         alertDialog.show();
