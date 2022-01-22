@@ -113,7 +113,7 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         });
     }
 
-    //Action on Restaurants onClick
+    //Action on Restaurant onClick
     @Override
     public void onItemClick(int position) {
 

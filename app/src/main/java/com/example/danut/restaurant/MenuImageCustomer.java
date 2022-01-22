@@ -1,14 +1,22 @@
 package com.example.danut.restaurant;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,12 +25,13 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MenuImageCustomer extends AppCompatActivity {
+public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterCustomer.OnItemClickListener{
 
     //Declare variables
     private DatabaseReference databaseRefMenu;
@@ -71,6 +80,7 @@ public class MenuImageCustomer extends AppCompatActivity {
 
         menuAdapterCustomer = new MenuAdapterCustomer(MenuImageCustomer.this, menusList);
         recyclerView.setAdapter(menuAdapterCustomer);
+        menuAdapterCustomer.setOnItmClickListener(MenuImageCustomer.this);
     }
 
     @Override
@@ -95,7 +105,7 @@ public class MenuImageCustomer extends AppCompatActivity {
                         if( menu_Data.getRestaurant_Key().equals(restaurantKey)) {
                             menu_Data.setMenu_Key(postSnapshot.getKey());
                             menusList.add(menu_Data);
-                            tVMenusAvCustomer.setText(menusList.size()+" Menus Available");
+                            tVMenusAvCustomer.setText(menusList.size()+" Menus available");
                         }
                     }
                 }
@@ -109,5 +119,46 @@ public class MenuImageCustomer extends AppCompatActivity {
                 Toast.makeText(MenuImageCustomer.this, databaseError.getMessage(),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //Action on Menu onClick
+    @Override
+    public void onItemClick(int position) {
+
+        Menus selected_Menu = menusList.get(position);
+
+        Context context = MenuImageCustomer.this;
+        LayoutInflater li = LayoutInflater.from(context);
+        View promptsView = li.inflate(R.layout.image_menu_customer_full, null);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        //alertDialogBuilder.setView(promptsView);
+
+        final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgFullCustomer);
+
+        Picasso.get()
+                .load(selected_Menu.getMenu_Image())
+                .placeholder(R.mipmap.ic_launcher)
+                .fit()
+                .centerCrop()
+                .into(img_full);
+
+        // set dialog message
+        alertDialogBuilder
+                .setTitle("Menu Name: " + selected_Menu.getMenu_Name())
+                .setView(promptsView)
+                .setCancelable(false)
+                .setNegativeButton("CLOSE",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }

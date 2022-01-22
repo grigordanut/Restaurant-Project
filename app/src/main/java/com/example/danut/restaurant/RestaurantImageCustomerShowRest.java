@@ -116,8 +116,8 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setCancelable(false)
                 .setTitle("You selected "+ selected_Rest.getRest_Name()+" Restaurant"+"\nSelect an option:")
+                .setCancelable(false)
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

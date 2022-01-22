@@ -353,8 +353,11 @@ public class UpdateMenu extends AppCompatActivity {
 
     public void alertDialogMenuPicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Please add a picture");
-        alertDialogBuilder.setPositiveButton("OK",
+        alertDialogBuilder
+                .setTitle("Update menu picture.")
+                .setMessage("Please add a picture")
+                .setCancelable(false)
+                .setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {

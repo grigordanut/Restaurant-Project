@@ -101,7 +101,7 @@ public class UserPage extends AppCompatActivity {
                     assert users_Data != null;
                     if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
                         tVUserWelcome.setText("Welcome: " + users_Data.getUser_firstName() + " " + users_Data.getUser_lastName());
-                        tVUserShowDetails.setText("Doctors Name: \n" + users_Data.getUser_firstName() + " "
+                        tVUserShowDetails.setText("Customer Name: \n" + users_Data.getUser_firstName() + " "
                                 + users_Data.getUser_lastName() + "\n\nEmail: \n" + users_Data.getUser_email());
 
                         //Adding Click Events to our navigation drawer item
@@ -256,6 +256,7 @@ public class UserPage extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
         alertDialogBuilder
+                .setTitle("Log out customer.")
                 .setMessage("Are sure to Log Out?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",

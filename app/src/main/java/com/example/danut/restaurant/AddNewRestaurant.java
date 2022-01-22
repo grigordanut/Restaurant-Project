@@ -44,11 +44,6 @@ public class AddNewRestaurant extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    public List<Restaurants> restList;
-    public List<Restaurants> restListCheck;
-
-    //private String rest_KeyAdd;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +52,6 @@ public class AddNewRestaurant extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add new Restaurant");
 
         progressDialog = new ProgressDialog(this);
-
-        restList = new ArrayList<>();
-        restListCheck = new ArrayList<>();
 
         etRest_Name = findViewById(R.id.etRestName);
         etRest_Address = findViewById(R.id.etRestAddress);
@@ -77,8 +69,11 @@ public class AddNewRestaurant extends AppCompatActivity {
     }
 
     private void checkRestaurantName() {
+
         final String etRest_CheckName = etRest_Name.getText().toString().trim();
+
         databaseRefRestCheck = FirebaseDatabase.getInstance().getReference().child("Restaurants");
+
         databaseRefRestCheck.orderByChild("rest_Name").equalTo(etRest_CheckName)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -98,7 +93,6 @@ public class AddNewRestaurant extends AppCompatActivity {
     }
 
     private void loadRestaurantData() {
-
 
         if (validateRestDetails()) {
             rest_Name = etRest_Name.getText().toString().trim();
@@ -160,8 +154,11 @@ public class AddNewRestaurant extends AppCompatActivity {
     public void alertDialogRestExist() {
         final String etRest_alertCheckName = etRest_Name.getText().toString().trim();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("The restaurant: " + etRest_alertCheckName + " already exists!");
-        alertDialogBuilder.setPositiveButton("OK",
+        alertDialogBuilder
+                .setTitle("Check restaurant name.")
+                .setMessage("The restaurant: " + etRest_alertCheckName + " already exists!")
+                .setCancelable(false)
+                .setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

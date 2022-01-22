@@ -162,7 +162,8 @@ public class AdminPage extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
         alertDialogBuilder
-                .setMessage("Are sure to Log Out?")
+                .setTitle("Log out admin.")
+                .setMessage("Are sure to Log out?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {

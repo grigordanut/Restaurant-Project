@@ -23,6 +23,8 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
     private final Context menuContext;
     private final List<Menus> menuUploads;
 
+    private OnItemClickListener clickListener;
+
     public MenuAdapterCustomer(Context menu_context, List<Menus> menu_uploads){
         menuContext = menu_context;
         menuUploads = menu_uploads;
@@ -51,44 +53,44 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
                 .centerCrop()
                 .into(holder.imageShowMenu);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(menuContext);
-                View promptsView = li.inflate(R.layout.image_menu_customer_full, null);
-
-                androidx.appcompat.app.AlertDialog.Builder
-                        alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(menuContext);
-
-                alertDialogBuilder.setView(promptsView);
-
-                final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgFullCustomer);
-
-                Picasso.get()
-                        .load(uploadCurrent.getMenu_Image())
-                        .placeholder(R.mipmap.ic_launcher)
-                        .fit()
-                        .centerCrop()
-                        .into(img_full);
-
-                // set dialog message
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setTitle("Menu Name: " + uploadCurrent.getMenu_Name())
-                        .setNegativeButton("CLOSE",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LayoutInflater li = LayoutInflater.from(menuContext);
+//                View promptsView = li.inflate(R.layout.image_menu_customer_full, null);
+//
+//                androidx.appcompat.app.AlertDialog.Builder
+//                        alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(menuContext);
+//
+//                alertDialogBuilder.setView(promptsView);
+//
+//                final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgFullCustomer);
+//
+//                Picasso.get()
+//                        .load(uploadCurrent.getMenu_Image())
+//                        .placeholder(R.mipmap.ic_launcher)
+//                        .fit()
+//                        .centerCrop()
+//                        .into(img_full);
+//
+//                // set dialog message
+//                alertDialogBuilder
+//                        .setTitle("Menu Name: " + uploadCurrent.getMenu_Name())
+//                        .setCancelable(false)
+//                        .setNegativeButton("CLOSE",
+//                                new DialogInterface.OnClickListener() {
+//                                    public void onClick(DialogInterface dialog, int id) {
+//                                        dialog.cancel();
+//                                    }
+//                                });
+//
+//                // create alert dialog
+//                AlertDialog alertDialog = alertDialogBuilder.create();
+//
+//                // show it
+//                alertDialog.show();
+//            }
+//        });
     }
 
     //assign the values of textViews
@@ -97,7 +99,7 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
         return menuUploads.size();
     }
 
-    public static class ImageViewHolder extends RecyclerView.ViewHolder {
+    public class ImageViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         public TextView tVNameMenu;
         public TextView tVDescriptionMenu;
@@ -110,6 +112,26 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
             tVDescriptionMenu = itemView.findViewById(R.id.tvDescriptionMenu);
             tVPriceMenu = itemView.findViewById(R.id.tvPriceMenu);
             imageShowMenu = itemView.findViewById(R.id.imgShowMenu);
+
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if(clickListener != null){
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION){
+                    clickListener.onItemClick(position);
+                }
+            }
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItmClickListener(OnItemClickListener listener){
+        clickListener = listener;
     }
 }

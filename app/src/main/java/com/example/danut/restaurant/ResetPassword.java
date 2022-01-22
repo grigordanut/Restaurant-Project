@@ -55,6 +55,7 @@ public class ResetPassword extends AppCompatActivity {
     }
 
     private void resetPassword(){
+
         if(validateResetPassData()){
 
             progressDialog.setMessage("The password is reset!!");

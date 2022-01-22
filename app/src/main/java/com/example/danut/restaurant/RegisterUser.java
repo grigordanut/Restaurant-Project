@@ -50,7 +50,7 @@ public class RegisterUser extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
         firstNameRegUser = findViewById(R.id.etFirstNameRegUser);
-        lastNameRegUser =  findViewById(R.id.etLastNameRegUser);
+        lastNameRegUser = findViewById(R.id.etLastNameRegUser);
         phoneNrRegUser = findViewById(R.id.etPhoneNrRegUser);
         emailRegUser = findViewById(R.id.etEmailRegUser);
         passRegUser = findViewById(R.id.etPassRegUser);
@@ -66,7 +66,7 @@ public class RegisterUser extends AppCompatActivity {
         });
 
         //action button cancel
-        Button buttonCancelRegUser = (Button)findViewById(R.id.btnCancelRegUser);
+        Button buttonCancelRegUser = (Button) findViewById(R.id.btnCancelRegUser);
         buttonCancelRegUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,38 +84,38 @@ public class RegisterUser extends AppCompatActivity {
         buttonRegLogUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent textLog =new Intent(RegisterUser.this,LoginUser.class);
+                Intent textLog = new Intent(RegisterUser.this, LoginUser.class);
                 startActivity(textLog);
             }
         });
     }
 
-    private void registerUser(){
+    private void registerUser() {
         if (validateRegUserData()) {
             progressDialog.setMessage("Register User Details");
             progressDialog.show();
 
             firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser)
-            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        sendEmailVerification();
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                sendEmailVerification();
 
-                        //clear input text fields
-                        firstNameRegUser.setText("");
-                        lastNameRegUser.setText("");
-                        phoneNrRegUser.setText("");
-                        emailRegUser.setText("");
-                        passRegUser.setText("");
-                        confPassRegUser.setText("");
+                                //clear input text fields
+                                firstNameRegUser.setText("");
+                                lastNameRegUser.setText("");
+                                phoneNrRegUser.setText("");
+                                emailRegUser.setText("");
+                                passRegUser.setText("");
+                                confPassRegUser.setText("");
 
-                    } else {
-                        progressDialog.dismiss();
-                        alertDialogEmailUsed();
-                    }
-                }
-            });
+                            } else {
+                                progressDialog.dismiss();
+                                alertDialogEmailUsed();
+                            }
+                        }
+                    });
         }
     }
 
@@ -190,32 +190,35 @@ public class RegisterUser extends AppCompatActivity {
         databaseReference.child(userID).setValue(user_data);
     }
 
-    private void alertDialogUserRegistered(){
+    private void alertDialogUserRegistered() {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RegisterUser.this);
-        builderAlert.setMessage("Hi " + firstName_regUser + " " + lastName_regUser + " you are successfully registered, Email verification was sent. Please verify your email before Log in");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        firebaseAuth.signOut();
-                        finish();
-                        startActivity(new Intent(RegisterUser.this, LoginUser.class));
-                    }
-                });
+        builderAlert
+                .setTitle("Register User.")
+                .setMessage("Hi " + firstName_regUser + " " + lastName_regUser + " you are successfully registered. Verification email sent. Please verify your email before Log in.")
+                .setCancelable(false)
+                .setPositiveButton("Ok",
+                        (dialog, which) -> {
+                            firebaseAuth.signOut();
+                            startActivity(new Intent(RegisterUser.this, LoginUser.class));
+                            finish();
+                            dialog.dismiss();
+                        });
 
         AlertDialog alertDialog = builderAlert.create();
         alertDialog.show();
     }
 
-    private void alertDialogEmailUsed(){
+    private void alertDialogEmailUsed() {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RegisterUser.this);
-        builderAlert.setMessage("Registration failed, the email: \n"+email_regUser+" was already used to open an account on this app.");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
-                "Ok",
-                (arg0, arg1) -> emailRegUser.requestFocus());
+        builderAlert
+                .setTitle("Register User.")
+                .setMessage("Registration failed, the email: \n" + email_regUser + " was already used to open an account on this app.")
+                .setCancelable(true)
+                .setPositiveButton("Ok",
+                        (dialog, which) -> {
+                            emailRegUser.requestFocus();
+                            dialog.dismiss();
+                        });
 
         AlertDialog alertDialog = builderAlert.create();
         alertDialog.show();

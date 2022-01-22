@@ -155,8 +155,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
         alertDialogBuilder
+                .setTitle("You selected the menu: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
                 .setCancelable(false)
-                .setTitle("You selected: " + selected_Menu.getMenu_Name() +" menu!"+ "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -197,7 +197,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuImageAdmin.this);
         alertDialogBuilder
-                .setMessage("Are sure to delete the " + selected_Menu.getMenu_Name() + " Menu?")
+                .setTitle("Delete menu from restaurant.")
+                .setMessage("Are sure to delete the menu: " + selected_Menu.getMenu_Name() + "?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
@@ -206,7 +207,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                                 StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
                                 imageReference.delete().addOnSuccessListener(aVoid -> {
                                     databaseRefMenu.child(selectedMenuKey).removeValue();
-                                    Toast.makeText(MenuImageAdmin.this, "The Menu has been deleted successfully ", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MenuImageAdmin.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
                                 });
                             }
                         })

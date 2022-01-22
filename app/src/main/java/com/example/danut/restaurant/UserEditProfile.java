@@ -200,6 +200,7 @@ public class UserEditProfile extends AppCompatActivity {
     private void alertEmailChangePlace() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
+                .setTitle("Change User Email")
                 .setMessage("The Email Address cannot be change here.\nPlease use Change Email option!")
                 .setCancelable(false)
                 .setPositiveButton("Ok",

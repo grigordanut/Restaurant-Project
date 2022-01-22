@@ -115,7 +115,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         });
     }
 
-    //Action of the menu onClick
+    //Action of the Menu onClick
     @Override
     public void onItemClick(int position) {
         Toast.makeText(this, "Press long click to show more actions: ", Toast.LENGTH_SHORT).show();
@@ -145,18 +145,20 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
     public void onDeleteRestClick(final int position) {
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
         Restaurants selectedRest = restaurantList.get(position);
-        builderAlert.setMessage("Are sure to delete " + selectedRest.getRest_Name() + " Restaurant?");
-        builderAlert.setCancelable(true);
-        builderAlert.setPositiveButton(
+        builderAlert
+                .setTitle("Delete Restaurant")
+                .setMessage("Are sure to delete the restaurant: " + selectedRest.getRest_Name() + "?")
+                .setCancelable(true)
+                .setPositiveButton(
                 "Yes",
                 (dialog, id) -> {
                     String selectedRestKey = selectedRest.getRest_Key();
                     databaseReference.child(selectedRestKey).removeValue();
                     Toast.makeText(RestaurantImageAdminShowRest.this, "The Restaurant " + selectedRest.getRest_Name() + " has been deleted successfully", Toast.LENGTH_SHORT).show();
 
-                });
+                })
 
-        builderAlert.setNegativeButton(
+                .setNegativeButton(
                 "No",
                 (dialog, id) -> dialog.cancel());
 

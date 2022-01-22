@@ -96,7 +96,7 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
         });
     }
 
-    //Action on Restaurants onClick
+    //Action on Restaurant onClick
     @Override
     public void onItemClick(int position) {
         Restaurants selected_Rest = restaurantsList.get(position);

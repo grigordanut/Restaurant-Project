@@ -35,9 +35,6 @@ public class UpdateRestaurant extends AppCompatActivity {
     //Check Restaurant name into Menu database
     private DatabaseReference databaseRefMenuCheck;
 
-    //Save updated Restaurant name to Menu database
-    private DatabaseReference databaseRefMenuUpdate;
-
     private TextView tVRestUpdate;
 
     private EditText restNameUp, restAddressUp;
@@ -208,6 +205,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         final String rest_alertNameCheck = restNameUp.getText().toString().trim();
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
+                .setTitle("Check restaurant name.")
                 .setMessage("The Restaurant " + rest_alertNameCheck + " already exists!")
                 .setCancelable(false)
                 .setPositiveButton("Ok",
