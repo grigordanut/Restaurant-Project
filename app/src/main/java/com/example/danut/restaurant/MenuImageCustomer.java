@@ -132,8 +132,6 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
         View promptsView = li.inflate(R.layout.image_menu_customer_full, null);
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-        //alertDialogBuilder.setView(promptsView);
-
         final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgFullCustomer);
 
         Picasso.get()
