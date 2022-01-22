@@ -199,7 +199,7 @@ public class UpdateMenu extends AppCompatActivity {
             menuDescription_Update = etMenuDescription_Update.getText().toString().trim();
             menuPrice_Update = Double.parseDouble(etMenuPrice_Update.getText().toString().trim());
 
-            progressDialog.setTitle("The Menu is updating");
+            progressDialog.setTitle("The Menu is updating!");
             progressDialog.show();
 
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUpdate));

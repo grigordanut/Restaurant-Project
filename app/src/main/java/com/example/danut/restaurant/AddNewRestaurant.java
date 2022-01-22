@@ -72,7 +72,7 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         final String etRest_CheckName = etRest_Name.getText().toString().trim();
 
-        databaseRefRestCheck = FirebaseDatabase.getInstance().getReference().child("Restaurants");
+        databaseRefRestCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         databaseRefRestCheck.orderByChild("rest_Name").equalTo(etRest_CheckName)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -95,10 +95,11 @@ public class AddNewRestaurant extends AppCompatActivity {
     private void loadRestaurantData() {
 
         if (validateRestDetails()) {
+
             rest_Name = etRest_Name.getText().toString().trim();
             rest_Address = etRest_Address.getText().toString().trim();
 
-            progressDialog.setMessage("Add New Restaurant");
+            progressDialog.setMessage("The Restaurant is adding!");
             progressDialog.show();
 
             databaseRefRest = FirebaseDatabase.getInstance().getReference("Restaurants");
@@ -116,9 +117,9 @@ public class AddNewRestaurant extends AppCompatActivity {
 
                         startActivity(new Intent(AddNewRestaurant.this, RestaurantImageAdminShowRest.class));
 
-                        Toast.makeText(AddNewRestaurant.this, "Restaurant Successfully Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddNewRestaurant.this, "Restaurant successfully added!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(AddNewRestaurant.this, "Filed to add new Restaurant", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddNewRestaurant.this, "Failed to add a new Restaurant!", Toast.LENGTH_SHORT).show();
                     }
                     progressDialog.dismiss();
                 }

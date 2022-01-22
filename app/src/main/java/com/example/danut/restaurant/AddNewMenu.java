@@ -72,12 +72,7 @@ public class AddNewMenu extends AppCompatActivity {
         menuPrice = findViewById(R.id.etMenuPrice);
         menuImg = findViewById(R.id.menuImage);
 
-        //Create a new menu into the Menu table
-        storageReference = FirebaseStorage.getInstance().getReference("Menus");
-        databaseReference = FirebaseDatabase.getInstance().getReference("Menus");
-
         Bundle bundle = getIntent().getExtras();
-
         if (bundle != null) {
             restName = bundle.getString("RName");
             restKey = bundle.getString("RKey");
@@ -148,8 +143,12 @@ public class AddNewMenu extends AppCompatActivity {
             menu_Description = menuDescription.getText().toString().trim();
             menu_Price = Double.parseDouble(menuPrice.getText().toString().trim());
 
-            progressDialog.setTitle("The Menu is uploading");
+            progressDialog.setTitle("The Menu is uploading!");
             progressDialog.show();
+
+            //Create a new menu into the Menu table
+            storageReference = FirebaseStorage.getInstance().getReference("Menus");
+            databaseReference = FirebaseDatabase.getInstance().getReference("Menus");
 
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             menuUploadTask = fileReference.putFile(imageUri)
