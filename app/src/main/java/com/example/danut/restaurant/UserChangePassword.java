@@ -140,7 +140,14 @@ public class UserChangePassword extends AppCompatActivity {
                                                         firebaseAuth.signOut();
                                                         startActivity(new Intent(UserChangePassword.this, LoginUser.class));
                                                         finish();
+                                                    }
 
+                                                    else {
+                                                        try {
+                                                            throw Objects.requireNonNull(task.getException());
+                                                        } catch (Exception e) {
+                                                            Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
                                                     }
                                                 }
                                             });

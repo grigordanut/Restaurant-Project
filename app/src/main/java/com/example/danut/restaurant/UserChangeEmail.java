@@ -143,6 +143,14 @@ public class UserChangeEmail extends AppCompatActivity {
                                                     if (task.isSuccessful()) {
                                                         sendEmailVerification();
                                                     }
+
+                                                    else{
+                                                        try {
+                                                            throw Objects.requireNonNull(task.getException());
+                                                        } catch (Exception e) {
+                                                            Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
                                                 }
                                             });
                                         }
