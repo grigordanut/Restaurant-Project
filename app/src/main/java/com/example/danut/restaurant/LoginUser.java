@@ -124,6 +124,7 @@ public class LoginUser extends AppCompatActivity {
                             Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     progressDialog.dismiss();
                 }
             });
@@ -161,19 +162,16 @@ public class LoginUser extends AppCompatActivity {
     //check if the email has been verified
     private void checkEmailVerification() {
 
-        if (firebaseUser != null) {
+        if (firebaseUser.isEmailVerified()) {
 
-            if (firebaseUser.isEmailVerified()) {
+            Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(LoginUser.this, UserPage.class));
+            finish();
 
-                Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginUser.this, UserPage.class));
-                finish();
-
-            } else {
-                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            }
-
-            progressDialog.dismiss();
+        } else {
+            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
         }
+
+        progressDialog.dismiss();
     }
 }

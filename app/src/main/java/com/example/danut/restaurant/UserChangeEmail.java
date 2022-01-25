@@ -112,8 +112,6 @@ public class UserChangeEmail extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
 
-                                progressDialog.dismiss();
-
                                 tVUserAuthChangeEmail.setText("Your profile is authenticated.\nYou can change the Email now!!");
                                 tVUserAuthChangeEmail.setTextColor(Color.BLACK);
 
@@ -151,12 +149,14 @@ public class UserChangeEmail extends AppCompatActivity {
                                                             Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
+
                                                     progressDialog.dismiss();
                                                 }
                                             });
                                         }
                                     }
                                 });
+
                             } else {
                                 try {
                                     throw Objects.requireNonNull(task.getException());
@@ -169,6 +169,7 @@ public class UserChangeEmail extends AppCompatActivity {
                                     Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             progressDialog.dismiss();
                         }
                     });
@@ -259,7 +260,7 @@ public class UserChangeEmail extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.userChangeEmailGoBack) {
+        if (item.getItemId() == R.id.userChangeEmail_goBack) {
             userChangeEmailGoBack();
         }
 

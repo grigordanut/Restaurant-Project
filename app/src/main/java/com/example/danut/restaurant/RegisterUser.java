@@ -102,9 +102,9 @@ public class RegisterUser extends AppCompatActivity {
             firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
 
-                        sendUserRegData();
+                    if (task.isSuccessful()) {
+                        uploadUserData();
 
                     } else {
                         alertDialogEmailUsed();
@@ -160,57 +160,51 @@ public class RegisterUser extends AppCompatActivity {
         return result;
     }
 
-    private void sendUserRegData() {
+    private void uploadUserData() {
 
-        if (firebaseUser != null) {
+        String user_Id = firebaseUser.getUid();
+        Users user_data = new Users(firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser);
 
-            String user_Id = firebaseUser.getUid();
-            Users user_data = new Users(firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser);
+        databaseReference.child(user_Id).setValue(user_data).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
-            databaseReference.child(user_Id).setValue(user_data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
+                if (task.isSuccessful()) {
+                    sendEmailVerification();
 
-                        sendEmailVerification();
-
-                    } else {
-                        try {
-                            throw Objects.requireNonNull(task.getException());
-                        } catch (Exception e) {
-                            Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-                    progressDialog.dismiss();
                 }
-            });
-        }
+
+                progressDialog.dismiss();
+            }
+        });
     }
 
     private void sendEmailVerification() {
 
-        if (firebaseUser != null) {
+        firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
-            firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
+                if (task.isSuccessful()) {
+                    alertDialogUserRegistered();
 
-                        alertDialogUserRegistered();
-
-                    } else {
-                        try {
-                            throw Objects.requireNonNull(task.getException());
-                        } catch (Exception e) {
-                            Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-                    progressDialog.dismiss();
                 }
-            });
-        }
+
+                progressDialog.dismiss();
+            }
+        });
     }
 
     private void alertDialogUserRegistered() {

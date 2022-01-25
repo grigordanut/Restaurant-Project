@@ -103,8 +103,6 @@ public class UserChangePassword extends AppCompatActivity {
 
                             if (task.isSuccessful()) {
 
-                                progressDialog.dismiss();
-
                                 tVUserAuthChangePass.setText("Your profile is authenticated.\nYou can change the Password now!!");
                                 tVUserAuthChangePass.setTextColor(Color.BLACK);
 
@@ -154,6 +152,7 @@ public class UserChangePassword extends AppCompatActivity {
                                         }
                                     }
                                 });
+
                             } else {
                                 try {
                                     throw Objects.requireNonNull(task.getException());
@@ -202,7 +201,7 @@ public class UserChangePassword extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.userChangePassGoBack) {
+        if (item.getItemId() == R.id.userChangePass_goBack) {
             userChangePassGoBack();
         }
 

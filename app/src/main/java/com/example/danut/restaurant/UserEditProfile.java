@@ -59,6 +59,12 @@ public class UserEditProfile extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
 
+        //Retrieve from Users database and load user details into the edit texts
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+
+        //Upload updated data into Users table
+        databaseReferenceUp = FirebaseDatabase.getInstance().getReference("Users");
+
         tVUserNameUp = findViewById(R.id.tvUserNameUp);
 
         //initialise the variables
@@ -88,16 +94,6 @@ public class UserEditProfile extends AppCompatActivity {
 
         if (validateUserUpdateData()) {
 
-            databaseReferenceUp = FirebaseDatabase.getInstance().getReference("Users");
-
-            firstName_UserUp = firstNameUserUp.getText().toString().trim();
-            lastName_UserUp = lastNameUserUp.getText().toString().trim();
-            phone_UserUp = phoneUserUp.getText().toString().trim();
-            email_UserUp = emailUserUp.getText().toString().trim();
-
-            progressDialog.setMessage("User details are updating!!");
-            progressDialog.show();
-
             databaseReferenceUp.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -115,10 +111,7 @@ public class UserEditProfile extends AppCompatActivity {
                         }
                     }
 
-                    progressDialog.dismiss();
                     Toast.makeText(UserEditProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
-                    firebaseAuth.signOut();
-
                     startActivity(new Intent(UserEditProfile.this, LoginUser.class));
                     finish();
                 }
@@ -162,12 +155,6 @@ public class UserEditProfile extends AppCompatActivity {
 
     private void loadUserData() {
 
-        progressDialog.setMessage("User details are displaying!!");
-        progressDialog.show();
-
-        //Retrieve and load user details into the edit texts
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override
@@ -187,7 +174,6 @@ public class UserEditProfile extends AppCompatActivity {
                         }
                     }
                 }
-                progressDialog.dismiss();
             }
 
             @Override
@@ -224,7 +210,7 @@ public class UserEditProfile extends AppCompatActivity {
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.userEditProfileGoBack) {
+        if (item.getItemId() == R.id.userEditProfile_goBack) {
             userEditProfileGoBack();
         }
 

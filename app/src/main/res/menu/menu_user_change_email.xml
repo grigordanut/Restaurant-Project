@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/userChangeEmailGoBack"
+        android:id="@+id/userChangeEmail_goBack"
         android:orderInCategory="100"
         android:title="@string/menuUserChangeEmail_goBack"
         app:showAsAction="ifRoom" />

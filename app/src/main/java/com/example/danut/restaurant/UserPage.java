@@ -52,16 +52,12 @@ public class UserPage extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggleUser;
     private NavigationView navigationViewUser;
 
-    private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: main page");
-
-        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -166,8 +162,6 @@ public class UserPage extends AppCompatActivity {
 
     //log out user
     private void userLogOut() {
-        progressDialog.setMessage("Log out User!");
-        progressDialog.show();
         alertDialogUserLogout();
     }
 
@@ -223,9 +217,9 @@ public class UserPage extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
 
-                    progressDialog.dismiss();
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
+
                 })
 
                 .setNegativeButton("No", (dialog, id) -> dialog.cancel());
