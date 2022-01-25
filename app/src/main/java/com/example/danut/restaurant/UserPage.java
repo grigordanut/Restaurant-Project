@@ -219,7 +219,6 @@ public class UserPage extends AppCompatActivity {
 
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
-
                 })
 
                 .setNegativeButton("No", (dialog, id) -> dialog.cancel());
