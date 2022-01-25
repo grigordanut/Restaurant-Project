@@ -45,16 +45,12 @@ public class UserEditProfile extends AppCompatActivity {
 
     private String firstName_UserUp, lastName_UserUp, phone_UserUp, email_UserUp;
 
-    private ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit_profile);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: edit Profile");
-
-        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
