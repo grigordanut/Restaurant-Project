@@ -47,6 +47,9 @@ public class RestaurantImageAdminUpdateRest extends AppCompatActivity implements
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
+        //Retrieve data from Restaurants database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+
         restaurantsList = new ArrayList<>();
 
         tVRestImageUpdateRest = findViewById(R.id.tvRestImageUpdateRest);
@@ -68,9 +71,6 @@ public class RestaurantImageAdminUpdateRest extends AppCompatActivity implements
     }
 
     private void loadRestListUpdateRest() {
-
-        //Retrieve data from Restaurants database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         restaurantsEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})

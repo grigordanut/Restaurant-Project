@@ -47,7 +47,7 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
-        //initialize the Restaurants database
+        //Retrieve data from Restaurants database
         databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         restaurantsList = new ArrayList<>();

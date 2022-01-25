@@ -51,6 +51,9 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
+        //Retrieve data from Restaurants database
+        databaseRefRest = FirebaseDatabase.getInstance().getReference("Restaurants");
+
         customRestList = new ArrayList<>();
 
         tVRestCustomShowMenu = findViewById(R.id.tvRestCustomShowMenu);
@@ -82,9 +85,6 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
     }
 
     public void loadRestaurantsList() {
-
-        //Retrieve data from Restaurants database
-        databaseRefRest = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         eventListenerRest = databaseRefRest.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})

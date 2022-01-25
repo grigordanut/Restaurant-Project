@@ -16,6 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,9 +55,14 @@ public class UpdateRestaurant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_restaurant);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Update Restaurant");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: update Restaurant");
 
         progressDialog = new ProgressDialog(this);
+
+        databaseRefRestNameCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
+        databaseRefRestUpdate = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+        databaseRefMenuCheck = FirebaseDatabase.getInstance().getReference("Menus");
 
         tVRestUpdate = findViewById(R.id.tvRestUpdate);
         restNameUp = findViewById(R.id.etRestNameUp);
@@ -86,17 +93,15 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         final String rest_nameCheck = restNameUp.getText().toString().trim();
 
-        databaseRefRestNameCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
-
         databaseRefRestNameCheck.orderByChild("rest_Name").equalTo(rest_nameCheck)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                         if (dataSnapshot.exists()) {
                             alertDialogRestExist();
                         } else {
                             uploadRestDetailsUpdate();
-                            uploadRestNameMenuUp();
                         }
                     }
 
@@ -111,37 +116,25 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         if (validateRestDetailsUpdate()) {
 
-            rest_NameUp = restNameUp.getText().toString().trim();
-            rest_AddressUp = restAddressUp.getText().toString().trim();
-
             progressDialog.setMessage("The " + restNameUpdate + " restaurant is updating!!");
             progressDialog.show();
 
-            databaseRefRestUpdate = FirebaseDatabase.getInstance().getReference("Restaurants");
+            Restaurants rest_Data = new Restaurants(rest_NameUp, rest_AddressUp);
 
-            databaseRefRestUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseRefRestUpdate.child(restKeyUpdate).setValue(rest_Data).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                        String rest_Key = postSnapshot.getKey();
-                        assert rest_Key != null;
-
-                        if (rest_Key.equals(restKeyUpdate)) {
-                            postSnapshot.getRef().child("rest_Name").setValue(rest_NameUp);
-                            postSnapshot.getRef().child("rest_Address").setValue(rest_AddressUp);
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        uploadRestNameMenuUp();
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(UpdateRestaurant.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
 
-                    //progressDialog.dismiss();
-                    //Toast.makeText(UpdateRestaurant.this, "The Restaurant has been updated", Toast.LENGTH_SHORT).show();
-                    //finish();
-                    //startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                 }
             });
         }
@@ -158,7 +151,7 @@ public class UpdateRestaurant extends AppCompatActivity {
             restNameUp.setError("Enter Restaurant name");
             restNameUp.requestFocus();
         } else if (TextUtils.isEmpty(rest_AddressUp)) {
-            restAddressUp.setError("Enter Restaurant Address");
+            restAddressUp.setError("Enter Restaurant address");
             restAddressUp.requestFocus();
         } else {
             result = true;
@@ -169,10 +162,6 @@ public class UpdateRestaurant extends AppCompatActivity {
     private void uploadRestNameMenuUp() {
 
         final String menuRest_NameUp = restNameUp.getText().toString().trim();
-
-        //progressDialog.show();
-
-        databaseRefMenuCheck = FirebaseDatabase.getInstance().getReference("Menus");
 
         databaseRefMenuCheck.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -207,8 +196,8 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Check restaurant name.")
-                .setMessage("The Restaurant " + rest_alertNameCheck + " already exists!")
+                .setTitle("Check Restaurant name")
+                .setMessage("The Restaurant: " + rest_alertNameCheck + " already exists!")
                 .setCancelable(false)
                 .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
 

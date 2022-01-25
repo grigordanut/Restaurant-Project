@@ -50,6 +50,9 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
+        //Retrieve data from Restaurants database
+        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+
         restaurantList = new ArrayList<>();
 
         tVRestImageShowRestAdmin = findViewById(R.id.tvRestListAdmin);
@@ -87,9 +90,6 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
     }
 
     private void loadRestListAdmin() {
-
-        //Retrieve data from Restaurants database
-        databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         restaurantEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})

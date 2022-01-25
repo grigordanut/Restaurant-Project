@@ -135,9 +135,7 @@ public class UserChangePassword extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
 
-                                                        progressDialog.dismiss();
                                                         Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
-                                                        firebaseAuth.signOut();
                                                         startActivity(new Intent(UserChangePassword.this, LoginUser.class));
                                                         finish();
                                                     }
@@ -149,6 +147,8 @@ public class UserChangePassword extends AppCompatActivity {
                                                             Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
+
+                                                    progressDialog.dismiss();
                                                 }
                                             });
                                         }
@@ -166,6 +166,7 @@ public class UserChangePassword extends AppCompatActivity {
                                     Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
+
                             progressDialog.dismiss();
                         }
                     });

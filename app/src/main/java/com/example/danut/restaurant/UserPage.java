@@ -59,14 +59,18 @@ public class UserPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("User main page");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: main page");
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("The User page is displaying!!");
-        progressDialog.show();
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
+        //Retrieve data from Restaurants database
+        restDatabaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+        //Retrieve data from Users database
+        userDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
         restaurantsList = new ArrayList<>();
 
@@ -84,9 +88,6 @@ public class UserPage extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
-        //retrieve data from database into text views
-        userDatabaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
         userEventListener = userDatabaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NewApi"})
             @Override
@@ -94,7 +95,6 @@ public class UserPage extends AppCompatActivity {
 
                 //retrieve data from database
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    //final FirebaseUser doctor_Db = firebaseAuth.getCurrentUser();
 
                     final Users users_Data = postSnapshot.getValue(Users.class);
 
@@ -158,11 +158,17 @@ public class UserPage extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_user_page, menu);
+        return true;
+    }
+
     //log out user
     private void userLogOut() {
-        firebaseAuth.signOut();
-        startActivity(new Intent(UserPage.this, LoginUser.class));
-        finish();
+        progressDialog.setMessage("Log out User!");
+        progressDialog.show();
+        alertDialogUserLogout();
     }
 
     private void userEditProfile() {
@@ -180,12 +186,6 @@ public class UserPage extends AppCompatActivity {
         finish();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_user_page, menu);
-        return true;
-    }
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -195,7 +195,8 @@ public class UserPage extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.user_logOut) {
-            alertDialogUserLogout();
+            userLogOut();
+
         }
 
         if (item.getItemId() == R.id.user_editProfile) {
@@ -213,6 +214,26 @@ public class UserPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void alertDialogUserLogout() {
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
+        alertDialogBuilder
+                .setTitle("Log out User")
+                .setMessage("Are sure to Log out?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", (dialog, id) -> {
+
+                    progressDialog.dismiss();
+                    startActivity(new Intent(UserPage.this, LoginUser.class));
+                    finish();
+                })
+
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -220,9 +241,6 @@ public class UserPage extends AppCompatActivity {
     }
 
     private void loadPatientsAv() {
-
-        //initialize the Patients database
-        restDatabaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         restEventListener = restDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -238,7 +256,6 @@ public class UserPage extends AppCompatActivity {
                         tVUserRestsAv.setText(String.valueOf(numberRestsAv));
                     }
                 }
-                progressDialog.dismiss();
             }
 
             @Override
@@ -246,20 +263,5 @@ public class UserPage extends AppCompatActivity {
                 Toast.makeText(UserPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void alertDialogUserLogout() {
-
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
-        alertDialogBuilder
-                .setTitle("Log out Customer.")
-                .setMessage("Are sure to Log Out?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> userLogOut())
-
-                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 }

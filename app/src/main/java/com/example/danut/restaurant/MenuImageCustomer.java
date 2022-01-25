@@ -61,6 +61,9 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
+        //Retrieve data from Menus database
+        databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
+
         menusList = new ArrayList<>();
 
         tVRestNameCustomer = findViewById(R.id.tvRestNameCustomer);
@@ -91,9 +94,6 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
     }
 
     private void loadMenuDataCustomer() {
-
-        //Retrieve data from Menus database
-        databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
 
         eventListenerMenu = databaseRefMenu.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})

@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -36,7 +37,7 @@ public class ResetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("CUSTOMER: Reset Password");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("CUSTOMER: reset Password");
 
         progressDialog = new ProgressDialog(this);
 
@@ -68,10 +69,10 @@ public class ResetPassword extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
 
-                        progressDialog.dismiss();
                         Toast.makeText(ResetPassword.this, "The password reset email was sent", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ResetPassword.this, LoginUser.class));
                         finish();
+
                     } else {
                         try {
                             throw Objects.requireNonNull(task.getException());
@@ -82,6 +83,7 @@ public class ResetPassword extends AppCompatActivity {
                             Toast.makeText(ResetPassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
+
                     progressDialog.dismiss();
                 }
             });
@@ -95,11 +97,10 @@ public class ResetPassword extends AppCompatActivity {
         emailReset_Pass = emailResetPass.getText().toString().trim();
 
         //check the input fields
-        if (TextUtils.isEmpty(emailReset_Pass)) {
-            emailResetPass.setError("Please enter your registered email");
+        if (emailReset_Pass.isEmpty()) {
+            emailResetPass.setError("Enter your Email Address");
             emailResetPass.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailReset_Pass).matches()) {
-            Toast.makeText(ResetPassword.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             emailResetPass.setError("Enter a valid Email Address");
             emailResetPass.requestFocus();
         } else {

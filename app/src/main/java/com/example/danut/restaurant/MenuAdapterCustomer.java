@@ -52,45 +52,6 @@ public class MenuAdapterCustomer extends RecyclerView.Adapter<MenuAdapterCustome
                 .fit()
                 .centerCrop()
                 .into(holder.imageShowMenu);
-
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LayoutInflater li = LayoutInflater.from(menuContext);
-//                View promptsView = li.inflate(R.layout.image_menu_customer_full, null);
-//
-//                androidx.appcompat.app.AlertDialog.Builder
-//                        alertDialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(menuContext);
-//
-//                alertDialogBuilder.setView(promptsView);
-//
-//                final ImageView img_full = (ImageView) promptsView.findViewById(R.id.imgFullCustomer);
-//
-//                Picasso.get()
-//                        .load(uploadCurrent.getMenu_Image())
-//                        .placeholder(R.mipmap.ic_launcher)
-//                        .fit()
-//                        .centerCrop()
-//                        .into(img_full);
-//
-//                // set dialog message
-//                alertDialogBuilder
-//                        .setTitle("Menu Name: " + uploadCurrent.getMenu_Name())
-//                        .setCancelable(false)
-//                        .setNegativeButton("CLOSE",
-//                                new DialogInterface.OnClickListener() {
-//                                    public void onClick(DialogInterface dialog, int id) {
-//                                        dialog.cancel();
-//                                    }
-//                                });
-//
-//                // create alert dialog
-//                AlertDialog alertDialog = alertDialogBuilder.create();
-//
-//                // show it
-//                alertDialog.show();
-//            }
-//        });
     }
 
     //assign the values of textViews

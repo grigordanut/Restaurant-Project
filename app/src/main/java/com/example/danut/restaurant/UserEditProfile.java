@@ -52,7 +52,7 @@ public class UserEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit_profile);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: Edit profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: edit Profile");
 
         progressDialog = new ProgressDialog(this);
 
@@ -95,7 +95,7 @@ public class UserEditProfile extends AppCompatActivity {
             phone_UserUp = phoneUserUp.getText().toString().trim();
             email_UserUp = emailUserUp.getText().toString().trim();
 
-            progressDialog.setMessage("The User details are updating!!");
+            progressDialog.setMessage("User details are updating!!");
             progressDialog.show();
 
             databaseReferenceUp.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -125,7 +125,7 @@ public class UserEditProfile extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(UserEditProfile.this, error.getCode(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UserEditProfile.this, error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -140,13 +140,13 @@ public class UserEditProfile extends AppCompatActivity {
         phone_UserUp = phoneUserUp.getText().toString().trim();
 
         if (TextUtils.isEmpty(firstName_UserUp)) {
-            firstNameUserUp.setError("Enter First Name");
+            firstNameUserUp.setError("Enter your First Name");
             firstNameUserUp.requestFocus();
         } else if (TextUtils.isEmpty(lastName_UserUp)) {
-            lastNameUserUp.setError("Enter Last Name");
+            lastNameUserUp.setError("Enter your Last Name");
             lastNameUserUp.requestFocus();
         } else if (TextUtils.isEmpty(phone_UserUp)) {
-            phoneUserUp.setError("Enter Phone number");
+            phoneUserUp.setError("Enter your Phone number");
             firstNameUserUp.requestFocus();
         } else {
             result = true;
@@ -192,7 +192,7 @@ public class UserEditProfile extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(UserEditProfile.this, databaseError.getCode(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserEditProfile.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

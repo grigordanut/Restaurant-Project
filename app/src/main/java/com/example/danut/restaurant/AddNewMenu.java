@@ -7,6 +7,7 @@ import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,8 @@ public class AddNewMenu extends AppCompatActivity {
     private static final int PICK_IMAGE = 100;
 
     private EditText menuName, menuDescription, menuPrice;
+    private TextView tVMenuRestName;
+
     private String menu_Name, menu_Description;
     private double menu_Price;
 
@@ -65,7 +68,11 @@ public class AddNewMenu extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(AddNewMenu.this);
 
-        TextView tVMenuRestName = findViewById(R.id.tvMenuRestName);
+        //Create a Menu table into the database
+        storageReference = FirebaseStorage.getInstance().getReference("Menus");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Menus");
+
+        tVMenuRestName = findViewById(R.id.tvMenuRestName);
 
         menuName = findViewById(R.id.etMenuName);
         menuDescription = findViewById(R.id.etMenuDescription);
@@ -87,7 +94,6 @@ public class AddNewMenu extends AppCompatActivity {
             }
         });
 
-        //Action button insert
         Button buttonAddMenu = findViewById(R.id.btnAddMenu);
         buttonAddMenu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,9 +138,8 @@ public class AddNewMenu extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    //Upload a new menu into the menu table
+    //Upload a new menu into the Menu table
     public void uploadMenuData() {
-        progressDialog.dismiss();
 
         //Add menu into Menu's database
         if (validateMenuDetails()) {
@@ -146,10 +151,6 @@ public class AddNewMenu extends AppCompatActivity {
             progressDialog.setTitle("The Menu is uploading!");
             progressDialog.show();
 
-            //Create a new menu into the Menu table
-            storageReference = FirebaseStorage.getInstance().getReference("Menus");
-            databaseReference = FirebaseDatabase.getInstance().getReference("Menus");
-
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             menuUploadTask = fileReference.putFile(imageUri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -158,24 +159,29 @@ public class AddNewMenu extends AppCompatActivity {
                             fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    String menu_Id = databaseReference.push().getKey();
-                                    Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
-                                    assert menu_Id != null;
-                                    databaseReference.child(menu_Id).setValue(menus);
 
-                                    menuName.setText("");
-                                    menuDescription.setText("");
-                                    menuPrice.setText("");
-                                    menuImg.setImageResource(R.drawable.add_menus_picture);
-
-                                    progressDialog.dismiss();
+                                    Handler handler = new Handler();
+                                    handler.postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            progressDialog.setProgress(0);
+                                        }
+                                    }, 2000);
 
                                     Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
-                                    Intent intentAdd = new Intent(AddNewMenu.this, MenuImageAdmin.class);
-                                    intentAdd.putExtra("RName", menus.getRestaurant_Name());
-                                    intentAdd.putExtra("RKey", menus.getRestaurant_Key());
-                                    startActivity(intentAdd);
-                                    finish();
+
+                                    Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
+                                    String menu_Id = databaseReference.push().getKey();
+
+                                    if (menu_Id != null) {
+                                        databaseReference.child(menu_Id).setValue(menus);
+
+                                        Intent intentAdd = new Intent(AddNewMenu.this, MenuImageAdmin.class);
+                                        intentAdd.putExtra("RName", menus.getRestaurant_Name());
+                                        intentAdd.putExtra("RKey", menus.getRestaurant_Key());
+                                        startActivity(intentAdd);
+                                        finish();
+                                    }
                                 }
                             });
                         }
@@ -183,7 +189,6 @@ public class AddNewMenu extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
                             Toast.makeText(AddNewMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -225,7 +230,7 @@ public class AddNewMenu extends AppCompatActivity {
     public void alertDialogMenuPicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Add menu picture.")
+                .setTitle("Add menu picture")
                 .setMessage("Please add a picture!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());

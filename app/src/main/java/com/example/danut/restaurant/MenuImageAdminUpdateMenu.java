@@ -51,6 +51,9 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
 
+        //Retrieve data from Menus database
+        databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
+
         tVMenuImageUpdateMenuRestName = findViewById(R.id.tvMenuImageUpdateMenuRestName);
         tVMenuImageUpdateMenuMenusAv = findViewById(R.id.tvMenuImageUpdateMenuMenusAv);
 
@@ -81,9 +84,6 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
     }
 
     private void loadMenuDataUpdateMenus() {
-
-        //Retrieve data from Menus database
-        databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
 
         eventListenerMenu = databaseRefMenu.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})

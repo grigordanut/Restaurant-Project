@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +44,8 @@ public class AdminPage extends AppCompatActivity {
 
     private TextView tVAdminRestAv, tVAdminMenusAv;
 
+    private ProgressDialog progressDialog;
+
     //Declaring some objects
     private DrawerLayout drawerLayoutAdmin;
     private ActionBarDrawerToggle drawerToggleAdmin;
@@ -54,6 +57,14 @@ public class AdminPage extends AppCompatActivity {
         setContentView(R.layout.activity_admin_page);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Admin Page");
+
+        progressDialog = new ProgressDialog(this);
+
+        //Retrieve data from Restaurants database
+        databaseRefRestAv = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+        //Retrieve data from Menus database
+        databaseRefMenuAv = FirebaseDatabase.getInstance().getReference("Menus");
 
         restListAv = new ArrayList<>();
         menuListAv = new ArrayList<>();
@@ -137,8 +148,9 @@ public class AdminPage extends AppCompatActivity {
     }
 
     private void adminLogOut() {
-        startActivity(new Intent(AdminPage.this, LoginUser.class));
-        finish();
+        progressDialog.setMessage("Log out Admin!");
+        progressDialog.show();
+        alertDialogAdminLogout();
     }
 
     @Override
@@ -152,7 +164,7 @@ public class AdminPage extends AppCompatActivity {
         }
 
         if (item.getItemId() == R.id.admin_logOut) {
-            alertDialogAdminLogout();
+            adminLogOut();
         }
 
         return super.onOptionsItemSelected(item);
@@ -162,12 +174,22 @@ public class AdminPage extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
         alertDialogBuilder
-                .setTitle("Log out Admin.")
+                .setTitle("Log out Admin")
                 .setMessage("Are sure to Log out?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> adminLogOut())
+                .setPositiveButton("Yes", (dialog, id) -> {
 
-                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+                    progressDialog.dismiss();
+                    startActivity(new Intent(AdminPage.this, MainActivity.class));
+                    finish();
+
+                })
+
+                .setNegativeButton("No", (dialog, id) -> {
+                    progressDialog.dismiss();
+                    dialog.cancel();
+                });
+
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
@@ -181,8 +203,6 @@ public class AdminPage extends AppCompatActivity {
     }
 
     public void loadRestaurantsAv() {
-
-        databaseRefRestAv = FirebaseDatabase.getInstance().getReference("Restaurants");
 
         eventListenerRestAv = databaseRefRestAv.addValueEventListener(new ValueEventListener() {
             @Override
@@ -205,13 +225,12 @@ public class AdminPage extends AppCompatActivity {
 
     public void loadMenusAv() {
 
-        databaseRefMenuAv = FirebaseDatabase.getInstance().getReference("Menus");
-
         eventListenerMenuAv = databaseRefMenuAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Menus menu_data = postSnapshot.getValue(Menus.class);
+
                     menuListAv.add(menu_data);
                     numberMenuAv = menuListAv.size();
                     tVAdminMenusAv.setText(String.valueOf(numberMenuAv));

@@ -48,6 +48,7 @@ public class LoginUser extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         //initialize variables
         emailLogUser = findViewById(R.id.etEmailLogUser);
@@ -79,6 +80,7 @@ public class LoginUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent sign = new Intent(LoginUser.this, RegisterUser.class);
+                //Intent sign = new Intent(LoginUser.this, RegisterUserNew.class);
                 startActivity(sign);
             }
         });
@@ -88,97 +90,48 @@ public class LoginUser extends AppCompatActivity {
         buttonLogInUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                emailLog_User = emailLogUser.getText().toString();
-                passLog_User = passwordLogUser.getText().toString();
-
-                if (emailLog_User.isEmpty()) {
-                    emailLogUser.setError("Enter your Email Address");
-                    Toast.makeText(LoginUser.this, "Please enter your Email Address", Toast.LENGTH_SHORT).show();
-                    emailLogUser.requestFocus();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()) {
-                    emailLogUser.setError("Enter a valid Email Address");
-                    Toast.makeText(LoginUser.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-                    emailLogUser.requestFocus();
-                } else if (passLog_User.isEmpty()) {
-                    passwordLogUser.setError("Enter your Password");
-                    Toast.makeText(LoginUser.this, "Please enter your Password", Toast.LENGTH_SHORT).show();
-                    passwordLogUser.requestFocus();
-                } else {
-                    if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
-                        progressDialog.setMessage("Login Admin");
-                        progressDialog.show();
-                        startActivity(new Intent(LoginUser.this, AdminPage.class));
-                        finish();
-                    } else {
-                        logInUser();
-                    }
-                }
+                logInUser();
             }
         });
     }
 
     private void logInUser() {
+
         //log in a new user
-        //if (validateUserData()) {
+        if (validateUserData()) {
 
-        progressDialog.setMessage("Welcome to restaurant");
-        progressDialog.show();
+            progressDialog.setMessage("Log in User!");
+            progressDialog.show();
 
-        firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if (task.isSuccessful()) {
+                    if (task.isSuccessful()) {
 
-                    checkEmailVerification();
+                        checkEmailVerification();
 
-                    //firebaseUser = firebaseAuth.getCurrentUser();
-
-//                               if (firebaseUser != null){
-//
-//                                   if (firebaseUser.isEmailVerified()) {
-//                                       progressDialog.dismiss();
-//
-//                                       //clear data
-//                                       emailLogUser.setText("");
-//                                       passwordLogUser.setText("");
-//                                       checkEmailVerification();
-//
-//                                       Toast.makeText(LoginUser.this, "Log In successful", Toast.LENGTH_SHORT).show();
-//                                       startActivity(new Intent(LoginUser.this, UserPage.class));
-//                                       finish();
-//                                   }
-//
-//                                   else {
-//                                       progressDialog.dismiss();
-//                                       firebaseUser.sendEmailVerification();
-//                                       Toast.makeText(LoginUser.this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-//                                       firebaseAuth.signOut();
-//                                   }
-//                               }
-
-                } else {
-                    try {
-                        throw Objects.requireNonNull(task.getException());
-                    } catch (FirebaseAuthInvalidUserException e) {
-                        emailLogUser.setError("This email is not registered.");
-                        emailLogUser.requestFocus();
-                    } catch (FirebaseAuthInvalidCredentialsException e) {
-                        passwordLogUser.setError("Invalid Password");
-                        passwordLogUser.requestFocus();
-                    } catch (Exception e) {
-                        Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (FirebaseAuthInvalidUserException e) {
+                            emailLogUser.setError("This email is not registered.");
+                            emailLogUser.requestFocus();
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                            passwordLogUser.setError("Invalid Password");
+                            passwordLogUser.requestFocus();
+                        } catch (Exception e) {
+                            Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
+                    progressDialog.dismiss();
                 }
-                progressDialog.dismiss();
-            }
-        });
-        //}
+            });
+        }
     }
 
     //validate input data into the editText
-    public Boolean validateUserData() {
+    private Boolean validateUserData() {
 
         boolean result = false;
 
@@ -187,28 +140,19 @@ public class LoginUser extends AppCompatActivity {
 
         if (emailLog_User.isEmpty()) {
             emailLogUser.setError("Enter your Email Address");
-            Toast.makeText(this, "Please enter your Email Address", Toast.LENGTH_SHORT).show();
             emailLogUser.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()) {
             emailLogUser.setError("Enter a valid Email Address");
-            Toast.makeText(this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
             emailLogUser.requestFocus();
         } else if (passLog_User.isEmpty()) {
             passwordLogUser.setError("Enter your Password");
-            Toast.makeText(this, "Please enter your Password", Toast.LENGTH_SHORT).show();
             passwordLogUser.requestFocus();
-        }
-
-//        else if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
-//            progressDialog.setMessage("Login Admin");
-//            progressDialog.show();
-//            startActivity(new Intent(LoginUser.this, AdminPage.class));
-//            emailLogUser.setText("");
-//            passwordLogUser.setText("");
-//            progressDialog.dismiss();
-//        }
-
-        else {
+        } else if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
+            progressDialog.setMessage("Login Admin");
+            progressDialog.show();
+            startActivity(new Intent(LoginUser.this, AdminPage.class));
+            progressDialog.dismiss();
+        } else {
             result = true;
         }
         return result;
@@ -217,20 +161,19 @@ public class LoginUser extends AppCompatActivity {
     //check if the email has been verified
     private void checkEmailVerification() {
 
-        firebaseUser = firebaseAuth.getCurrentUser();
-
         if (firebaseUser != null) {
-            boolean emailFlag = firebaseUser.isEmailVerified();
 
-            if (emailFlag) {
-                progressDialog.dismiss();
-                Toast.makeText(LoginUser.this, "Log In successful", Toast.LENGTH_SHORT).show();
+            if (firebaseUser.isEmailVerified()) {
+
+                Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginUser.this, UserPage.class));
                 finish();
+
             } else {
                 Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-                firebaseAuth.signOut();
             }
+
+            progressDialog.dismiss();
         }
     }
 }

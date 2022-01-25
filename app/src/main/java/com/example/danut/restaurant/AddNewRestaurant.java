@@ -53,6 +53,12 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
+        //Checks the if the Restaurant name already exist into database
+        databaseRefRestCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
+
+        //Create table Restaurants into database
+        databaseRefRest = FirebaseDatabase.getInstance().getReference("Restaurants");
+
         etRest_Name = findViewById(R.id.etRestName);
         etRest_Address = findViewById(R.id.etRestAddress);
 
@@ -72,16 +78,15 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         final String etRest_CheckName = etRest_Name.getText().toString().trim();
 
-        databaseRefRestCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
-
         databaseRefRestCheck.orderByChild("rest_Name").equalTo(etRest_CheckName)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                         if (dataSnapshot.exists()) {
                             alertDialogRestExist();
                         } else {
-                            loadRestaurantData();
+                            uploadRestaurantData();
                         }
                     }
 
@@ -92,44 +97,39 @@ public class AddNewRestaurant extends AppCompatActivity {
                 });
     }
 
-    private void loadRestaurantData() {
+    private void uploadRestaurantData() {
 
         if (validateRestDetails()) {
 
-            rest_Name = etRest_Name.getText().toString().trim();
-            rest_Address = etRest_Address.getText().toString().trim();
-
-            progressDialog.setMessage("The Restaurant is adding!");
+            progressDialog.setMessage("The Restaurant is uploading!");
             progressDialog.show();
 
-            databaseRefRest = FirebaseDatabase.getInstance().getReference("Restaurants");
+            String rest_Id = databaseRefRest.push().getKey();
+            Restaurants rest_Data = new Restaurants(rest_Name, rest_Address);
 
-            String restID = databaseRefRest.push().getKey();
-            assert restID != null;
-            Restaurants restaurants = new Restaurants(rest_Name, rest_Address);
-            databaseRefRest.child(restID).setValue(restaurants).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
+            if (rest_Id != null) {
 
-                        etRest_Name.setText("");
-                        etRest_Address.setText("");
+                databaseRefRest.child(rest_Id).setValue(rest_Data).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
 
-                        startActivity(new Intent(AddNewRestaurant.this, RestaurantImageAdminShowRest.class));
+                            Toast.makeText(AddNewRestaurant.this, "Restaurant successfully added!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(AddNewRestaurant.this, RestaurantImageAdminShowRest.class));
+                            finish();
 
-                        Toast.makeText(AddNewRestaurant.this, "Restaurant successfully added!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(AddNewRestaurant.this, "Failed to add a new Restaurant!", Toast.LENGTH_SHORT).show();
-                    }
-                    progressDialog.dismiss();
-                }
-            })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddNewRestaurant.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        } else {
+                            try {
+                                throw Objects.requireNonNull(task.getException());
+                            } catch (Exception e) {
+                                Toast.makeText(AddNewRestaurant.this, e.getMessage() , Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    });
+
+                        progressDialog.dismiss();
+                    }
+                });
+            }
         }
     }
 
@@ -137,14 +137,15 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         //validate Restaurant details
         boolean result = false;
+
         rest_Name = etRest_Name.getText().toString().trim();
         rest_Address = etRest_Address.getText().toString().trim();
 
         if (TextUtils.isEmpty(rest_Name)) {
-            etRest_Name.setError("Enter Restaurant Name");
+            etRest_Name.setError("Enter Restaurant name");
             etRest_Name.requestFocus();
         } else if (TextUtils.isEmpty(rest_Address)) {
-            etRest_Address.setError("Enter Restaurant Address");
+            etRest_Address.setError("Enter Restaurant address");
             etRest_Address.requestFocus();
         } else {
             result = true;
@@ -153,10 +154,12 @@ public class AddNewRestaurant extends AppCompatActivity {
     }
 
     public void alertDialogRestExist() {
+
         final String etRest_alertCheckName = etRest_Name.getText().toString().trim();
+
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Check restaurant name.")
+                .setTitle("Check restaurant name")
                 .setMessage("The restaurant: " + etRest_alertCheckName + " already exists!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());

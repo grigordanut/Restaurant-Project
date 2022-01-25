@@ -73,7 +73,7 @@ public class UpdateMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_menu);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Update Menu");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: update Menu");
 
         storageRefUpdate = FirebaseStorage.getInstance().getReference("Menus");
         databaseRefUpdate = FirebaseDatabase.getInstance().getReference("Menus");

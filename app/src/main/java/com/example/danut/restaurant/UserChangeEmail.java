@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -64,6 +65,8 @@ public class UserChangeEmail extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
         userOdlEmail = findViewById(R.id.etUserOldEmail);
         userOdlEmail.setEnabled(false);
@@ -129,7 +132,6 @@ public class UserChangeEmail extends AppCompatActivity {
                                             userNewEmail.setError("Enter your new Email Address");
                                             userNewEmail.requestFocus();
                                         } else if (!Patterns.EMAIL_ADDRESS.matcher(userNew_Email).matches()) {
-                                            Toast.makeText(UserChangeEmail.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
                                             userNewEmail.setError("Enter a valid Email Address");
                                             userNewEmail.requestFocus();
                                         } else {
@@ -141,16 +143,15 @@ public class UserChangeEmail extends AppCompatActivity {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        sendEmailVerification();
-                                                    }
-
-                                                    else{
+                                                        uploadUserChangeEmailData();
+                                                    } else {
                                                         try {
                                                             throw Objects.requireNonNull(task.getException());
                                                         } catch (Exception e) {
                                                             Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                                         }
                                                     }
+                                                    progressDialog.dismiss();
                                                 }
                                             });
                                         }
@@ -188,55 +189,60 @@ public class UserChangeEmail extends AppCompatActivity {
         alertDialog.show();
     }
 
+    private void uploadUserChangeEmailData() {
+
+        userNew_Email = userNewEmail.getText().toString().trim();
+        
+        String user_Id = firebaseUser.getUid();
+
+        databaseReference.child(user_Id).child("user_email").setValue(userNew_Email).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+
+                    sendEmailVerification();
+
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (Exception e) {
+                        Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                progressDialog.dismiss();
+            }
+        });
+    }
+
     private void sendEmailVerification() {
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
         if (firebaseUser != null) {
+
             firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        sendUserChangeEmailData();
+
+                        Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
+                        finish();
+
                     } else {
-                        Toast.makeText(UserChangeEmail.this, "Email verification  has not been sent", Toast.LENGTH_SHORT).show();
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        }
                     }
+
+                    progressDialog.dismiss();
                 }
             });
         }
     }
 
-    private void sendUserChangeEmailData() {
-
-        userNew_Email = userNewEmail.getText().toString().trim();
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users");
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-
-                    final FirebaseUser user_Key = firebaseAuth.getCurrentUser();
-
-                    if (user_Key != null) {
-                        if (user_Key.getUid().equals(postSnapshot.getKey())) {
-                            postSnapshot.getRef().child("user_email").setValue(userNew_Email);
-                        }
-                    }
-                }
-
-                progressDialog.dismiss();
-                Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
-                firebaseAuth.signOut();
-                startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
-                finish();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(UserChangeEmail.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

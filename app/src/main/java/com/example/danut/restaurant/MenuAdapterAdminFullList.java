@@ -91,7 +91,7 @@ public class MenuAdapterAdminFullList extends RecyclerView.Adapter<MenuAdapterAd
         void onItemClick(int position);
     }
 
-    public void setOnItmClickListener(MenuAdapterAdminFullList.OnItemClickListener listener) {
+    public void setOnItmClickListener(OnItemClickListener listener) {
         clickListener = listener;
     }
 }
