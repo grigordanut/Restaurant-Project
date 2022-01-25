@@ -159,8 +159,7 @@ public class UserPage extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_user_page, menu);
         return true;
     }
-
-    //log out user
+    
     private void userLogOut() {
         alertDialogUserLogout();
     }
@@ -190,7 +189,6 @@ public class UserPage extends AppCompatActivity {
 
         if (item.getItemId() == R.id.user_logOut) {
             userLogOut();
-
         }
 
         if (item.getItemId() == R.id.user_editProfile) {
