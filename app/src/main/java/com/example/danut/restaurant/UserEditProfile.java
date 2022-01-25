@@ -90,20 +90,21 @@ public class UserEditProfile extends AppCompatActivity {
 
         if (validateUserUpdateData()) {
 
+            firstName_UserUp = firstNameUserUp.getText().toString().trim();
+            lastName_UserUp = lastNameUserUp.getText().toString().trim();
+            phone_UserUp = phoneUserUp.getText().toString().trim();
+            email_UserUp = emailUserUp.getText().toString().trim();
+
             databaseReferenceUp.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
-                        final FirebaseUser user_Key = firebaseAuth.getCurrentUser();
-
-                        if (user_Key != null) {
-                            if (user_Key.getUid().equals(postSnapshot.getKey())) {
-                                postSnapshot.getRef().child("user_firstName").setValue(firstName_UserUp);
-                                postSnapshot.getRef().child("user_lastName").setValue(lastName_UserUp);
-                                postSnapshot.getRef().child("user_phone").setValue(phone_UserUp);
-                                postSnapshot.getRef().child("user_email").setValue(email_UserUp);
-                            }
+                        if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
+                            postSnapshot.getRef().child("user_firstName").setValue(firstName_UserUp);
+                            postSnapshot.getRef().child("user_lastName").setValue(lastName_UserUp);
+                            postSnapshot.getRef().child("user_phone").setValue(phone_UserUp);
+                            postSnapshot.getRef().child("user_email").setValue(email_UserUp);
                         }
                     }
 
