@@ -159,7 +159,7 @@ public class UserPage extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_user_page, menu);
         return true;
     }
-    
+
     private void userLogOut() {
         alertDialogUserLogout();
     }
@@ -214,7 +214,7 @@ public class UserPage extends AppCompatActivity {
                 .setMessage("Are sure to Log out?")
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
-
+                    firebaseAuth.signOut();
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
                 })

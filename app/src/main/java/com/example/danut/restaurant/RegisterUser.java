@@ -27,7 +27,6 @@ import java.util.Objects;
 public class RegisterUser extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
 
     private DatabaseReference databaseReference;
 
@@ -47,7 +46,6 @@ public class RegisterUser extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
 
         //Create table Users into database
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -107,13 +105,55 @@ public class RegisterUser extends AppCompatActivity {
                         uploadUserData();
 
                     } else {
-                        alertDialogEmailUsed();
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     progressDialog.dismiss();
                 }
             });
         }
+    }
+
+    private void uploadUserData() {
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+
+            String user_Id = firebaseUser.getUid();
+            Users user_data = new Users(firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser);
+
+            databaseReference.child(user_Id).setValue(user_data).addOnCompleteListener(RegisterUser.this, new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+
+                    if (task.isSuccessful()) {
+
+                        firebaseUser.sendEmailVerification();
+
+                        Toast.makeText(RegisterUser.this, "User successfully registered.\nVerification Email has been sent!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(RegisterUser.this, LoginUser.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    progressDialog.dismiss();
+                }
+            });
+        }
+
     }
 
     private Boolean validateRegUserData() {
@@ -158,86 +198,5 @@ public class RegisterUser extends AppCompatActivity {
             result = true;
         }
         return result;
-    }
-
-    private void uploadUserData() {
-
-        String user_Id = firebaseUser.getUid();
-        Users user_data = new Users(firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser);
-
-        databaseReference.child(user_Id).setValue(user_data).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-                if (task.isSuccessful()) {
-                    sendEmailVerification();
-
-                } else {
-                    try {
-                        throw Objects.requireNonNull(task.getException());
-                    } catch (Exception e) {
-                        Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-    private void sendEmailVerification() {
-
-        firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-
-                if (task.isSuccessful()) {
-                    alertDialogUserRegistered();
-
-                } else {
-                    try {
-                        throw Objects.requireNonNull(task.getException());
-                    } catch (Exception e) {
-                        Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                progressDialog.dismiss();
-            }
-        });
-    }
-
-    private void alertDialogUserRegistered() {
-
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RegisterUser.this);
-        builderAlert
-                .setTitle("Register User.")
-                .setMessage("Hi " + firstName_regUser + " " + lastName_regUser + " you are successfully registered.\nVerification email sent. Please verify your email before Log in!")
-                .setCancelable(false)
-                .setPositiveButton("Ok", (dialog, which) -> {
-
-                    startActivity(new Intent(RegisterUser.this, LoginUser.class));
-                    finish();
-
-                });
-
-        AlertDialog alertDialog = builderAlert.create();
-        alertDialog.show();
-    }
-
-    private void alertDialogEmailUsed() {
-
-        AlertDialog.Builder builderAlert = new AlertDialog.Builder(RegisterUser.this);
-        builderAlert
-                .setTitle("Register User.")
-                .setMessage("Registration failed, the email: \n" + email_regUser + " was already used to open an account on this app!")
-                .setCancelable(true)
-                .setPositiveButton("Ok", (dialog, which) -> {
-                    emailRegUser.requestFocus();
-                    dialog.dismiss();
-                });
-
-        AlertDialog alertDialog = builderAlert.create();
-        alertDialog.show();
     }
 }

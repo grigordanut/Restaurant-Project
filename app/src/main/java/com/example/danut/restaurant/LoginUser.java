@@ -29,7 +29,6 @@ public class LoginUser extends AppCompatActivity {
 
     //declare variables
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser firebaseUser;
 
     private EditText emailLogUser, passwordLogUser;
     private TextView tVForgotPassUser;
@@ -48,7 +47,6 @@ public class LoginUser extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
 
         //initialize variables
         emailLogUser = findViewById(R.id.etEmailLogUser);
@@ -161,16 +159,20 @@ public class LoginUser extends AppCompatActivity {
     //check if the email has been verified
     private void checkEmailVerification() {
 
-        if (firebaseUser.isEmailVerified()) {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-            Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(LoginUser.this, UserPage.class));
-            finish();
+        if (firebaseUser != null) {
 
-        } else {
-            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+            if (firebaseUser.isEmailVerified()) {
+
+                Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginUser.this, UserPage.class));
+                finish();
+
+            } else {
+                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+            }
+            progressDialog.dismiss();
         }
-
-        progressDialog.dismiss();
     }
 }

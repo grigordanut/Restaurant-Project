@@ -82,7 +82,7 @@
 
     <!--    Activity Reset Password-->
     <string name="tv_resetPassword">Enter your registered Email.</string>
-    <string name="et_resetPasswordEnterEmail">Please enter your email address</string>
+    <string name="et_resetPasswordEmail">Please enter your email address</string>
     <string name="btn_resetPassword">Reset Password</string>
 
     <!--    Activity Restaurant Image Admin Add Menu-->
