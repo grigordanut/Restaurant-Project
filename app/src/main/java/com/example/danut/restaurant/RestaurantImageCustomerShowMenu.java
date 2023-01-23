@@ -57,7 +57,6 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         customRestList = new ArrayList<>();
 
         tVRestCustomShowMenu = findViewById(R.id.tvRestCustomShowMenu);
-        tVRestCustomShowMenu.setText("No Restaurant found!!");
 
         customerRecyclerView = findViewById(R.id.customRecyclerView);
         customerRecyclerView.setHasFixedSize(true);
@@ -89,20 +88,23 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         eventListenerRest = databaseRefRest.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                customRestList.clear();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-                    Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
-
-                    if (rest_Data != null) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    customRestList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
+                        assert rest_Data != null;
                         rest_Data.setRest_Key(postSnapshot.getKey());
                         customRestList.add(rest_Data);
-                        tVRestCustomShowMenu.setText("Select your Restaurant");
+                        tVRestCustomShowMenu.setText("Select the Restaurant");
                     }
+
+                    restaurantAdapterCustomer.notifyDataSetChanged();
+                                    }
+                else {
+                    tVRestCustomShowMenu.setText("No registered Restaurants.");
                 }
 
-                restaurantAdapterCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

@@ -53,7 +53,6 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
         restaurantsList = new ArrayList<>();
 
         tVRestImageUpdateMenusAdmin = findViewById(R.id.tvRestImageUpdateMenusAdmin);
-        tVRestImageUpdateMenusAdmin.setText("No Restaurants available");
 
         restaurantsRecyclerView = findViewById(R.id.evRecyclerView);
         restaurantsRecyclerView.setHasFixedSize(true);
@@ -72,21 +71,26 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
 
     private void loadRestaurantsListAdmin() {
 
-
         restaurantsEventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                restaurantsList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
-                    assert restaurants != null;
-                    restaurants.setRest_Key(postSnapshot.getKey());
-                    restaurantsList.add(restaurants);
-                    tVRestImageUpdateMenusAdmin.setText("Select your Restaurant");
+                if (dataSnapshot.exists()) {
+                    restaurantsList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
+                        assert restaurants != null;
+                        restaurants.setRest_Key(postSnapshot.getKey());
+                        restaurantsList.add(restaurants);
+                        tVRestImageUpdateMenusAdmin.setText("Select the Restaurant");
+                    }
+
+                    restaurantAdapterAdmin.notifyDataSetChanged();
+                }
+                else {
+                    tVRestImageUpdateMenusAdmin.setText("No registered Restaurants.");
                 }
 
-                restaurantAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

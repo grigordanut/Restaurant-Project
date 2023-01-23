@@ -65,7 +65,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
         menusList = new ArrayList<>();
 
         tVMenusAvFullListAdmin = findViewById(R.id.tvMenusAvFullListAdmin);
-        tVMenusAvFullListAdmin.setText("No Menus available");
 
         rVFullList = findViewById(R.id.rvFullList);
         rVFullList.setHasFixedSize(true);
@@ -108,19 +107,24 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Menus menus = postSnapshot.getValue(Menus.class);
-                    if (menus != null) {
+                if (dataSnapshot.exists()) {
+                    menusList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Menus menus = postSnapshot.getValue(Menus.class);
+                        assert menus != null;
                         menus.setMenu_Key(postSnapshot.getKey());
                         menusList.add(menus);
                         tVMenusAvFullListAdmin.setText(menusList.size() + " Menus available");
                         restaurantName = menus.getRestaurant_Name();
                         restaurantKey = menus.getRestaurant_Key();
                     }
+
+                    menuAdapterAdminFullList.notifyDataSetChanged();
+                }
+                else {
+                    tVMenusAvFullListAdmin.setText("No added Menus were found.");
                 }
 
-                menuAdapterAdminFullList.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -166,7 +170,7 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
     }
 
     public void updateMenus(final int position) {
-        Intent intent = new Intent(MenuImageAdminFullList.this, UpdateMenu.class);
+        Intent intent = new Intent(MenuImageAdminFullList.this, UpdateMenuImage.class);
         Menus selected_Menu = menusList.get(position);
         intent.putExtra("MName", selected_Menu.getMenu_Name());
         intent.putExtra("MDesc", selected_Menu.getMenu_Description());

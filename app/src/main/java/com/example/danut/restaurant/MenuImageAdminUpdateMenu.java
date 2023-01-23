@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +69,6 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
         }
 
         tVMenuImageUpdateMenuRestName.setText("Restaurant: " + restaurantName);
-        tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -89,19 +91,30 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Menus menus = postSnapshot.getValue(Menus.class);
-                    if (menus != null) {
-                        if (menus.getRestaurant_Key().equals(restaurantKey)) {
-                            menus.setMenu_Key(postSnapshot.getKey());
-                            menusList.add(menus);
-                            tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
+                if (dataSnapshot.exists()) {
+
+                    menusList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Menus menus = postSnapshot.getValue(Menus.class);
+                        if (menus != null) {
+                            if (menus.getRestaurant_Key().equals(restaurantKey)) {
+                                menus.setMenu_Key(postSnapshot.getKey());
+                                menusList.add(menus);
+                                tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
+                            } else {
+                                tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
+                            }
+
+                            progressDialog.dismiss();
                         }
                     }
+
+                    menuAdapterAdmin.notifyDataSetChanged();
+                }
+                else {
+                    tVMenuImageUpdateMenuMenusAv.setText("No added Menus were found.");
                 }
 
-                menuAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -115,14 +128,52 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
     //Action on Menus onClick
     @Override
     public void onItemClick(final int position) {
+
+        final String[] options = {"Update Menu picture", "Update Menu Details"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
         Menus selected_Menu = menusList.get(position);
 
-        Intent update_Menu = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenu.class);
-        update_Menu.putExtra("MName", selected_Menu.getMenu_Name());
-        update_Menu.putExtra("MDesc", selected_Menu.getMenu_Description());
-        update_Menu.putExtra("MPrice", String.valueOf(selected_Menu.getMenu_Price()));
-        update_Menu.putExtra("MImage", selected_Menu.getMenu_Image());
-        update_Menu.putExtra("MKey", selected_Menu.getMenu_Key());
-        startActivity(update_Menu);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder
+                .setCancelable(false)
+                .setTitle("Menu selected: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
+                .setAdapter(adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        if (i == 0) {
+                            Menus selected_Menu = menusList.get(position);
+
+                            Intent update_Menu = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenuImage.class);
+                            update_Menu.putExtra("MNameImg", selected_Menu.getMenu_Name());
+                            update_Menu.putExtra("MDescImg", selected_Menu.getMenu_Description());
+                            update_Menu.putExtra("MPriceImg", String.valueOf(selected_Menu.getMenu_Price()));
+                            update_Menu.putExtra("MImageImg", selected_Menu.getMenu_Image());
+                            update_Menu.putExtra("MKeyImg", selected_Menu.getMenu_Key());
+                            startActivity(update_Menu);
+                        }
+
+                        if (i == 1) {
+                            Menus selected_Menu = menusList.get(position);
+
+                            Intent update_Menu = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenuDetails.class);
+                            update_Menu.putExtra("MNameDet", selected_Menu.getMenu_Name());
+                            update_Menu.putExtra("MDescDet", selected_Menu.getMenu_Description());
+                            update_Menu.putExtra("MPriceDet", String.valueOf(selected_Menu.getMenu_Price()));
+                            update_Menu.putExtra("MImageDet", selected_Menu.getMenu_Image());
+                            update_Menu.putExtra("MKeyDet", selected_Menu.getMenu_Key());
+                            startActivity(update_Menu);
+                        }
+                    }
+                })
+                .setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
-    tools:context=".UpdateMenu">
+    tools:context=".UpdateMenuImage">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvMenuUpdate"
+            android:id="@+id/tvMenuUpImg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -25,8 +25,21 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tvMenuInfoImg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/tv_menuImage"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
         <ImageView
-            android:id="@+id/imgViewMenuUpdate"
+            android:id="@+id/imgViewMenuUpImg"
             android:layout_width="280dp"
             android:layout_height="240dp"
             android:layout_gravity="center"
@@ -44,13 +57,14 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMenuNameUpdate"
+                android:id="@+id/etMenuNameUpImg"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/et_round_corners"
                 android:hint="@string/et_menuNameUpdate"
                 android:inputType="textPersonName|textCapWords"
                 android:paddingStart="10dp"
+                android:textColor="#000000"
                 android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -64,19 +78,19 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMenuDescriptionUpdate"
+                android:id="@+id/etMenuDescriptionUpImg"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/et_round_corners"
                 android:hint="@string/et_menuDescriptionUpdate"
                 android:inputType="text|textCapWords"
                 android:paddingStart="10dp"
+                android:textColor="#000000"
                 android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/menuPriceWrapperUp"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
@@ -85,13 +99,14 @@
             android:textColorHint="#000000">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etMenuPriceUpdate"
+                android:id="@+id/etMenuPriceUpImg"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:background="@drawable/et_round_corners"
                 android:hint="@string/et_menuPriceUpdate"
                 android:inputType="numberDecimal"
                 android:paddingStart="10dp"
+                android:textColor="#000000"
                 android:textSize="22sp"
                 tools:ignore="RtlSymmetry" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -102,7 +117,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnSaveMenuUpdate"
+                android:id="@+id/btnSaveMenuUpImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
@@ -117,7 +132,7 @@
                 tools:ignore="ButtonStyle" />
 
             <Button
-                android:id="@+id/btnBacMenuUpdate"
+                android:id="@+id/btnBacMenuUpImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"

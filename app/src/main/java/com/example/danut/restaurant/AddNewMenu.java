@@ -38,7 +38,6 @@ import java.util.Objects;
 public class AddNewMenu extends AppCompatActivity {
 
     //Declare Variables
-    private ImageView menuImg;
     private static final int PICK_IMAGE = 100;
 
     private EditText menuName, menuDescription, menuPrice;
@@ -51,6 +50,7 @@ public class AddNewMenu extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private StorageTask menuUploadTask;
 
+    private ImageView menuImg;
     private Uri imageUri = null;
 
     private ProgressDialog progressDialog;

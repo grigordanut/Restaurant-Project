@@ -3,7 +3,6 @@ package com.example.danut.restaurant;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -78,11 +77,10 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
         //Set textview
         tVRestName.setText("Restaurant: " + restaurantName);
-        tVMenusAvAdmin.setText("No Menus available");
 
         //Action button new Menus
-        Button buttonNewMenuAdmin = findViewById(R.id.btnNewMenuAdmin);
-        buttonNewMenuAdmin.setOnClickListener(new View.OnClickListener() {
+        Button btn_NewMenuAdmin = findViewById(R.id.btnNewMenuAdmin);
+        btn_NewMenuAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MenuImageAdmin.this, AddNewMenu.class);
@@ -93,8 +91,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         });
 
         //Action button back to restaurant
-        Button buttonBackAdmin = findViewById(R.id.btnBackAdmin);
-        buttonBackAdmin.setOnClickListener(new View.OnClickListener() {
+        Button btn_BackAdmin = findViewById(R.id.btnBackAdmin);
+        btn_BackAdmin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MenuImageAdmin.this, AdminPage.class));
@@ -121,19 +119,32 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Menus menus = postSnapshot.getValue(Menus.class);
-                    if (menus != null) {
+
+                if (dataSnapshot.exists()) {
+
+                    menusList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Menus menus = postSnapshot.getValue(Menus.class);
+                        assert menus != null;
                         if (menus.getRestaurant_Key().equals(restaurantKey)) {
                             menus.setMenu_Key(postSnapshot.getKey());
                             menusList.add(menus);
                             tVMenusAvAdmin.setText(menusList.size() + " Menus available");
                         }
+
+                        else {
+                            tVMenusAvAdmin.setText("No Menus available");
+                        }
+
+                        progressDialog.dismiss();
                     }
+
+                    menuAdapterAdmin.notifyDataSetChanged();
+                }
+                else {
+                    tVMenusAvAdmin.setText("No added Menus were found.");
                 }
 
-                menuAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -176,7 +187,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     }
 
     public void updateMenus(final int position) {
-        Intent intent = new Intent(MenuImageAdmin.this, UpdateMenu.class);
+        Intent intent = new Intent(MenuImageAdmin.this, UpdateMenuImage.class);
         Menus selected_Menu = menusList.get(position);
         intent.putExtra("MName", selected_Menu.getMenu_Name());
         intent.putExtra("MDesc", selected_Menu.getMenu_Description());

@@ -56,7 +56,6 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         restaurantList = new ArrayList<>();
 
         tVRestImageShowRestAdmin = findViewById(R.id.tvRestListAdmin);
-        tVRestImageShowRestAdmin.setText("No Restaurants available");
 
         restaurantRecyclerView = findViewById(R.id.restRecyclerView);
         restaurantRecyclerView.setHasFixedSize(true);
@@ -95,16 +94,22 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                restaurantList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Restaurants rest = postSnapshot.getValue(Restaurants.class);
-                    assert rest != null;
-                    rest.setRest_Key(postSnapshot.getKey());
-                    restaurantList.add(rest);
-                    tVRestImageShowRestAdmin.setText(restaurantList.size() + " Restaurants available");
+                if (dataSnapshot.exists()) {
+                    restaurantList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Restaurants rest = postSnapshot.getValue(Restaurants.class);
+                        assert rest != null;
+                        rest.setRest_Key(postSnapshot.getKey());
+                        restaurantList.add(rest);
+                        tVRestImageShowRestAdmin.setText(restaurantList.size() + " Restaurants available");
+                    }
+
+                    restaurantAdapterAdminShowRest.notifyDataSetChanged();
+                }
+                else {
+                    tVRestImageShowRestAdmin.setText("No registered Restaurants.");
                 }
 
-                restaurantAdapterAdminShowRest.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

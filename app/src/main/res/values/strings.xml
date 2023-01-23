@@ -112,6 +112,7 @@
 
     <!--    Activity Update Menu-->
     <string name="tv_menuUpdate">Update Menu</string>
+    <string name="tv_menuImage">Update Image</string>
     <string name="et_menuNameUpdate">Menu Name</string>
     <string name="et_menuDescriptionUpdate">Menu Description</string>
     <string name="et_menuPriceUpdate">Menu Price</string>

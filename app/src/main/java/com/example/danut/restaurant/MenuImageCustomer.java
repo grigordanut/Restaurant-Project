@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -76,7 +73,6 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
         }
 
         tVRestNameCustomer.setText(restaurantName + " Restaurant ");
-        tVMenusAvCustomer.setText("No Menus available");
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -99,19 +95,30 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Menus menu_Data = postSnapshot.getValue(Menus.class);
-                    if (menu_Data != null) {
+                if (dataSnapshot.exists()) {
+                    menusList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Menus menu_Data = postSnapshot.getValue(Menus.class);
+
+                        assert menu_Data != null;
                         if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
                             menu_Data.setMenu_Key(postSnapshot.getKey());
                             menusList.add(menu_Data);
                             tVMenusAvCustomer.setText(menusList.size() + " Menus available");
                         }
+                        else {
+                            tVMenusAvCustomer.setText("No Menus available");
+                        }
+
+                        progressDialog.dismiss();
                     }
+
+                    menuAdapterCustomer.notifyDataSetChanged();
+                }
+                else {
+                    tVMenusAvCustomer.setText("No added Menus were found.");
                 }
 
-                menuAdapterCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

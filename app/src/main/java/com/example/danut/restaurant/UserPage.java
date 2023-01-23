@@ -7,8 +7,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -215,6 +213,7 @@ public class UserPage extends AppCompatActivity {
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
                     firebaseAuth.signOut();
+
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
                 })

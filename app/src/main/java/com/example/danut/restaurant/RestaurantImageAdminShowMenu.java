@@ -53,7 +53,6 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
         restaurantsList = new ArrayList<>();
 
         tVRestImageShowMenusAdmin = findViewById(R.id.tvRestImageShowMenusAdmin);
-        tVRestImageShowMenusAdmin.setText("No Restaurants available!!");
 
         restaurantRecyclerView = findViewById(R.id.restRecyclerView);
         restaurantRecyclerView.setHasFixedSize(true);
@@ -76,16 +75,22 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                restaurantsList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
-                    assert restaurants != null;
-                    restaurants.setRest_Key(postSnapshot.getKey());
-                    restaurantsList.add(restaurants);
-                    tVRestImageShowMenusAdmin.setText("Select your Restaurant");
+                if (dataSnapshot.exists()) {
+                    restaurantsList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
+                        assert restaurants != null;
+                        restaurants.setRest_Key(postSnapshot.getKey());
+                        restaurantsList.add(restaurants);
+                        tVRestImageShowMenusAdmin.setText("Select the Restaurant");
+                    }
+
+                    restaurantAdapterAdmin.notifyDataSetChanged();
+                }
+                else {
+                    tVRestImageShowMenusAdmin.setText("No registered Restaurants.");
                 }
 
-                restaurantAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

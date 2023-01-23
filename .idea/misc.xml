@@ -29,6 +29,7 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_add_new_restaurant.xml" value="0.2212962962962963" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_admin_page.xml" value="0.2212962962962963" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_admin_page2.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_bike_store_list_return_rented_bike.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_change_email.xml" value="0.2359375" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_change_password.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_contact_form.xml" value="0.25461613216715256" />
@@ -74,6 +75,8 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_image_update_rest.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_restaurant_list_show_rest_customer.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_menu_details.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_menu_image.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_menu_old.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_profile.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/activity_update_restaurant.xml" value="0.25416666666666665" />
@@ -90,6 +93,7 @@
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/content_main.xml" value="0.2111111111111111" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/header_admin_page.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/header_user_page.xml" value="0.25" />
+        <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_bikestore_return_bike.xml" value="0.25" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_item.xml" value="0.23981481481481481" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/danut/AndroidStudioProjects/Restaurant/app/src/main/res/layout/image_menu_admin_full_list.xml" value="0.25" />

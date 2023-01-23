@@ -207,6 +207,7 @@ public class AdminPage extends AppCompatActivity {
         eventListenerRestAv = databaseRefRestAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                restListAv.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
 
@@ -228,6 +229,7 @@ public class AdminPage extends AppCompatActivity {
         eventListenerMenuAv = databaseRefMenuAv.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                menuListAv.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                     Menus menu_data = postSnapshot.getValue(Menus.class);
 
