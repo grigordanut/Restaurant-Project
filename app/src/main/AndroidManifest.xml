@@ -39,7 +39,7 @@
         <activity android:name=".AddNewRestaurant" />
         <activity android:name=".AdminPage" />
         <activity android:name=".RestaurantImageAdminShowRest" />
-        
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

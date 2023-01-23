@@ -92,14 +92,13 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-
                     menusList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Menus menus = postSnapshot.getValue(Menus.class);
-                        if (menus != null) {
-                            if (menus.getRestaurant_Key().equals(restaurantKey)) {
-                                menus.setMenu_Key(postSnapshot.getKey());
-                                menusList.add(menus);
+                        Menus menu_Data = postSnapshot.getValue(Menus.class);
+                        if (menu_Data != null) {
+                            if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
+                                menu_Data.setMenu_Key(postSnapshot.getKey());
+                                menusList.add(menu_Data);
                                 tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
                             } else {
                                 tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
@@ -136,33 +135,31 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setCancelable(false)
-                .setTitle("Menu selected: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
+                .setTitle("Selected menu: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
                 .setAdapter(adapter, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
                         if (i == 0) {
-                            Menus selected_Menu = menusList.get(position);
-
-                            Intent update_Menu = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenuImage.class);
-                            update_Menu.putExtra("MNameImg", selected_Menu.getMenu_Name());
-                            update_Menu.putExtra("MDescImg", selected_Menu.getMenu_Description());
-                            update_Menu.putExtra("MPriceImg", String.valueOf(selected_Menu.getMenu_Price()));
-                            update_Menu.putExtra("MImageImg", selected_Menu.getMenu_Image());
-                            update_Menu.putExtra("MKeyImg", selected_Menu.getMenu_Key());
-                            startActivity(update_Menu);
+                            Menus selected_MenuImg = menusList.get(position);
+                            Intent update_Image = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenuImage.class);
+                            update_Image.putExtra("MNameImg", selected_MenuImg.getMenu_Name());
+                            update_Image.putExtra("MDescImg", selected_MenuImg.getMenu_Description());
+                            update_Image.putExtra("MPriceImg", String.valueOf(selected_MenuImg.getMenu_Price()));
+                            update_Image.putExtra("MImageImg", selected_MenuImg.getMenu_Image());
+                            update_Image.putExtra("MKeyImg", selected_MenuImg.getMenu_Key());
+                            startActivity(update_Image);
                         }
 
                         if (i == 1) {
-                            Menus selected_Menu = menusList.get(position);
-
-                            Intent update_Menu = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenuDetails.class);
-                            update_Menu.putExtra("MNameDet", selected_Menu.getMenu_Name());
-                            update_Menu.putExtra("MDescDet", selected_Menu.getMenu_Description());
-                            update_Menu.putExtra("MPriceDet", String.valueOf(selected_Menu.getMenu_Price()));
-                            update_Menu.putExtra("MImageDet", selected_Menu.getMenu_Image());
-                            update_Menu.putExtra("MKeyDet", selected_Menu.getMenu_Key());
-                            startActivity(update_Menu);
+                            Menus selected_MenuDet = menusList.get(position);
+                            Intent update_Det = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenuDetails.class);
+                            update_Det.putExtra("MNameDet", selected_MenuDet.getMenu_Name());
+                            update_Det.putExtra("MDescDet", selected_MenuDet.getMenu_Description());
+                            update_Det.putExtra("MPriceDet", String.valueOf(selected_MenuDet.getMenu_Price()));
+                            update_Det.putExtra("MImageDet", selected_MenuDet.getMenu_Image());
+                            update_Det.putExtra("MKeyDet", selected_MenuDet.getMenu_Key());
+                            startActivity(update_Det);
                         }
                     }
                 })
@@ -174,6 +171,5 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
                 });
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-
     }
 }
