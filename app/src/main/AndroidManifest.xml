@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.danut.restaurant" >
+    package="com.example.danut.restaurant">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -19,71 +19,38 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme" >
-        <activity
-            android:name=".UpdateMenuDetails"
-            android:exported="false" />
-        <activity
-            android:name=".RestaurantImageCustomerShowRest"
-            android:exported="false" />
-        <activity
-            android:name=".UserChangeEmail"
-            android:exported="false" />
-        <activity
-            android:name=".UserChangePassword"
-            android:exported="false" />
-        <activity
-            android:name=".UserPage"
-            android:exported="false" />
-        <activity
-            android:name=".UpdateMenuOld"
-            android:exported="false" />
-        <activity
-            android:name=".RestaurantImageAdminUpdateRest"
-            android:exported="false" />
-        <activity
-            android:name=".MenuImageAdminUpdateMenu"
-            android:exported="false" />
-        <activity
-            android:name=".MenuImageAdminFullList"
-            android:exported="false" />
-        <activity
-            android:name=".RestaurantImageAdminUpdateMenu"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterUser"
-            android:exported="false" />
-        <activity
-            android:name=".UpdateMenuImage"
-            android:exported="false" />
-        <activity
-            android:name=".UpdateRestaurant"
-            android:exported="false" />
-        <activity
-            android:name=".RestaurantImageAdminShowMenu"
-            android:exported="false" />
-        <activity
-            android:name=".RestaurantImageAdminAddMenu"
-            android:exported="false" />
-        <activity
-            android:name=".AddNewRestaurant"
-            android:exported="false" />
-        <activity
-            android:name=".AdminPage"
-            android:exported="false" />
-        <activity
-            android:name=".RestaurantImageAdminShowRest"
-            android:exported="false" />
+        android:theme="@style/AppTheme">
+
+        <activity android:name=".UpdateMenuDetails" />
+        <activity android:name=".RestaurantImageCustomerShowRest" />
+        <activity android:name=".UserChangeEmail" />
+        <activity android:name=".UserChangePassword" />
+        <activity android:name=".UserPage" />
+        <activity android:name=".UpdateMenuOld" />
+        <activity android:name=".RestaurantImageAdminUpdateRest" />
+        <activity android:name=".MenuImageAdminUpdateMenu" />
+        <activity android:name=".MenuImageAdminFullList" />
+        <activity android:name=".RestaurantImageAdminUpdateMenu" />
+        <activity android:name=".RegisterUser" />
+        <activity android:name=".UpdateMenuImage" />
+        <activity android:name=".UpdateRestaurant" />
+        <activity android:name=".RestaurantImageAdminShowMenu" />
+        <activity android:name=".RestaurantImageAdminAddMenu" />
+        <activity android:name=".AddNewRestaurant" />
+        <activity android:name=".AdminPage" />
+        <activity android:name=".RestaurantImageAdminShowRest" />
+        
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LoginUser" />
         <activity android:name=".ContactUs" />
         <activity android:name=".ResetPassword" />
