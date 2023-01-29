@@ -59,7 +59,6 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
         customRestList = new ArrayList<>();
 
         tVRestCustomShowMenu = findViewById(R.id.tvRestCustomShowMenu);
-        tVRestCustomShowMenu.setText("No Restaurant found!!");
 
         customerRecyclerView = findViewById(R.id.customRecyclerView);
         customerRecyclerView.setHasFixedSize(true);
@@ -82,20 +81,23 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
         eventListenerRest = databaseRefRest.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                customRestList.clear();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-
-                    Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
-
-                    if (rest_Data != null) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    customRestList.clear();
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
+                        assert rest_Data != null;
                         rest_Data.setRest_Key(postSnapshot.getKey());
                         customRestList.add(rest_Data);
                         tVRestCustomShowMenu.setText("Select your Restaurant");
                     }
+
+                    restaurantAdapterCustomer.notifyDataSetChanged();
+                }
+                else {
+                    tVRestCustomShowMenu.setText("No registered Restaurants");
                 }
 
-                restaurantAdapterCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -127,7 +129,6 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                         intent_Update.putExtra("RName", selected_Rest.getRest_Name());
                         intent_Update.putExtra("RKey", selected_Rest.getRest_Key());
                         startActivity(intent_Update);
-                        customRestList.clear();
                     }
 
                     if (id == 1) {
@@ -137,7 +138,7 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                 })
 
                 .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
-        final AlertDialog alertDialog = alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }
 }

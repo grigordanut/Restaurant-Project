@@ -173,15 +173,14 @@ public class AddNewMenu extends AppCompatActivity {
                                     Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
                                     String menu_Id = databaseReference.push().getKey();
 
-                                    if (menu_Id != null) {
-                                        databaseReference.child(menu_Id).setValue(menus);
 
-                                        Intent intentAdd = new Intent(AddNewMenu.this, MenuImageAdmin.class);
-                                        intentAdd.putExtra("RName", menus.getRestaurant_Name());
-                                        intentAdd.putExtra("RKey", menus.getRestaurant_Key());
-                                        startActivity(intentAdd);
-                                        finish();
-                                    }
+                                    assert menu_Id != null;
+                                    databaseReference.child(menu_Id).setValue(menus);
+
+                                    Intent intentAdd = new Intent(AddNewMenu.this, RestaurantImageAdminAddMenu.class);
+                                    startActivity(intentAdd);
+                                    finish();
+
                                 }
                             });
                         }

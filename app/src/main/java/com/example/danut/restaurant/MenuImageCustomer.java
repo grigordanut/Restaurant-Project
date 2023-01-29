@@ -73,6 +73,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
         }
 
         tVRestNameCustomer.setText(restaurantName + " Restaurant ");
+        tVMenusAvCustomer.setText("No Menus available");
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -106,11 +107,6 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                             menusList.add(menu_Data);
                             tVMenusAvCustomer.setText(menusList.size() + " Menus available");
                         }
-                        else {
-                            tVMenusAvCustomer.setText("No Menus available");
-                        }
-
-                        progressDialog.dismiss();
                     }
 
                     menuAdapterCustomer.notifyDataSetChanged();

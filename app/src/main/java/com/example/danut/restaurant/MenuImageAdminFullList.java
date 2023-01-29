@@ -150,7 +150,15 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                 .setAdapter(adapter, (dialog, id) -> {
 
                     if (id == 0) {
-                        chooseUpdate(position);
+                        //chooseUpdate(position);
+                        Intent intent = new Intent(MenuImageAdminFullList.this, UpdateMenuOld.class);
+                        Menus selected_MenuImg = menusList.get(position);
+                        intent.putExtra("MName", selected_MenuImg.getMenu_Name());
+                        intent.putExtra("MDesc", selected_MenuImg.getMenu_Description());
+                        intent.putExtra("MPrice", String.valueOf(selected_MenuImg.getMenu_Price()));
+                        intent.putExtra("MImage", selected_MenuImg.getMenu_Image());
+                        intent.putExtra("MKey", selected_MenuImg.getMenu_Key());
+                        startActivity(intent);
                     }
                     if (id == 1) {
                         confirmDeletion(position);
@@ -163,74 +171,71 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
         alertDialog.show();
     }
 
-    private void chooseUpdate(int position) {
-
-        final String[] options = {"Update Menu image", "Update Menu Details"};
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder
-                .setCancelable(false)
-                .setTitle("Select an option:")
-                .setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        if (i == 0) {
-                            Intent intent_Image = new Intent(MenuImageAdminFullList.this, UpdateMenuImage.class);
-                            Menus selected_MenuImg = menusList.get(position);
-                            intent_Image.putExtra("MNameImg", selected_MenuImg.getMenu_Name());
-                            intent_Image.putExtra("MDescImg", selected_MenuImg.getMenu_Description());
-                            intent_Image.putExtra("MPriceImg", String.valueOf(selected_MenuImg.getMenu_Price()));
-                            intent_Image.putExtra("MImageImg", selected_MenuImg.getMenu_Image());
-                            intent_Image.putExtra("MKeyImg", selected_MenuImg.getMenu_Key());
-                            startActivity(intent_Image);
-                        }
-
-                        if (i == 1) {
-                            Intent intent_Det = new Intent(MenuImageAdminFullList.this, UpdateMenuDetails.class);
-                            Menus selected_MenuDet = menusList.get(position);
-                            intent_Det.putExtra("MNameDet", selected_MenuDet.getMenu_Name());
-                            intent_Det.putExtra("MDescDet", selected_MenuDet.getMenu_Description());
-                            intent_Det.putExtra("MPriceDet", String.valueOf(selected_MenuDet.getMenu_Price()));
-                            intent_Det.putExtra("MImageDet", selected_MenuDet.getMenu_Image());
-                            intent_Det.putExtra("MKeyDet", selected_MenuDet.getMenu_Key());
-                            startActivity(intent_Det);
-                        }
-                    }
-                })
-                .setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
+//    private void chooseUpdate(int position) {
+//
+//        final String[] options = {"Update Menu image", "Update Menu Details"};
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
+//        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+//        alertDialogBuilder
+//                .setCancelable(false)
+//                .setTitle("Select an option:")
+//                .setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//                        if (i == 0) {
+//                            Intent intent_Image = new Intent(MenuImageAdminFullList.this, UpdateMenuImage.class);
+//                            Menus selected_MenuImg = menusList.get(position);
+//                            intent_Image.putExtra("MNameImg", selected_MenuImg.getMenu_Name());
+//                            intent_Image.putExtra("MDescImg", selected_MenuImg.getMenu_Description());
+//                            intent_Image.putExtra("MPriceImg", String.valueOf(selected_MenuImg.getMenu_Price()));
+//                            intent_Image.putExtra("MImageImg", selected_MenuImg.getMenu_Image());
+//                            intent_Image.putExtra("MKeyImg", selected_MenuImg.getMenu_Key());
+//                            startActivity(intent_Image);
+//                        }
+//
+//                        if (i == 1) {
+//                            Intent intent_Det = new Intent(MenuImageAdminFullList.this, UpdateMenuDetails.class);
+//                            Menus selected_MenuDet = menusList.get(position);
+//                            intent_Det.putExtra("MNameDet", selected_MenuDet.getMenu_Name());
+//                            intent_Det.putExtra("MDescDet", selected_MenuDet.getMenu_Description());
+//                            intent_Det.putExtra("MPriceDet", String.valueOf(selected_MenuDet.getMenu_Price()));
+//                            intent_Det.putExtra("MImageDet", selected_MenuDet.getMenu_Image());
+//                            intent_Det.putExtra("MKeyDet", selected_MenuDet.getMenu_Key());
+//                            startActivity(intent_Det);
+//                        }
+//                    }
+//                })
+//                .setNegativeButton("CLOSE", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.dismiss();
+//                    }
+//                });
+//
+//        AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+//    }
 
     public void confirmDeletion(final int position) {
+
         Menus selected_Menu = menusList.get(position);
 
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuImageAdminFullList.this);
         alertDialogBuilder
                 .setTitle("Delete menu from restaurant.")
-                .setMessage("Are sure to delete the menu: " + selected_Menu.getMenu_Name() + "?")
+                .setMessage("Are you sure to delete the menu: " + selected_Menu.getMenu_Name() + "?")
                 .setCancelable(false)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                final String selectedMenuKey = selected_Menu.getMenu_Key();
-                                StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
-                                imageReference.delete().addOnSuccessListener(aVoid -> {
-                                    databaseRefMenu.child(selectedMenuKey).removeValue();
-                                    Toast.makeText(MenuImageAdminFullList.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
-                                });
-                            }
+                .setPositiveButton("Yes", (dialog, id) -> {
+                            final String selectedMenuKey = selected_Menu.getMenu_Key();
+                            StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
+                            imageReference.delete().addOnSuccessListener(aVoid -> {
+                                databaseRefMenu.child(selectedMenuKey).removeValue();
+                                Toast.makeText(MenuImageAdminFullList.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
+                            });
                         })
 
-                .setNegativeButton("No",
-                        (dialog, which) -> dialog.cancel());
+                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
 
         AlertDialog alert1 = alertDialogBuilder.create();
         alert1.show();

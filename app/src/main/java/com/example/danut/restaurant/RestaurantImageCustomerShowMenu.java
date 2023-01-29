@@ -100,9 +100,8 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
                     }
 
                     restaurantAdapterCustomer.notifyDataSetChanged();
-                                    }
-                else {
-                    tVRestCustomShowMenu.setText("No registered Restaurants.");
+                } else {
+                    tVRestCustomShowMenu.setText("No registered Restaurants");
                 }
 
                 progressDialog.dismiss();
