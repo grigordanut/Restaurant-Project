@@ -209,16 +209,16 @@ public class UserPage extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
         alertDialogBuilder
                 .setTitle("Log out User")
-                .setMessage("Are sure to Log out?")
+                .setMessage("Are you sure to Log out?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> {
+                .setPositiveButton("YES", (dialog, id) -> {
                     firebaseAuth.signOut();
 
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
                 })
 
-                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+                .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

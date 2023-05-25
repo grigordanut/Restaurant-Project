@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -151,7 +150,7 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
 
                     if (id == 0) {
                         //chooseUpdate(position);
-                        Intent intent = new Intent(MenuImageAdminFullList.this, UpdateMenuOld.class);
+                        Intent intent = new Intent(MenuImageAdminFullList.this, UpdateMenu.class);
                         Menus selected_MenuImg = menusList.get(position);
                         intent.putExtra("MName", selected_MenuImg.getMenu_Name());
                         intent.putExtra("MDesc", selected_MenuImg.getMenu_Description());

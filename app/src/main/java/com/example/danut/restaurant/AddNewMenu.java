@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
@@ -87,22 +86,14 @@ public class AddNewMenu extends AppCompatActivity {
 
         tVMenuRestName.setText("Restaurant: " + restName);
 
-        menuImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openGallery();
-            }
-        });
+        menuImg.setOnClickListener(view -> openGallery());
 
-        Button buttonAddMenu = findViewById(R.id.btnAddMenu);
-        buttonAddMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (menuUploadTask != null && menuUploadTask.isInProgress()) {
-                    Toast.makeText(AddNewMenu.this, "Upload menu in progress", Toast.LENGTH_SHORT).show();
-                } else {
-                    uploadMenuData();
-                }
+        Button btn_AddMenu = findViewById(R.id.btnAddMenu);
+        btn_AddMenu.setOnClickListener(view -> {
+            if (menuUploadTask != null && menuUploadTask.isInProgress()) {
+                Toast.makeText(AddNewMenu.this, "Upload menu in progress", Toast.LENGTH_SHORT).show();
+            } else {
+                uploadMenuData();
             }
         });
 
@@ -153,52 +144,34 @@ public class AddNewMenu extends AppCompatActivity {
 
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             menuUploadTask = fileReference.putFile(imageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
+                        public void onSuccess(Uri uri) {
 
-                                    Handler handler = new Handler();
-                                    handler.postDelayed(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            progressDialog.setProgress(0);
-                                        }
-                                    }, 2000);
+                            Handler handler = new Handler();
+                            handler.postDelayed(() -> progressDialog.setProgress(0), 2000);
 
-                                    Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
+                            Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
 
-                                    Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
-                                    String menu_Id = databaseReference.push().getKey();
+                            Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
+                            String menu_Id = databaseReference.push().getKey();
 
 
-                                    assert menu_Id != null;
-                                    databaseReference.child(menu_Id).setValue(menus);
+                            assert menu_Id != null;
+                            databaseReference.child(menu_Id).setValue(menus);
 
-                                    Intent intentAdd = new Intent(AddNewMenu.this, RestaurantImageAdminAddMenu.class);
-                                    startActivity(intentAdd);
-                                    finish();
+                            Intent intentAdd = new Intent(AddNewMenu.this, RestaurantImageAdminAddMenu.class);
+                            startActivity(intentAdd);
+                            finish();
 
-                                }
-                            });
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AddNewMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
-                            //show upload Progress
-                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
-                            progressDialog.setMessage("Uploaded " + (int) progress + "%");
-                            progressDialog.setProgress((int) progress);
-                        }
+                    }))
+                    .addOnFailureListener(e -> Toast.makeText(AddNewMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show())
+                    .addOnProgressListener(taskSnapshot -> {
+                        //show upload Progress
+                        double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
+                        progressDialog.setMessage("Uploaded " + (int) progress + "%");
+                        progressDialog.setProgress((int) progress);
                     });
 
         }
@@ -229,8 +202,8 @@ public class AddNewMenu extends AppCompatActivity {
     public void alertDialogMenuPicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Add menu picture")
-                .setMessage("Please add a picture!")
+                .setTitle("No menu picture.")
+                .setMessage("Please add a Menu picture!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 

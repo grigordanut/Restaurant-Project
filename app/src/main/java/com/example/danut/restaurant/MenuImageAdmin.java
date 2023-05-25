@@ -3,7 +3,6 @@ package com.example.danut.restaurant;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -122,7 +121,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists()) {
+                //if (dataSnapshot.exists()) {
 
                     menusList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -136,10 +135,10 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                     }
 
                     menuAdapterAdmin.notifyDataSetChanged();
-                }
-                else {
-                    tVMenusAvAdmin.setText("No added Menus were found.");
-                }
+//                }
+//                else {
+//                    tVMenusAvAdmin.setText("No added Menus were found.");
+//                }
 
                 progressDialog.dismiss();
             }
@@ -167,7 +166,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
                     if (id == 0) {
                         //chooseUpdate(position);
-                        Intent intent = new Intent(MenuImageAdmin.this, UpdateMenuOld.class);
+                        Intent intent = new Intent(MenuImageAdmin.this, UpdateMenu.class);
                         Menus selected_MenuImg = menusList.get(position);
                         intent.putExtra("MName", selected_MenuImg.getMenu_Name());
                         intent.putExtra("MDesc", selected_MenuImg.getMenu_Description());
@@ -250,6 +249,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                     StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
                     imageReference.delete().addOnSuccessListener(aVoid -> {
                         databaseRefMenu.child(selectedMenuKey).removeValue();
+                        menusList.clear();
                         Toast.makeText(MenuImageAdmin.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
                     });
                 })
@@ -265,6 +265,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     protected void onDestroy() {
         super.onDestroy();
         databaseRefMenu.removeEventListener(menuEventListener);
+        menusList.clear();
         tVMenusAvAdmin.setText(menusList.size() + " Menus available");
     }
 }

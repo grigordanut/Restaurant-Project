@@ -35,7 +35,7 @@ public class UpdateRestaurant extends AppCompatActivity {
     private DatabaseReference databaseRefRestUpdate;
 
     //Check Restaurant name into Menu database
-    private DatabaseReference databaseRefMenuCheck;
+    private DatabaseReference databaseRefMenuUpdate;
 
     private TextView tVRestUpdate;
 
@@ -61,8 +61,7 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         databaseRefRestNameCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
         databaseRefRestUpdate = FirebaseDatabase.getInstance().getReference("Restaurants");
-
-        databaseRefMenuCheck = FirebaseDatabase.getInstance().getReference("Menus");
+        databaseRefMenuUpdate = FirebaseDatabase.getInstance().getReference("Menus");
 
         tVRestUpdate = findViewById(R.id.tvRestUpdate);
         restNameUp = findViewById(R.id.etRestNameUp);
@@ -91,6 +90,9 @@ public class UpdateRestaurant extends AppCompatActivity {
 
     private void checkRestaurantName() {
 
+        progressDialog.setTitle("Update the Restaurant: " + restNameUpdate + "!!");
+        progressDialog.show();
+
         final String rest_nameCheck = restNameUp.getText().toString().trim();
 
         databaseRefRestNameCheck.orderByChild("rest_Name").equalTo(rest_nameCheck)
@@ -101,7 +103,7 @@ public class UpdateRestaurant extends AppCompatActivity {
                         if (dataSnapshot.exists()) {
                             alertDialogRestExist();
                         } else {
-                            uploadRestDetailsUpdate();
+                            updateRestDetails();
                         }
                     }
 
@@ -112,12 +114,9 @@ public class UpdateRestaurant extends AppCompatActivity {
                 });
     }
 
-    private void uploadRestDetailsUpdate() {
+    private void updateRestDetails() {
 
         if (validateRestDetailsUpdate()) {
-
-            progressDialog.setMessage("The " + restNameUpdate + " restaurant is updating!!");
-            progressDialog.show();
 
             Restaurants rest_Data = new Restaurants(rest_NameUp, rest_AddressUp);
 
@@ -133,8 +132,6 @@ public class UpdateRestaurant extends AppCompatActivity {
                             Toast.makeText(UpdateRestaurant.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
-
-                    progressDialog.dismiss();
                 }
             });
         }
@@ -163,10 +160,11 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         final String menuRest_NameUp = restNameUp.getText().toString().trim();
 
-        databaseRefMenuCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseRefMenuUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
                     Menus menus_restUpdate = postSnapshot.getValue(Menus.class);
 
                     if (menus_restUpdate != null) {
@@ -179,6 +177,7 @@ public class UpdateRestaurant extends AppCompatActivity {
                 }
 
                 progressDialog.dismiss();
+                Toast.makeText(UpdateRestaurant.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
                 finish();
             }
@@ -196,10 +195,12 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Check Restaurant name")
-                .setMessage("The Restaurant: " + rest_alertNameCheck + " already exists!")
+                .setTitle("The Restaurant: " + rest_alertNameCheck + " already exists!")
+                .setMessage("Save the Restaurant with same name?")
                 .setCancelable(false)
-                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
+                .setPositiveButton("YES", (dialog, id) -> updateRestDetails())
+
+                .setNegativeButton("NO", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

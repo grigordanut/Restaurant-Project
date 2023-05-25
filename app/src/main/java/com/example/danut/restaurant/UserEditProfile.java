@@ -3,7 +3,6 @@ package com.example.danut.restaurant;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 
 import androidx.annotation.NonNull;
@@ -45,12 +44,16 @@ public class UserEditProfile extends AppCompatActivity {
 
     private String firstName_UserUp, lastName_UserUp, phone_UserUp, email_UserUp;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit_profile);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: edit Profile");
+
+        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -69,12 +72,7 @@ public class UserEditProfile extends AppCompatActivity {
         phoneUserUp = findViewById(R.id.etPhoneUp);
         emailUserUp = findViewById(R.id.tvEmailUp);
 
-        emailUserUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertEmailChangePlace();
-            }
-        });
+        emailUserUp.setOnClickListener(view -> alertEmailChangePlace());
 
         //save the user details in the database
         Button buttonSaveUp = findViewById(R.id.btnSaveUp);

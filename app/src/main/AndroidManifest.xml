@@ -21,18 +21,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".UpdateMenuDetails" />
         <activity android:name=".RestaurantImageCustomerShowRest" />
         <activity android:name=".UserChangeEmail" />
         <activity android:name=".UserChangePassword" />
         <activity android:name=".UserPage" />
-        <activity android:name=".UpdateMenuOld" />
+        <activity android:name=".UpdateMenu" />
         <activity android:name=".RestaurantImageAdminUpdateRest" />
         <activity android:name=".MenuImageAdminUpdateMenu" />
         <activity android:name=".MenuImageAdminFullList" />
         <activity android:name=".RestaurantImageAdminUpdateMenu" />
         <activity android:name=".RegisterUser" />
-        <activity android:name=".UpdateMenuImage" />
         <activity android:name=".UpdateRestaurant" />
         <activity android:name=".RestaurantImageAdminShowMenu" />
         <activity android:name=".RestaurantImageAdminAddMenu" />

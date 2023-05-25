@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -138,7 +137,7 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
 
                     if (id == 0) {
                         Menus selected_MenuImg = menusList.get(position);
-                        Intent intent = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenuOld.class);
+                        Intent intent = new Intent(MenuImageAdminUpdateMenu.this, UpdateMenu.class);
                         intent.putExtra("MName", selected_MenuImg.getMenu_Name());
                         intent.putExtra("MDesc", selected_MenuImg.getMenu_Description());
                         intent.putExtra("MPrice", String.valueOf(selected_MenuImg.getMenu_Price()));
