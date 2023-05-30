@@ -11,17 +11,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,8 +75,8 @@ public class UserChangeEmail extends AppCompatActivity {
         Button btn_ChangeEmail = findViewById(R.id.btnUserChangeEmail);
         btn_ChangeEmail.setOnClickListener(view -> alertUserEmailNotAuth());
 
-        Button buttonAuthUser = findViewById(R.id.btnAuthUser);
-        buttonAuthUser.setOnClickListener(view -> {
+        Button btn_AuthUser = findViewById(R.id.btnAuthUser);
+        btn_AuthUser.setOnClickListener(view -> {
 
             userOdl_Email = userOdlEmail.getText().toString().trim();
             user_Password = userPassword.getText().toString().trim();
@@ -90,7 +86,7 @@ public class UserChangeEmail extends AppCompatActivity {
                 userPassword.requestFocus();
             } else {
 
-                progressDialog.setMessage("The user is authenticating!");
+                progressDialog.setTitle("The user is authenticating!");
                 progressDialog.show();
 
                 AuthCredential credential = EmailAuthProvider.getCredential(userOdl_Email, user_Password);
@@ -103,8 +99,8 @@ public class UserChangeEmail extends AppCompatActivity {
                         tVUserAuthChangeEmail.setTextColor(Color.BLACK);
 
                         userPassword.setEnabled(false);
-                        buttonAuthUser.setEnabled(false);
-                        buttonAuthUser.setText("Disabled");
+                        btn_AuthUser.setEnabled(false);
+                        btn_AuthUser.setText("Disabled");
                         userNewEmail.requestFocus();
 
                         btn_ChangeEmail.setOnClickListener(view1 -> {
@@ -117,24 +113,14 @@ public class UserChangeEmail extends AppCompatActivity {
                             } else if (!Patterns.EMAIL_ADDRESS.matcher(userNew_Email).matches()) {
                                 userNewEmail.setError("Enter a valid Email Address");
                                 userNewEmail.requestFocus();
+                            } else if (userOdl_Email.matches(userNew_Email)) {
+                                userNewEmail.setError("Please enter a new email\nNew email cannot same as old");
                             } else {
 
-                                progressDialog.setMessage("The user Email is changing!");
+                                progressDialog.setTitle("The user Email is changing!");
                                 progressDialog.show();
 
-                                firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-                                        uploadChangeUserEmailData();
-                                    } else {
-                                        try {
-                                            throw Objects.requireNonNull(task1.getException());
-                                        } catch (Exception e) {
-                                            Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    progressDialog.dismiss();
-                                });
+                                updateUserEmail();
                             }
                         });
 
@@ -169,10 +155,26 @@ public class UserChangeEmail extends AppCompatActivity {
         alertDialog.show();
     }
 
+    private void updateUserEmail(){
+
+        firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful()) {
+                uploadChangeUserEmailData();
+            } else {
+                try {
+                    throw Objects.requireNonNull(task1.getException());
+                } catch (Exception e) {
+                    Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            progressDialog.dismiss();
+        });
+    }
+
+
     private void uploadChangeUserEmailData() {
 
-        userNew_Email = userNewEmail.getText().toString().trim();
-        
         String user_Id = firebaseUser.getUid();
 
         databaseReference.child(user_Id).child("user_email").setValue(userNew_Email).addOnCompleteListener(task -> {
@@ -194,27 +196,25 @@ public class UserChangeEmail extends AppCompatActivity {
 
     private void sendEmailVerification() {
 
-        if (firebaseUser != null) {
+        firebaseUser.sendEmailVerification().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
 
-            firebaseUser.sendEmailVerification().addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
+                Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
+                finish();
 
-                    Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
-                    finish();
+            } else {
+                try {
+                    throw Objects.requireNonNull(task.getException());
+                } catch (Exception e) {
+                    Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                } else {
-                    try {
-                        throw Objects.requireNonNull(task.getException());
-                    } catch (Exception e) {
-                        Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
                 }
+            }
 
-                progressDialog.dismiss();
-            });
-        }
+            progressDialog.dismiss();
+        });
+
     }
 
 
