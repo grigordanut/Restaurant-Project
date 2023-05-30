@@ -208,7 +208,7 @@ public class UserPage extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
         alertDialogBuilder
-                .setTitle("Log out User")
+                .setTitle("Log out User!!")
                 .setMessage("Are you sure to Log out?")
                 .setCancelable(false)
                 .setPositiveButton("YES", (dialog, id) -> {

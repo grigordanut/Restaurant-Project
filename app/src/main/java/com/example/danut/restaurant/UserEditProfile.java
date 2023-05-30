@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -72,16 +71,11 @@ public class UserEditProfile extends AppCompatActivity {
         phoneUserUp = findViewById(R.id.etPhoneUp);
         emailUserUp = findViewById(R.id.tvEmailUp);
 
-        emailUserUp.setOnClickListener(view -> alertEmailChangePlace());
+        emailUserUp.setOnClickListener(view -> alertChangeEmailPlace());
 
         //save the user details in the database
-        Button buttonSaveUp = findViewById(R.id.btnSaveUp);
-        buttonSaveUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateUserDetails();
-            }
-        });
+        Button btn_SaveUp = findViewById(R.id.btnSaveUp);
+        btn_SaveUp.setOnClickListener(v -> updateUserDetails());
     }
 
     private void updateUserDetails() {
@@ -178,13 +172,13 @@ public class UserEditProfile extends AppCompatActivity {
         });
     }
 
-    private void alertEmailChangePlace() {
+    private void alertChangeEmailPlace() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("Change User Email")
-                .setMessage("The Email Address cannot be change here.\nPlease use Change Email option!")
+                .setMessage("The Email Address cannot be change here.\nPlease use Change Email option!!")
                 .setCancelable(false)
-                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

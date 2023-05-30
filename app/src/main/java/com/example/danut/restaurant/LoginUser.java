@@ -63,33 +63,22 @@ public class LoginUser extends AppCompatActivity {
         });
 
         //Action button Cancel Log in user
-        Button buttonCancelLogUser = findViewById(R.id.btnCancelLogUser);
-        buttonCancelLogUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                emailLogUser.setText("");
-                passwordLogUser.setText("");
-            }
+        Button btn_CancelLogUser = findViewById(R.id.btnCancelLogUser);
+        btn_CancelLogUser.setOnClickListener(v -> {
+            emailLogUser.setText("");
+            passwordLogUser.setText("");
         });
 
         //Action button Register User
-        Button buttonRegLogUser = findViewById(R.id.btnRegLogUser);
-        buttonRegLogUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent sign = new Intent(LoginUser.this, RegisterUser.class);
-                startActivity(sign);
-            }
+        Button btn_RegLogUser = findViewById(R.id.btnRegLogUser);
+        btn_RegLogUser.setOnClickListener(view -> {
+            Intent sign = new Intent(LoginUser.this, RegisterUser.class);
+            startActivity(sign);
         });
 
         //Action button LogIn User
-        Button buttonLogInUser = findViewById(R.id.btnLogInUser);
-        buttonLogInUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logInUser();
-            }
-        });
+        Button btn_LogInUser = findViewById(R.id.btnLogInUser);
+        btn_LogInUser.setOnClickListener(view -> logInUser());
     }
 
     private void logInUser() {
@@ -97,7 +86,7 @@ public class LoginUser extends AppCompatActivity {
         //Log in a new user
         if (validateUserData()) {
 
-            progressDialog.setMessage("Log in User!");
+            progressDialog.setTitle("Log in User!!");
             progressDialog.show();
 
             firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

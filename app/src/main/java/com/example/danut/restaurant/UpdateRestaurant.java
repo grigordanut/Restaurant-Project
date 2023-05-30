@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -167,17 +166,16 @@ public class UpdateRestaurant extends AppCompatActivity {
 
                     Menus menus_restUpdate = postSnapshot.getValue(Menus.class);
 
-                    if (menus_restUpdate != null) {
-                        String menuRest_Key = menus_restUpdate.getRestaurant_Key();
+                    assert menus_restUpdate != null;
+                    String menuRest_Key = menus_restUpdate.getRestaurant_Key();
 
-                        if (menuRest_Key.equals(restKeyUpdate)) {
-                            postSnapshot.getRef().child("restaurant_Name").setValue(menuRest_NameUp);
-                        }
+                    if (menuRest_Key.equals(restKeyUpdate)) {
+                        postSnapshot.getRef().child("restaurant_Name").setValue(menuRest_NameUp);
                     }
                 }
 
                 progressDialog.dismiss();
-                Toast.makeText(UpdateRestaurant.this, "Bike Store Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(UpdateRestaurant.this, "Restaurant Updated", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
                 finish();
             }

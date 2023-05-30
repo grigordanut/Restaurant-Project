@@ -145,7 +145,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                 .centerCrop()
                 .into(img_full);
 
-        // set dialog message
+        //set dialog message
         alertDialogBuilder
                 .setTitle("Menu Name: " + selected_Menu.getMenu_Name())
                 .setView(promptsView)
@@ -154,8 +154,6 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
-
-        // show it
         alertDialog.show();
     }
 }

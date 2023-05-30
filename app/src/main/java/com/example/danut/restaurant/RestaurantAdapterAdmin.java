@@ -21,8 +21,8 @@ import java.util.List;
 
 public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapterAdmin.ImageViewHolder> {
 
-    private Context restaurantsContext;
-    private List<Restaurants> restaurantsUploads;
+    private final Context restaurantsContext;
+    private final List<Restaurants> restaurantsUploads;
 
     private FirebaseStorage menusStorage;
     private DatabaseReference databaseReference;
@@ -76,7 +76,7 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(BikeStoreAdapterAddBikesAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(RestaurantAdapterAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

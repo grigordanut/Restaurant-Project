@@ -7,10 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.text.TextUtils;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Objects;
 
@@ -29,44 +27,40 @@ public class ContactForm extends AppCompatActivity {
         final EditText mySubject = findViewById(R.id.mySubject);
         final EditText myMessage = findViewById(R.id.myMessage);
 
-        Button buttonSendMessage = (Button) findViewById(R.id.btnSendMessage);
-        buttonSendMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        Button btn_SendMessage = (Button) findViewById(R.id.btnSendMessage);
+        btn_SendMessage.setOnClickListener(v -> {
 
-                String name = myName.getText().toString();
-                String email = myEmail.getText().toString();
-                String subject = mySubject.getText().toString();
-                String message = myMessage.getText().toString();
+            String name = myName.getText().toString();
+            String email = myEmail.getText().toString();
+            String subject = mySubject.getText().toString();
+            String message = myMessage.getText().toString();
 
-                if (TextUtils.isEmpty(name)) {
-                    myName.setError("Enter Your Name");
-                    myName.requestFocus();
-                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                    Toast.makeText(ContactForm.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
-                    myEmail.setError("Enter a valid Email Address");
-                    myEmail.requestFocus();
-                } else if (TextUtils.isEmpty(subject)) {
-                    mySubject.setError("Enter Your Subject");
-                    mySubject.requestFocus();
-                } else if (TextUtils.isEmpty(message)) {
-                    myMessage.setError("Enter Your Message");
-                    myMessage.requestFocus();
-                } else {
-                    Intent sendEmail = new Intent(android.content.Intent.ACTION_SEND);
+            if (TextUtils.isEmpty(name)) {
+                myName.setError("Enter Your Name");
+                myName.requestFocus();
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                myEmail.setError("Enter a valid Email Address");
+                myEmail.requestFocus();
+            } else if (TextUtils.isEmpty(subject)) {
+                mySubject.setError("Enter Your Subject");
+                mySubject.requestFocus();
+            } else if (TextUtils.isEmpty(message)) {
+                myMessage.setError("Enter Your Message");
+                myMessage.requestFocus();
+            } else {
+                Intent sendEmail = new Intent(Intent.ACTION_SEND);
 
-                    /* insert email Data */
-                    sendEmail.setType("plain/text");
-                    sendEmail.putExtra(android.content.Intent.EXTRA_EMAIL, new String[]{"restaurant.deals70@gmail.com"});
-                    sendEmail.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
-                    sendEmail.putExtra(android.content.Intent.EXTRA_TEXT,
-                            "name:" + name + '\n' + "Email ID:" + email + '\n' + "Message:" + '\n' + message);
+                /* insert email Data */
+                sendEmail.setType("plain/text");
+                sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[]{"restaurant.deals70@gmail.com"});
+                sendEmail.putExtra(Intent.EXTRA_SUBJECT, subject);
+                sendEmail.putExtra(Intent.EXTRA_TEXT,
+                        "name:" + name + '\n' + "Email ID:" + email + '\n' + "Message:" + '\n' + message);
 
-                    // Send message to the Activity
-                    startActivity(Intent.createChooser(sendEmail, "Send mail..."));
-                }
-
+                // Send message to the Activity
+                startActivity(Intent.createChooser(sendEmail, "Send mail..."));
             }
+
         });
     }
 

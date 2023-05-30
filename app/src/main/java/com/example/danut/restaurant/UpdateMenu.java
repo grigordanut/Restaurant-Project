@@ -171,7 +171,7 @@ public class UpdateMenu extends AppCompatActivity {
             menuDescription_Update = etMenuDescription_Update.getText().toString().trim();
             menuPrice_Update = Double.parseDouble(etMenuPrice_Update.getText().toString().trim());
 
-            progressDialog.setTitle("The Menu is updating!");
+            progressDialog.setTitle("The Menu is updating!!");
             progressDialog.show();
 
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUpdate));
@@ -195,7 +195,6 @@ public class UpdateMenu extends AppCompatActivity {
                                     }
 
                                     deleteOldMenuPicture();
-                                    progressDialog.dismiss();
                                     Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(UpdateMenu.this, AdminPage.class));
                                     finish();
@@ -241,6 +240,7 @@ public class UpdateMenu extends AppCompatActivity {
                         postSnapshot.getRef().child("menu_Price").setValue(menuPrice_Update);
                     }
 
+                    progressDialog.dismiss();
                     Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(UpdateMenu.this, AdminPage.class));
                     finish();

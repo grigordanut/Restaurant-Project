@@ -52,6 +52,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import Modules.DirectionFinder;
 import Modules.DirectionFinderListener;
@@ -108,6 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // get notified when  map is ready.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
+        assert mapFragment != null;
         mapFragment.getMapAsync(this);
         points = new ArrayList<>();
 
@@ -157,7 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
 
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
         mMap.getUiSettings().setZoomControlsEnabled(true);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -170,7 +172,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             // Click method to add Points, reset if more than 2
             @Override
-            public void onMapLongClick(LatLng latLng) {
+            public void onMapLongClick(@NonNull LatLng latLng) {
                 //Reset marker when already 2
                 if (points.size() > 1) {
                     points.clear();
@@ -267,13 +269,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuilder = new StringBuilder();
             String line = "";
             while ((line = bufferedReader.readLine()) != null) {
-                stringBuffer.append(line);
+                stringBuilder.append(line);
             }
 
-            responseString = stringBuffer.toString();
+            responseString = stringBuilder.toString();
             bufferedReader.close();
             inputStreamReader.close();
 
@@ -283,6 +285,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (inputStream != null) {
                 inputStream.close();
             }
+            assert httpURLConnection != null;
             httpURLConnection.disconnect();
         }
         return responseString;
@@ -311,9 +314,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         myLocationRequest.setInterval(1000);
         myLocationRequest.setFastestInterval(1000);
         myLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        //if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-        //return;
     }
 
     @Override
@@ -357,7 +357,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     */
 
-    ////on Touch
+    //on Touch
     @SuppressLint("StaticFieldLeak")
     public class TaskRequestDirections extends AsyncTask<String, Void, String> {
 
@@ -382,6 +382,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //on Touch
+    @SuppressLint("StaticFieldLeak")
     public class TaskParser extends AsyncTask<String, Void, List<List<HashMap<String, String>>>> {
 
         @Override
@@ -412,8 +413,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 polylineOptions = new PolylineOptions();
 
                 for (HashMap<String, String> point : path) {
-                    double lat = Double.parseDouble(point.get("lat"));
-                    double lon = Double.parseDouble(point.get("lon"));
+                    double lat = Double.parseDouble(Objects.requireNonNull(point.get("lat")));
+                    double lon = Double.parseDouble(Objects.requireNonNull(point.get("lon")));
 
                     points.add(new LatLng(lat, lon));
                 }
@@ -433,13 +434,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //Get distance and show on Button
+    @SuppressLint("SetTextI18n")
     public void gDistance() {
 
         float[] distance = new float[1];
 
         Location.distanceBetween(latitude, longitude, endLatitude, endLongitude, distance); // in km;
 
-        btnShowDistance.setText("Distance: " + String.valueOf(distance[0]));
+        btnShowDistance.setText("Distance: " + (distance[0]));
     }
 
     //Search method
@@ -502,9 +504,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     //Show Nearby Location
+    @SuppressLint("NonConstantResourceId")
     public void onClick(View v) {
 
-        Object dataTransfer[] = new Object[2];
+        Object[] dataTransfer = new Object[2];
         GetNearbyPlacesData getNearbyPlacesData = new GetNearbyPlacesData();
 
         switch (v.getId()) {
@@ -554,8 +557,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         StringBuilder googlePlaceUrl = new StringBuilder(" https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=53.350638,-6.2833727");
         //googlePlaceUrl.append("location="+latitude+","+longitude);
-        googlePlaceUrl.append("&radius=" + PROXIMITY_RADIUS);
-        googlePlaceUrl.append("&type=" + nearbyPlace);
+        googlePlaceUrl.append("&radius=").append(PROXIMITY_RADIUS);
+        googlePlaceUrl.append("&type=").append(nearbyPlace);
         googlePlaceUrl.append("&sensor=true");
         googlePlaceUrl.append("&key=" + "AIzaSyDogzVfmVckJxGEVbWTQc4ljUg8dzgID7E");
 

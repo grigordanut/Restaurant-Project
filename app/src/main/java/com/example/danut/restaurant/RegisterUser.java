@@ -3,7 +3,6 @@ package com.example.danut.restaurant;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,36 +56,25 @@ public class RegisterUser extends AppCompatActivity {
         passRegUser = findViewById(R.id.etPassRegUser);
         confPassRegUser = findViewById(R.id.etConfPassRegUser);
 
-        Button buttonRegUser = findViewById(R.id.btnRegUser);
-        buttonRegUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                registerUser();
-            }
-        });
+        Button btn_RegUser = findViewById(R.id.btnRegUser);
+        btn_RegUser.setOnClickListener(view -> registerUser());
 
         //action button cancel
         Button buttonCancelRegUser = (Button) findViewById(R.id.btnCancelRegUser);
-        buttonCancelRegUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                firstNameRegUser.setText("");
-                lastNameRegUser.setText("");
-                phoneNrRegUser.setText("");
-                emailRegUser.setText("");
-                passRegUser.setText("");
-                confPassRegUser.setText("");
-            }
+        buttonCancelRegUser.setOnClickListener(v -> {
+            firstNameRegUser.setText("");
+            lastNameRegUser.setText("");
+            phoneNrRegUser.setText("");
+            emailRegUser.setText("");
+            passRegUser.setText("");
+            confPassRegUser.setText("");
         });
 
         //Action TextView Log In
-        Button buttonRegLogUser = findViewById(R.id.btnRegLogUser);
-        buttonRegLogUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent textLog = new Intent(RegisterUser.this, LoginUser.class);
-                startActivity(textLog);
-            }
+        Button btn_RegLogUser = findViewById(R.id.btnRegLogUser);
+        btn_RegLogUser.setOnClickListener(view -> {
+            Intent textLog = new Intent(RegisterUser.this, LoginUser.class);
+            startActivity(textLog);
         });
     }
 

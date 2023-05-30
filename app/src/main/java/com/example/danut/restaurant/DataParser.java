@@ -1,5 +1,4 @@
 package com.example.danut.restaurant;
-//nearby place
 
 import android.util.Log;
 

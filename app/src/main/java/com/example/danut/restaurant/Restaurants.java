@@ -2,8 +2,6 @@ package com.example.danut.restaurant;
 
 import com.google.firebase.database.Exclude;
 
-import java.util.List;
-
 /**
  * Created by danut on 25/03/2018.
  */
