@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -71,9 +70,7 @@ public class RegisterUser extends AppCompatActivity {
 
         //Action TextView Log In
         Button btn_RegLogUser = findViewById(R.id.btnRegLogUser);
-        btn_RegLogUser.setOnClickListener(view -> {
-            startActivity(new Intent(RegisterUser.this, LoginUser.class));
-        });
+        btn_RegLogUser.setOnClickListener(view -> startActivity(new Intent(RegisterUser.this, LoginUser.class)));
     }
 
     private void registerUser() {
@@ -83,23 +80,20 @@ public class RegisterUser extends AppCompatActivity {
             progressDialog.setTitle("Registering User details!!");
             progressDialog.show();
 
-            firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
+            firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser).addOnCompleteListener(task -> {
 
-                    if (task.isSuccessful()) {
-                        uploadUserData();
+                if (task.isSuccessful()) {
+                    uploadUserData();
 
-                    } else {
-                        try {
-                            throw Objects.requireNonNull(task.getException());
-                        } catch (Exception e) {
-                            Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-                    progressDialog.dismiss();
                 }
+
+                progressDialog.dismiss();
             });
         }
     }

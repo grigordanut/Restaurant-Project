@@ -9,14 +9,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -85,7 +82,7 @@ public class UpdateRestaurant extends AppCompatActivity {
 
     private void checkRestaurantName() {
 
-        progressDialog.setTitle("Update the Restaurant: " + restNameUpdate + "!!");
+        progressDialog.setTitle("Update Restaurant details!!");
         progressDialog.show();
 
         final String rest_nameCheck = restNameUp.getText().toString().trim();

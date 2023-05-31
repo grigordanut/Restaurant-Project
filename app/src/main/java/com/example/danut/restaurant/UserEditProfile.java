@@ -82,6 +82,9 @@ public class UserEditProfile extends AppCompatActivity {
 
         if (validateUserUpdateData()) {
 
+            progressDialog.setTitle("Update User details!!");
+            progressDialog.show();
+
             firstName_UserUp = firstNameUserUp.getText().toString().trim();
             lastName_UserUp = lastNameUserUp.getText().toString().trim();
             phone_UserUp = phoneUserUp.getText().toString().trim();
@@ -100,8 +103,10 @@ public class UserEditProfile extends AppCompatActivity {
                         }
                     }
 
+                    progressDialog.dismiss();
                     Toast.makeText(UserEditProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(UserEditProfile.this, LoginUser.class));
+                    //startActivity(new Intent(UserEditProfile.this, LoginUser.class));
+                    startActivity(new Intent(UserEditProfile.this, UserPage.class));
                     finish();
                 }
 
@@ -153,14 +158,13 @@ public class UserEditProfile extends AppCompatActivity {
 
                     Users user_Data = postSnapshot.getValue(Users.class);
 
-                    if (user_Data != null) {
-                        if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
-                            firstNameUserUp.setText(user_Data.getUser_firstName());
-                            lastNameUserUp.setText(user_Data.getUser_lastName());
-                            phoneUserUp.setText(user_Data.getUser_phone());
-                            emailUserUp.setText(user_Data.getUser_email());
-                            tVUserNameUp.setText("Edit profile of: " + user_Data.getUser_firstName() + " " + user_Data.getUser_lastName());
-                        }
+                    assert user_Data != null;
+                    if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
+                        firstNameUserUp.setText(user_Data.getUser_firstName());
+                        lastNameUserUp.setText(user_Data.getUser_lastName());
+                        phoneUserUp.setText(user_Data.getUser_phone());
+                        emailUserUp.setText(user_Data.getUser_email());
+                        tVUserNameUp.setText("Edit profile of: " + user_Data.getUser_firstName() + " " + user_Data.getUser_lastName());
                     }
                 }
             }
@@ -175,8 +179,8 @@ public class UserEditProfile extends AppCompatActivity {
     private void alertChangeEmailPlace() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Change User Email")
-                .setMessage("The Email Address cannot be change here.\nPlease use Change Email option!!")
+                .setTitle("Change User Email!!")
+                .setMessage("The Email Address cannot be change here.\nPlease use Change Email option.")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
