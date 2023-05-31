@@ -104,21 +104,19 @@ public class LoginUser extends AppCompatActivity {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        if (firebaseUser != null) {
+        assert firebaseUser != null;
+        if (firebaseUser.isEmailVerified()) {
 
-            if (firebaseUser.isEmailVerified()) {
+            Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(LoginUser.this, UserPage.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
 
-                Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(LoginUser.this, UserPage.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-
-            } else {
-                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            }
-            progressDialog.dismiss();
+        } else {
+            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
         }
+        progressDialog.dismiss();
     }
 
     //validate input data into the editText
