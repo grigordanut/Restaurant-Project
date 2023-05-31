@@ -62,7 +62,7 @@ import Modules.Route;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
-    private Button btnShowDistance, btnClear;
+    private Button btn_ShowDistance, btn_Clear;
     LocationRequest myLocationRequest;
 
     private double latitude, longitude;
@@ -90,22 +90,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
 
         //Clear button
-        btnClear = (Button) findViewById(R.id.btnClear);
-        btnClear.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                mMap.clear();
-            }
-
-        });
+        btn_Clear = findViewById(R.id.btnClear);
+        btn_Clear.setOnClickListener(v -> mMap.clear());
 
         //show Distance Button
-        btnShowDistance = (Button) findViewById(R.id.btnShowDistance);
-        btnShowDistance.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gDistance();
-            }
-        });
+        btn_ShowDistance = findViewById(R.id.btnShowDistance);
+        btn_ShowDistance.setOnClickListener(v -> gDistance());
+
         // get notified when  map is ready.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -441,7 +432,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Location.distanceBetween(latitude, longitude, endLatitude, endLongitude, distance); // in km;
 
-        btnShowDistance.setText("Distance: " + (distance[0]));
+        btn_ShowDistance.setText("Distance: " + (distance[0]));
     }
 
     //Search method

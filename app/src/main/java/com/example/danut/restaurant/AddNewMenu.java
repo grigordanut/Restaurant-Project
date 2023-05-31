@@ -128,7 +128,7 @@ public class AddNewMenu extends AppCompatActivity {
             menu_Description = menuDescription.getText().toString().trim();
             menu_Price = Double.parseDouble(menuPrice.getText().toString().trim());
 
-            progressDialog.setTitle("The Menu is uploading!!");
+            progressDialog.setTitle("Upload Menu details!!");
             progressDialog.show();
 
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
@@ -139,8 +139,6 @@ public class AddNewMenu extends AppCompatActivity {
                                 Handler handler = new Handler();
                                 handler.postDelayed(() -> progressDialog.setProgress(0), 2000);
 
-                                Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
-
                                 Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
                                 String menu_Id = databaseReference.push().getKey();
 
@@ -148,6 +146,7 @@ public class AddNewMenu extends AppCompatActivity {
                                 databaseReference.child(menu_Id).setValue(menus);
 
                                 startActivity(new Intent(AddNewMenu.this, AdminPage.class));
+                                Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
                                 finish();
 
                             }))

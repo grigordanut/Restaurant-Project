@@ -41,7 +41,7 @@ public class DownloadURL {
         }
         //Execute exception (ignoring Try Catch)
         finally {
-            if (inputStream != null){
+            if (inputStream != null) {
                 inputStream.close();
                 urlConnection.disconnect();
             }

@@ -67,7 +67,7 @@ public class LoginUser extends AppCompatActivity {
         btn_LogInUser.setOnClickListener(view -> logInUser());
     }
 
-    private void logInUser() {
+    public void logInUser() {
 
         //Log in a new user
         if (validateUserData()) {
@@ -100,7 +100,7 @@ public class LoginUser extends AppCompatActivity {
     }
 
     //check if the email has been verified
-    private void checkEmailVerification() {
+    public void checkEmailVerification() {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -122,7 +122,7 @@ public class LoginUser extends AppCompatActivity {
     }
 
     //validate input data into the editText
-    private Boolean validateUserData() {
+    public Boolean validateUserData() {
 
         boolean result = false;
 

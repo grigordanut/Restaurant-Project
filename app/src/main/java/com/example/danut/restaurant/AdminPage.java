@@ -143,7 +143,7 @@ public class AdminPage extends AppCompatActivity {
         return true;
     }
 
-    private void adminLogOut() {
+    public void adminLogOut() {
         alertDialogAdminLogout();
     }
 
@@ -164,7 +164,7 @@ public class AdminPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void alertDialogAdminLogout() {
+    public void alertDialogAdminLogout() {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
         alertDialogBuilder

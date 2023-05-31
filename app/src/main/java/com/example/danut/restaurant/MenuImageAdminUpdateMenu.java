@@ -68,7 +68,6 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
         }
 
         tVMenuImageUpdateMenuRestName.setText("Restaurant: " + restaurantName);
-        tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -103,12 +102,15 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
                             menusList.add(menu_Data);
                             tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
                         }
+                        if(menusList.size() == 0) {
+                            tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
+                        }
                     }
 
                     menuAdapterAdmin.notifyDataSetChanged();
                 }
                 else {
-                    tVMenuImageUpdateMenuMenusAv.setText("No added Menus were found.");
+                    tVMenuImageUpdateMenuMenusAv.setText("There are not Menus added");
                 }
 
                 progressDialog.dismiss();

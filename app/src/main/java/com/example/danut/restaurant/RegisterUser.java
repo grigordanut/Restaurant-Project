@@ -58,7 +58,7 @@ public class RegisterUser extends AppCompatActivity {
         btn_RegUser.setOnClickListener(view -> registerUser());
 
         //action button cancel
-        Button btn_CancelRegUser = (Button) findViewById(R.id.btnCancelRegUser);
+        Button btn_CancelRegUser = findViewById(R.id.btnCancelRegUser);
         btn_CancelRegUser.setOnClickListener(v -> {
             firstNameRegUser.setText("");
             lastNameRegUser.setText("");

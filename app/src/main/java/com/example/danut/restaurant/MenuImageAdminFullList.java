@@ -72,9 +72,7 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
 
         //Action button new Menu
         Button btn_NewMenuFullList = findViewById(R.id.btnNewMenuFullList);
-        btn_NewMenuFullList.setOnClickListener(v -> {
-            startActivity(new Intent(MenuImageAdminFullList.this, RestaurantImageAdminAddMenu.class));
-        });
+        btn_NewMenuFullList.setOnClickListener(v -> startActivity(new Intent(MenuImageAdminFullList.this, RestaurantImageAdminAddMenu.class)));
 
         //Action button back to Admin page
         Button btn_BackAdminFullList = findViewById(R.id.btnBackAdminFullList);
@@ -103,9 +101,8 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                     }
 
                     menuAdapterAdminFullList.notifyDataSetChanged();
-                }
-                else {
-                    tVMenusAvFullListAdmin.setText("No added Menus were found.");
+                } else {
+                    tVMenusAvFullListAdmin.setText("There are not Menus added");
                 }
 
                 progressDialog.dismiss();
@@ -123,10 +120,10 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
     public void onItemClick(final int position) {
 
         final String[] options = {"Update this Menu", "Delete this Menu"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_item, options);
         Menus selected_Menu = menusList.get(position);
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuImageAdminFullList.this);
         alertDialogBuilder
                 .setTitle("Selected Menu: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
                 .setCancelable(false)
@@ -163,13 +160,13 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                 .setMessage("Are you sure to delete the menu:\n" + selected_Menu.getMenu_Name() + "?")
                 .setCancelable(false)
                 .setPositiveButton("YES", (dialog, id) -> {
-                            final String selectedMenuKey = selected_Menu.getMenu_Key();
-                            StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
-                            imageReference.delete().addOnSuccessListener(aVoid -> {
-                                databaseRefMenu.child(selectedMenuKey).removeValue();
-                                Toast.makeText(MenuImageAdminFullList.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
-                            });
-                        })
+                    final String selectedMenuKey = selected_Menu.getMenu_Key();
+                    StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
+                    imageReference.delete().addOnSuccessListener(aVoid -> {
+                        databaseRefMenu.child(selectedMenuKey).removeValue();
+                        Toast.makeText(MenuImageAdminFullList.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
+                    });
+                })
 
                 .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
 

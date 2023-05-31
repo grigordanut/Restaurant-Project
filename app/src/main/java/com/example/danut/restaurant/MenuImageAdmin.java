@@ -100,7 +100,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         loadMenusAdmin();
     }
 
-    private void loadMenusAdmin() {
+    public void loadMenusAdmin() {
         menuEventListener = databaseRefMenu.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
@@ -124,8 +124,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                     }
 
                     menuAdapterAdmin.notifyDataSetChanged();
-                }
-                else {
+                } else {
                     tVMenusAvAdmin.setText("There are not Menus added");
                     alertDialogNoMenusAvailable();
                 }
@@ -142,7 +141,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
     //Action on menus onClick
     @Override
-    public void onItemClick(final int position) {
+    public void onItemClick(int position) {
 
         final String[] options = {"Update this Menu", "Delete this Menu"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
@@ -176,13 +175,13 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         alertDialog.show();
     }
 
-    private void confirmDeletion(final int position) {
+    public void confirmDeletion(final int position) {
 
         Menus selected_Menu = menusList.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuImageAdmin.this);
         alertDialogBuilder
-                .setTitle("Delete menu from Restaurant!!")
+                .setTitle("Delete Menu from restaurant!!")
                 .setMessage("Are you sure to delete the menu:\n" + selected_Menu.getMenu_Name() + "?")
                 .setCancelable(false)
                 .setPositiveButton("YES", (dialog, id) -> {
@@ -211,7 +210,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     }
 
     public void alertDialogNoMenusAvailable() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuImageAdmin.this);
         alertDialogBuilder
                 .setTitle("There are not Menus available!!")
                 .setMessage("Would you like to add Menus?")

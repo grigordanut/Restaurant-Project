@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -56,15 +55,12 @@ public class AddNewRestaurant extends AppCompatActivity {
         etRest_Name = findViewById(R.id.etRestName);
         etRest_Address = findViewById(R.id.etRestAddress);
 
-        Button buttonSaveRestaurant = findViewById(R.id.btnSaveRestaurant);
-        buttonSaveRestaurant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (restUploadTask != null && restUploadTask.isInProgress()) {
-                    Toast.makeText(AddNewRestaurant.this, "Upload restaurant in Progress", Toast.LENGTH_SHORT).show();
-                }
-                checkRestaurantName();
+        Button btn_SaveRestaurant = findViewById(R.id.btnSaveRestaurant);
+        btn_SaveRestaurant.setOnClickListener(v -> {
+            if (restUploadTask != null && restUploadTask.isInProgress()) {
+                Toast.makeText(AddNewRestaurant.this, "Upload restaurant in Progress", Toast.LENGTH_SHORT).show();
             }
+            checkRestaurantName();
         });
     }
 
@@ -95,7 +91,7 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         if (validateRestDetails()) {
 
-            progressDialog.setTitle("The Restaurant is uploading!!");
+            progressDialog.setTitle("Upload Restaurant details!!");
             progressDialog.show();
 
             String rest_Id = databaseRefRest.push().getKey();
