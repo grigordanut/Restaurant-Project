@@ -88,7 +88,7 @@ public class UserPage extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         userEventListener = userDatabaseReference.addValueEventListener(new ValueEventListener() {
-            @SuppressLint({"SetTextI18n", "NewApi"})
+            @SuppressLint({"SetTextI18n", "NewApi", "NonConstantResourceId"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -104,47 +104,43 @@ public class UserPage extends AppCompatActivity {
                                 + users_Data.getUser_lastName() + "\n\nEmail: \n" + users_Data.getUser_email());
 
                         //Adding Click Events to our navigation drawer item
-                        navigationViewUser.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-                            @SuppressLint("NonConstantResourceId")
-                            @Override
-                            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                                int id = item.getItemId();
-                                switch (id) {
-                                    //Show Restaurants
-                                    case R.id.user_showRests:
-                                        Intent show_Rests = new Intent(UserPage.this, RestaurantImageCustomerShowRest.class);
-                                        startActivity(show_Rests);
-                                        break;
+                        navigationViewUser.setNavigationItemSelectedListener(item -> {
+                            int id = item.getItemId();
+                            switch (id) {
+                                //Show Restaurants
+                                case R.id.user_showRests:
+                                    Intent show_Rests = new Intent(UserPage.this, RestaurantImageCustomerShowRest.class);
+                                    startActivity(show_Rests);
+                                    break;
 
-                                    //Show Menus
-                                    case R.id.user_showMenus:
-                                        Intent show_Menus = new Intent(UserPage.this, RestaurantImageCustomerShowMenu.class);
-                                        startActivity(show_Menus);
-                                        break;
+                                //Show Menus
+                                case R.id.user_showMenus:
+                                    Intent show_Menus = new Intent(UserPage.this, RestaurantImageCustomerShowMenu.class);
+                                    startActivity(show_Menus);
+                                    break;
 
-                                    //Edit User profile
-                                    case R.id.user_editProfile:
-                                        Intent edit_Profile = new Intent(UserPage.this, UserEditProfile.class);
-                                        startActivity(edit_Profile);
-                                        break;
+                                //Edit User profile
+                                case R.id.user_editProfile:
+                                    Intent edit_Profile = new Intent(UserPage.this, UserEditProfile.class);
+                                    startActivity(edit_Profile);
+                                    break;
 
-                                    //Change User email
-                                    case R.id.user_changeEmail:
-                                        Intent change_Email = new Intent(UserPage.this, UserChangeEmail.class);
-                                        startActivity(change_Email);
-                                        break;
+                                //Change User email
+                                case R.id.user_changeEmail:
+                                    Intent change_Email = new Intent(UserPage.this, UserChangeEmail.class);
+                                    startActivity(change_Email);
+                                    break;
 
-                                    //Change User Password
-                                    case R.id.user_changePassword:
-                                        Intent change_Password = new Intent(UserPage.this, UserChangePassword.class);
-                                        startActivity(change_Password);
-                                        break;
+                                //Change User Password
+                                case R.id.user_changePassword:
+                                    Intent change_Password = new Intent(UserPage.this, UserChangePassword.class);
+                                    startActivity(change_Password);
+                                    break;
 
-                                    default:
-                                        return true;
-                                }
-                                return true;
+                                default:
+                                    return true;
                             }
+                            return true;
                         });
                     }
                 }

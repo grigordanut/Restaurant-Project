@@ -50,6 +50,7 @@ public class AdminPage extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggleAdmin;
     private NavigationView navigationViewAdmin;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,60 +83,56 @@ public class AdminPage extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         //Adding Click Events to navigation drawer item
-        navigationViewAdmin.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                switch (id) {
+        navigationViewAdmin.setNavigationItemSelectedListener(item -> {
+            int id = item.getItemId();
+            switch (id) {
 
-                    //Add new Restaurant
-                    case R.id.adminAdd_restaurant:
-                        Toast.makeText(AdminPage.this, "Add New Restaurant", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, AddNewRestaurant.class));
-                        break;
+                //Add new Restaurant
+                case R.id.adminAdd_restaurant:
+                    Toast.makeText(AdminPage.this, "Add New Restaurant", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AdminPage.this, AddNewRestaurant.class));
+                    break;
 
-                    //Show the list of Restaurants available
-                    case R.id.adminShow_restaurant:
-                        Toast.makeText(AdminPage.this, "Show Restaurants", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowRest.class));
-                        break;
+                //Show the list of Restaurants available
+                case R.id.adminShow_restaurant:
+                    Toast.makeText(AdminPage.this, "Show Restaurants", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowRest.class));
+                    break;
 
-                    //Edit the Restaurants available
-                    case R.id.adminUpdate_restaurant:
-                        Toast.makeText(AdminPage.this, "Update Restaurant", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateRest.class));
-                        break;
+                //Edit the Restaurants available
+                case R.id.adminUpdate_restaurant:
+                    Toast.makeText(AdminPage.this, "Update Restaurant", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateRest.class));
+                    break;
 
-                    //Add Menus to the Restaurants available
-                    case R.id.adminAdd_menu:
-                        Toast.makeText(AdminPage.this, "Add Menu to Restaurant", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, RestaurantImageAdminAddMenu.class));
-                        break;
+                //Add Menus to the Restaurants available
+                case R.id.adminAdd_menu:
+                    Toast.makeText(AdminPage.this, "Add Menu to Restaurant", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminAddMenu.class));
+                    break;
 
-                    //Show the list of Menus available ordered by Restaurants
-                    case R.id.adminShow_menus:
-                        Toast.makeText(AdminPage.this, "Show list of Menus", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowMenu.class));
-                        break;
+                //Show the list of Menus available ordered by Restaurants
+                case R.id.adminShow_menus:
+                    Toast.makeText(AdminPage.this, "Show list of Menus", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowMenu.class));
+                    break;
 
-                    //Show the full list of Menus available
-                    case R.id.adminShow_menusFullList:
-                        Toast.makeText(AdminPage.this, "Show full list of Menus", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, MenuImageAdminFullList.class));
-                        break;
+                //Show the full list of Menus available
+                case R.id.adminShow_menusFullList:
+                    Toast.makeText(AdminPage.this, "Show full list of Menus", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AdminPage.this, MenuImageAdminFullList.class));
+                    break;
 
-                    //Edit the Menus available ordered by Restaurants
-                    case R.id.adminUpdate_menu:
-                        Toast.makeText(AdminPage.this, "Edit Menus", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateMenu.class));
-                        break;
+                //Edit the Menus available ordered by Restaurants
+                case R.id.adminUpdate_menu:
+                    Toast.makeText(AdminPage.this, "Edit Menus", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateMenu.class));
+                    break;
 
-                    default:
-                        return true;
-                }
-                return true;
+                default:
+                    return true;
             }
+            return true;
         });
     }
 

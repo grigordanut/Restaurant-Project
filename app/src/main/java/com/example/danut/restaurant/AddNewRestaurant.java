@@ -150,7 +150,7 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Check Restaurant name!!")
+                .setTitle("Check the Restaurant name!!")
                 .setMessage("The restaurant: " + etRest_alertCheckName + " already exists!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());

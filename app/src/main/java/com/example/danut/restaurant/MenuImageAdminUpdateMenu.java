@@ -152,6 +152,7 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
                     }
                 })
                 .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
+        
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

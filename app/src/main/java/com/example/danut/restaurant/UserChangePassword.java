@@ -18,8 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,73 +84,67 @@ public class UserChangePassword extends AppCompatActivity {
 
                 AuthCredential credential = EmailAuthProvider.getCredential(user_Email, userOld_Password);
 
-                firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                firebaseUser.reauthenticate(credential).addOnCompleteListener(task -> {
 
-                        if (task.isSuccessful()) {
+                    if (task.isSuccessful()) {
 
-                            tVUserAuthChangePass.setText("Your profile is authenticated.\nYou can change the Password now!!");
-                            tVUserAuthChangePass.setTextColor(Color.BLACK);
+                        tVUserAuthChangePass.setText("Your profile is authenticated.\nYou can change the Password now!!");
+                        tVUserAuthChangePass.setTextColor(Color.BLACK);
 
-                            userOldPassword.setEnabled(false);
-                            btn_AuthUserPass.setEnabled(false);
-                            btn_AuthUserPass.setText("Disabled");
-                            userNewPassword.requestFocus();
+                        userOldPassword.setEnabled(false);
+                        btn_AuthUserPass.setEnabled(false);
+                        btn_AuthUserPass.setText("Disabled");
+                        userNewPassword.requestFocus();
 
-                            btn_ChangePassword.setOnClickListener(view1 -> {
+                        btn_ChangePassword.setOnClickListener(view1 -> {
 
-                                userNew_Password = userNewPassword.getText().toString().trim();
+                            userNew_Password = userNewPassword.getText().toString().trim();
 
-                                if (TextUtils.isEmpty(userNew_Password)) {
-                                    userNewPassword.setError("Enter your new Password");
-                                    userNewPassword.requestFocus();
-                                } else if (userNew_Password.length() < 6) {
-                                    userNewPassword.setError("The password is too short, enter minimum 6 character long");
-                                } else {
+                            if (TextUtils.isEmpty(userNew_Password)) {
+                                userNewPassword.setError("Enter your new Password");
+                                userNewPassword.requestFocus();
+                            } else if (userNew_Password.length() < 6) {
+                                userNewPassword.setError("The password is too short, enter minimum 6 character long");
+                            } else {
 
-                                    progressDialog.setTitle("The user Password is changing!!");
-                                    progressDialog.show();
+                                progressDialog.setTitle("The user Password is changing!!");
+                                progressDialog.show();
 
-                                    firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task1) {
-                                            if (task1.isSuccessful()) {
+                                firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(task1 -> {
+                                    if (task1.isSuccessful()) {
 
-                                                Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
-                                                startActivity(new Intent(UserChangePassword.this, LoginUser.class));
-                                                finish();
-                                            }
+                                        Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(UserChangePassword.this, LoginUser.class));
+                                        finish();
+                                    }
 
-                                            else {
-                                                try {
-                                                    throw Objects.requireNonNull(task1.getException());
-                                                } catch (Exception e) {
-                                                    Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-
-                                            progressDialog.dismiss();
+                                    else {
+                                        try {
+                                            throw Objects.requireNonNull(task1.getException());
+                                        } catch (Exception e) {
+                                            Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                         }
-                                    });
-                                }
-                            });
+                                    }
 
-                        } else {
-                            try {
-                                throw Objects.requireNonNull(task.getException());
-                            } catch (FirebaseAuthInvalidCredentialsException e) {
-                                userOldPassword.setError("Invalid Password");
-                                userOldPassword.requestFocus();
-                                tVUserAuthChangePass.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the Password!!");
-                                tVUserAuthChangePass.setTextColor(Color.RED);
-                            } catch (Exception e) {
-                                Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                });
                             }
-                        }
+                        });
 
-                        progressDialog.dismiss();
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (FirebaseAuthInvalidCredentialsException e) {
+                            userOldPassword.setError("Invalid Password");
+                            userOldPassword.requestFocus();
+                            tVUserAuthChangePass.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the Password!!");
+                            tVUserAuthChangePass.setTextColor(Color.RED);
+                        } catch (Exception e) {
+                            Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                     }
+
+                    progressDialog.dismiss();
                 });
             }
         });
