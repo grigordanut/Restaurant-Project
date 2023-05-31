@@ -73,7 +73,7 @@ public class RegisterUser extends AppCompatActivity {
         btn_RegLogUser.setOnClickListener(view -> startActivity(new Intent(RegisterUser.this, LoginUser.class)));
     }
 
-    private void registerUser() {
+    public void registerUser() {
 
         if (validateRegUserData()) {
 
@@ -98,7 +98,7 @@ public class RegisterUser extends AppCompatActivity {
         }
     }
 
-    private void uploadUserData() {
+    public void uploadUserData() {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -133,7 +133,7 @@ public class RegisterUser extends AppCompatActivity {
         });
     }
 
-    private Boolean validateRegUserData() {
+    public Boolean validateRegUserData() {
 
         boolean result = false;
 
