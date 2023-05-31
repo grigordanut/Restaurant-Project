@@ -68,12 +68,7 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
 
         //action of the button show map
         Button buttonShowMap = findViewById(R.id.btnShowMap);
-        buttonShowMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RestaurantImageCustomerShowMenu.this, MapsActivity.class));
-            }
-        });
+        buttonShowMap.setOnClickListener(v -> startActivity(new Intent(RestaurantImageCustomerShowMenu.this, MapsActivity.class)));
     }
 
     @SuppressLint("SetTextI18n")

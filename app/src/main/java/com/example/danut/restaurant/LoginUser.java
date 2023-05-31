@@ -116,6 +116,28 @@ public class LoginUser extends AppCompatActivity {
         }
     }
 
+    //check if the email has been verified
+    private void checkEmailVerification() {
+
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+        if (firebaseUser != null) {
+
+            if (firebaseUser.isEmailVerified()) {
+
+                Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(LoginUser.this, UserPage.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+
+            } else {
+                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+            }
+            progressDialog.dismiss();
+        }
+    }
+
     //validate input data into the editText
     private Boolean validateUserData() {
 
@@ -142,25 +164,5 @@ public class LoginUser extends AppCompatActivity {
             result = true;
         }
         return result;
-    }
-
-    //check if the email has been verified
-    private void checkEmailVerification() {
-
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-        if (firebaseUser != null) {
-
-            if (firebaseUser.isEmailVerified()) {
-
-                Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginUser.this, UserPage.class));
-                finish();
-
-            } else {
-                Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
-            }
-            progressDialog.dismiss();
-        }
     }
 }

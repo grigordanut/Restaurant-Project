@@ -65,21 +65,11 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         restaurantRecyclerView.setAdapter(restaurantAdapterAdminShowRest);
         restaurantAdapterAdminShowRest.setOnItmClickListener(RestaurantImageAdminShowRest.this);
 
-        Button buttonAddMoreRest = findViewById(R.id.btnAddMoreRest);
-        buttonAddMoreRest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RestaurantImageAdminShowRest.this, AddNewRestaurant.class));
-            }
-        });
+        Button btn_AddMoreRest = findViewById(R.id.btnAddMoreRest);
+        btn_AddMoreRest.setOnClickListener(v -> startActivity(new Intent(RestaurantImageAdminShowRest.this, AddNewRestaurant.class)));
 
-        Button buttonBackAdminPageRest = findViewById(R.id.btnBackAdminPageRest);
-        buttonBackAdminPageRest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RestaurantImageAdminShowRest.this, AdminPage.class));
-            }
-        });
+        Button btn_BackAdminPageRest = findViewById(R.id.btnBackAdminPageRest);
+        btn_BackAdminPageRest.setOnClickListener(v -> startActivity(new Intent(RestaurantImageAdminShowRest.this, AdminPage.class)));
     }
 
     @Override
@@ -153,16 +143,16 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
 
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
         builderAlert
-                .setTitle("Delete Restaurant")
-                .setMessage("Are sure to delete the restaurant: " + selectedRest.getRest_Name() + "?")
+                .setTitle("Delete Restaurant!!")
+                .setMessage("Are sure to delete the restaurant:\n" + selectedRest.getRest_Name() + "?")
                 .setCancelable(true)
-                .setPositiveButton("Yes", (dialog, id) -> {
+                .setPositiveButton("YES", (dialog, id) -> {
                     String selectedRestKey = selectedRest.getRest_Key();
                     databaseReference.child(selectedRestKey).removeValue();
                     Toast.makeText(RestaurantImageAdminShowRest.this, "The Restaurant " + selectedRest.getRest_Name() + " has been deleted successfully", Toast.LENGTH_SHORT).show();
                 })
 
-                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+                .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
 
         AlertDialog alertDialog = builderAlert.create();
         alertDialog.show();
@@ -177,7 +167,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         builderAlert
                 .setMessage("The " + selected_rest.getRest_Name() + " Restaurant still has Menus and cannot be deleted \nDelete the Menus first and after delete the Restaurant.")
                 .setCancelable(true)
-                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = builderAlert.create();
         alertDialog.show();
@@ -188,6 +178,5 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
     protected void onDestroy() {
         super.onDestroy();
         databaseReference.removeEventListener(restaurantEventListener);
-        tVRestImageShowRestAdmin.setText(restaurantList.size() + " Restaurants available");
     }
 }

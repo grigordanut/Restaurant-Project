@@ -19,38 +19,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Action button Restaurant
-        Button buttonMainLogIn = findViewById(R.id.btnMainLogIn);
-        buttonMainLogIn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, LoginUser.class);
-            startActivity(intent);
-        });
+        Button btn_MainLogIn = findViewById(R.id.btnMainLogIn);
+        btn_MainLogIn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, LoginUser.class)));
 
         //Action button Deals
         Button buttonMainDeals = findViewById(R.id.btnMainDeals);
-        buttonMainDeals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent deals = new Intent(MainActivity.this, AdminPage.class);
-                startActivity(deals);
-            }
-        });
+        buttonMainDeals.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AdminPage.class)));
 
         //Action button LogIn/RegisterUser
         Button buttonMainReg = findViewById(R.id.btnMainReg);
-        buttonMainReg.setOnClickListener(view -> {
-            Intent logReg = new Intent(MainActivity.this, RegisterUser.class);
-            startActivity(logReg);
-        });
+        buttonMainReg.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, RegisterUser.class)));
 
         //Action button Contact Us
         Button buttonContUs = findViewById(R.id.btnContUs);
-        buttonContUs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent contactUs = new Intent(MainActivity.this, ContactUs.class);
-                startActivity(contactUs);
-            }
-        });
+        buttonContUs.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactUs.class)));
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

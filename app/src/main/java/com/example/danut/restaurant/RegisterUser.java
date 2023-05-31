@@ -109,38 +109,35 @@ public class RegisterUser extends AppCompatActivity {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        if (firebaseUser != null) {
+        assert firebaseUser != null;
+        String user_Id = firebaseUser.getUid();
+        Users user_data = new Users(firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser);
 
-            String user_Id = firebaseUser.getUid();
-            Users user_data = new Users(firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser);
+        databaseReference.child(user_Id).setValue(user_data).addOnCompleteListener(RegisterUser.this, new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
 
-            databaseReference.child(user_Id).setValue(user_data).addOnCompleteListener(RegisterUser.this, new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
 
-                    if (task.isSuccessful()) {
+                    firebaseUser.sendEmailVerification();
 
-                        firebaseUser.sendEmailVerification();
+                    Toast.makeText(RegisterUser.this, "User successfully registered.\nVerification Email has been sent!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterUser.this, LoginUser.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    finish();
 
-                        Toast.makeText(RegisterUser.this, "User successfully registered.\nVerification Email has been sent!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(RegisterUser.this, LoginUser.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
-
-                    } else {
-                        try {
-                            throw Objects.requireNonNull(task.getException());
-                        } catch (Exception e) {
-                            Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (Exception e) {
+                        Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
-                    progressDialog.dismiss();
                 }
-            });
-        }
 
+                progressDialog.dismiss();
+            }
+        });
     }
 
     private Boolean validateRegUserData() {

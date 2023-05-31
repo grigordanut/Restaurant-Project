@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,7 +60,7 @@ public class AddNewMenu extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add Menus to Restaurant");
 
-        progressDialog = new ProgressDialog(AddNewMenu.this);
+        progressDialog = new ProgressDialog(this);
 
         //Create a Menu table into the database
         storageReference = FirebaseStorage.getInstance().getReference("Menus");
@@ -93,13 +92,8 @@ public class AddNewMenu extends AppCompatActivity {
             }
         });
 
-        Button backAdminMenu = findViewById(R.id.btnBackAdminMenu);
-        backAdminMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AddNewMenu.this, AdminPage.class));
-            }
-        });
+        Button btn_BackAdminMenu = findViewById(R.id.btnBackAdminMenu);
+        btn_BackAdminMenu.setOnClickListener(v -> startActivity(new Intent(AddNewMenu.this, AdminPage.class)));
     }
 
     //Insert a picture
@@ -135,32 +129,28 @@ public class AddNewMenu extends AppCompatActivity {
             menu_Description = menuDescription.getText().toString().trim();
             menu_Price = Double.parseDouble(menuPrice.getText().toString().trim());
 
-            progressDialog.setTitle("The Menu is uploading!");
+            progressDialog.setTitle("The Menu is uploading!!");
             progressDialog.show();
 
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
             menuUploadTask = fileReference.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
+                    .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
 
-                            Handler handler = new Handler();
-                            handler.postDelayed(() -> progressDialog.setProgress(0), 2000);
+                        Handler handler = new Handler();
+                        handler.postDelayed(() -> progressDialog.setProgress(0), 2000);
 
-                            Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
+                        Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
 
-                            Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
-                            String menu_Id = databaseReference.push().getKey();
+                        Menus menus = new Menus(menu_Name, menu_Description, menu_Price, uri.toString(), restName, restKey);
+                        String menu_Id = databaseReference.push().getKey();
 
+                        assert menu_Id != null;
+                        databaseReference.child(menu_Id).setValue(menus);
 
-                            assert menu_Id != null;
-                            databaseReference.child(menu_Id).setValue(menus);
+                        Intent intentAdd = new Intent(AddNewMenu.this, AdminPage.class);
+                        startActivity(intentAdd);
+                        finish();
 
-                            Intent intentAdd = new Intent(AddNewMenu.this, RestaurantImageAdminAddMenu.class);
-                            startActivity(intentAdd);
-                            finish();
-
-                        }
                     }))
                     .addOnFailureListener(e -> Toast.makeText(AddNewMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show())
                     .addOnProgressListener(taskSnapshot -> {
@@ -169,7 +159,6 @@ public class AddNewMenu extends AppCompatActivity {
                         progressDialog.setMessage("Uploaded " + (int) progress + "%");
                         progressDialog.setProgress((int) progress);
                     });
-
         }
     }
 
@@ -198,8 +187,8 @@ public class AddNewMenu extends AppCompatActivity {
     public void alertDialogMenuPicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("No menu picture.")
-                .setMessage("Please add a Menu picture!")
+                .setTitle("No menu picture!!")
+                .setMessage("Please add a Menu picture.")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 

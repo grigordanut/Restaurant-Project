@@ -147,8 +147,6 @@ public class AdminPage extends AppCompatActivity {
     }
 
     private void adminLogOut() {
-        progressDialog.setMessage("Log out Admin!");
-        progressDialog.show();
         alertDialogAdminLogout();
     }
 
@@ -173,23 +171,21 @@ public class AdminPage extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
         alertDialogBuilder
-                .setTitle("Log out Admin")
+                .setTitle("Log out Admin!!")
                 .setMessage("Are sure to Log out?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> {
+                .setPositiveButton("YES", (dialog, id) -> {
 
-                    progressDialog.dismiss();
-                    startActivity(new Intent(AdminPage.this, MainActivity.class));
+                    progressDialog.setTitle("Log out Admin!!");
+                    progressDialog.show();
+
+                    startActivity(new Intent(AdminPage.this, LoginUser.class));
                     finish();
-
                 })
 
-                .setNegativeButton("No", (dialog, id) -> {
-                    progressDialog.dismiss();
-                    dialog.cancel();
-                });
+                .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
 
-
+        progressDialog.dismiss();
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

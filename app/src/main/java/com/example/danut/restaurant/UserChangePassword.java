@@ -66,106 +66,94 @@ public class UserChangePassword extends AppCompatActivity {
         user_Email = firebaseUser.getEmail();
         userEmail.setText(user_Email);
 
-        Button buttonChangePassword = findViewById(R.id.btnUserChangePass);
-        buttonChangePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertUserNotAuthPassword();
-            }
-        });
+        Button btn_ChangePassword = findViewById(R.id.btnUserChangePass);
+        btn_ChangePassword.setOnClickListener(view -> alertUserNotAuthPassword());
 
-        Button buttonAuthUserPass = findViewById(R.id.btnAuthUserPass);
-        buttonAuthUserPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        Button btn_AuthUserPass = findViewById(R.id.btnAuthUserPass);
+        btn_AuthUserPass.setOnClickListener(view -> {
 
-                user_Email = userEmail.getText().toString().trim();
+            user_Email = userEmail.getText().toString().trim();
 
-                userOld_Password = userOldPassword.getText().toString().trim();
+            userOld_Password = userOldPassword.getText().toString().trim();
 
-                if (TextUtils.isEmpty(userOld_Password)) {
-                    userOldPassword.setError("Enter your password");
-                    userOldPassword.requestFocus();
-                } else {
+            if (TextUtils.isEmpty(userOld_Password)) {
+                userOldPassword.setError("Enter your password");
+                userOldPassword.requestFocus();
+            } else {
 
-                    progressDialog.setMessage("The user is authenticating!");
-                    progressDialog.show();
+                progressDialog.setMessage("The user is authenticating!!");
+                progressDialog.show();
 
-                    AuthCredential credential = EmailAuthProvider.getCredential(user_Email, userOld_Password);
+                AuthCredential credential = EmailAuthProvider.getCredential(user_Email, userOld_Password);
 
-                    firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                firebaseUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
 
-                            if (task.isSuccessful()) {
+                        if (task.isSuccessful()) {
 
-                                tVUserAuthChangePass.setText("Your profile is authenticated.\nYou can change the Password now!!");
-                                tVUserAuthChangePass.setTextColor(Color.BLACK);
+                            tVUserAuthChangePass.setText("Your profile is authenticated.\nYou can change the Password now!!");
+                            tVUserAuthChangePass.setTextColor(Color.BLACK);
 
-                                userOldPassword.setEnabled(false);
-                                buttonAuthUserPass.setEnabled(false);
-                                buttonAuthUserPass.setText("Disabled");
-                                userNewPassword.requestFocus();
+                            userOldPassword.setEnabled(false);
+                            btn_AuthUserPass.setEnabled(false);
+                            btn_AuthUserPass.setText("Disabled");
+                            userNewPassword.requestFocus();
 
-                                buttonChangePassword.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
+                            btn_ChangePassword.setOnClickListener(view1 -> {
 
-                                        userNew_Password = userNewPassword.getText().toString().trim();
+                                userNew_Password = userNewPassword.getText().toString().trim();
 
-                                        if (TextUtils.isEmpty(userNew_Password)) {
-                                            userNewPassword.setError("Enter your new Password");
-                                            userNewPassword.requestFocus();
-                                        } else if (userNew_Password.length() < 6) {
-                                            userNewPassword.setError("The password is too short, enter minimum 6 character long");
-                                            Toast.makeText(UserChangePassword.this, "The password is too short, enter minimum 6 character long", Toast.LENGTH_SHORT).show();
-                                        } else {
+                                if (TextUtils.isEmpty(userNew_Password)) {
+                                    userNewPassword.setError("Enter your new Password");
+                                    userNewPassword.requestFocus();
+                                } else if (userNew_Password.length() < 6) {
+                                    userNewPassword.setError("The password is too short, enter minimum 6 character long");
+                                } else {
 
-                                            progressDialog.setMessage("The user Password is changing!");
-                                            progressDialog.show();
+                                    progressDialog.setTitle("The user Password is changing!!");
+                                    progressDialog.show();
 
-                                            firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<Void> task) {
-                                                    if (task.isSuccessful()) {
+                                    firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task1) {
+                                            if (task1.isSuccessful()) {
 
-                                                        Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
-                                                        startActivity(new Intent(UserChangePassword.this, LoginUser.class));
-                                                        finish();
-                                                    }
+                                                Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(UserChangePassword.this, LoginUser.class));
+                                                finish();
+                                            }
 
-                                                    else {
-                                                        try {
-                                                            throw Objects.requireNonNull(task.getException());
-                                                        } catch (Exception e) {
-                                                            Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                                        }
-                                                    }
-
-                                                    progressDialog.dismiss();
+                                            else {
+                                                try {
+                                                    throw Objects.requireNonNull(task1.getException());
+                                                } catch (Exception e) {
+                                                    Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
-                                            });
+                                            }
+
+                                            progressDialog.dismiss();
                                         }
-                                    }
-                                });
-
-                            } else {
-                                try {
-                                    throw Objects.requireNonNull(task.getException());
-                                } catch (FirebaseAuthInvalidCredentialsException e) {
-                                    userOldPassword.setError("Invalid Password");
-                                    userOldPassword.requestFocus();
-                                    tVUserAuthChangePass.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the Password!!");
-                                    tVUserAuthChangePass.setTextColor(Color.RED);
-                                } catch (Exception e) {
-                                    Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    });
                                 }
-                            }
+                            });
 
-                            progressDialog.dismiss();
+                        } else {
+                            try {
+                                throw Objects.requireNonNull(task.getException());
+                            } catch (FirebaseAuthInvalidCredentialsException e) {
+                                userOldPassword.setError("Invalid Password");
+                                userOldPassword.requestFocus();
+                                tVUserAuthChangePass.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the Password!!");
+                                tVUserAuthChangePass.setTextColor(Color.RED);
+                            } catch (Exception e) {
+                                Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    });
-                }
+
+                        progressDialog.dismiss();
+                    }
+                });
             }
         });
     }
@@ -173,10 +161,10 @@ public class UserChangePassword extends AppCompatActivity {
     private void alertUserNotAuthPassword() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Authenticate User")
+                .setTitle("User Unauthenticated!!")
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Password!!")
                 .setCancelable(false)
-                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

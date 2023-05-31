@@ -67,8 +67,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private double latitude, longitude;
     private double endLatitude, endLongitude;
-    private Location lastlocation;
-    private Marker currentLocationmMarker;
+    private Location lastLocation;
+    private Marker currentLocationMarker;
     private GoogleApiClient client;
 
     int PROXIMITY_RADIUS = 10000; // Radius in Km
@@ -215,9 +215,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         latitude = location.getLatitude();
         longitude = location.getLongitude();
-        lastlocation = location;
-        if (currentLocationmMarker != null) {
-            currentLocationmMarker.remove();
+        lastLocation = location;
+        if (currentLocationMarker != null) {
+            currentLocationMarker.remove();
 
         }
         Log.d("lat = ", "" + latitude);
@@ -226,7 +226,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerOptions.position(latLng);
         markerOptions.title("Current Location");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
-        currentLocationmMarker = mMap.addMarker(markerOptions);
+        currentLocationMarker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(CameraUpdateFactory.zoomBy(10));
 

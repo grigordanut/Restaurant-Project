@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -45,6 +46,8 @@ public class UserPage extends AppCompatActivity {
 
     private int numberRestsAv;
 
+    private ProgressDialog progressDialog;
+
     //Declaring some objects
     private DrawerLayout drawerLayoutUser;
     private ActionBarDrawerToggle drawerToggleUser;
@@ -56,6 +59,8 @@ public class UserPage extends AppCompatActivity {
         setContentView(R.layout.activity_user_page);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: main page");
+
+        progressDialog = new ProgressDialog(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -212,14 +217,18 @@ public class UserPage extends AppCompatActivity {
                 .setMessage("Are you sure to Log out?")
                 .setCancelable(false)
                 .setPositiveButton("YES", (dialog, id) -> {
-                    firebaseAuth.signOut();
 
+                    progressDialog.setTitle("Log out User!!");
+                    progressDialog.show();
+
+                    firebaseAuth.signOut();
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
                 })
 
                 .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
 
+        progressDialog.dismiss();
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

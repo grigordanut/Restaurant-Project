@@ -21,6 +21,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Objects;
@@ -78,13 +79,8 @@ public class UpdateRestaurant extends AppCompatActivity {
         restNameUp.setText(restNameUpdate);
         restAddressUp.setText(restAddressUpdate);
 
-        Button btnSaveRestUpdates = findViewById(R.id.btnSaveRestUpdate);
-        btnSaveRestUpdates.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkRestaurantName();
-            }
-        });
+        Button btn_SaveRestUpdates = findViewById(R.id.btnSaveRestUpdate);
+        btn_SaveRestUpdates.setOnClickListener(v -> checkRestaurantName());
     }
 
     private void checkRestaurantName() {
@@ -94,23 +90,23 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         final String rest_nameCheck = restNameUp.getText().toString().trim();
 
-        databaseRefRestNameCheck.orderByChild("rest_Name").equalTo(rest_nameCheck)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+        Query query = databaseRefRestNameCheck.orderByChild("rest_Name").equalTo(rest_nameCheck);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                        if (dataSnapshot.exists()) {
-                            alertDialogRestExist();
-                        } else {
-                            updateRestDetails();
-                        }
-                    }
+                if (dataSnapshot.exists()) {
+                    alertDialogRestExist();
+                } else {
+                    updateRestDetails();
+                }
+            }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(UpdateRestaurant.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void updateRestDetails() {
@@ -119,40 +115,18 @@ public class UpdateRestaurant extends AppCompatActivity {
 
             Restaurants rest_Data = new Restaurants(rest_NameUp, rest_AddressUp);
 
-            databaseRefRestUpdate.child(restKeyUpdate).setValue(rest_Data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        uploadRestNameMenuUp();
-                    } else {
-                        try {
-                            throw Objects.requireNonNull(task.getException());
-                        } catch (Exception e) {
-                            Toast.makeText(UpdateRestaurant.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+            databaseRefRestUpdate.child(restKeyUpdate).setValue(rest_Data).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    uploadRestNameMenuUp();
+                } else {
+                    try {
+                        throw Objects.requireNonNull(task.getException());
+                    } catch (Exception e) {
+                        Toast.makeText(UpdateRestaurant.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
         }
-    }
-
-    private Boolean validateRestDetailsUpdate() {
-
-        boolean result = false;
-
-        rest_NameUp = restNameUp.getText().toString().trim();
-        rest_AddressUp = restAddressUp.getText().toString().trim();
-
-        if (TextUtils.isEmpty(rest_NameUp)) {
-            restNameUp.setError("Enter Restaurant name");
-            restNameUp.requestFocus();
-        } else if (TextUtils.isEmpty(rest_AddressUp)) {
-            restAddressUp.setError("Enter Restaurant address");
-            restAddressUp.requestFocus();
-        } else {
-            result = true;
-        }
-        return result;
     }
 
     private void uploadRestNameMenuUp() {
@@ -185,6 +159,25 @@ public class UpdateRestaurant extends AppCompatActivity {
                 Toast.makeText(UpdateRestaurant.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private Boolean validateRestDetailsUpdate() {
+
+        boolean result = false;
+
+        rest_NameUp = restNameUp.getText().toString().trim();
+        rest_AddressUp = restAddressUp.getText().toString().trim();
+
+        if (TextUtils.isEmpty(rest_NameUp)) {
+            restNameUp.setError("Enter Restaurant name");
+            restNameUp.requestFocus();
+        } else if (TextUtils.isEmpty(rest_AddressUp)) {
+            restAddressUp.setError("Enter Restaurant address");
+            restAddressUp.requestFocus();
+        } else {
+            result = true;
+        }
+        return result;
     }
 
     private void alertDialogRestExist() {

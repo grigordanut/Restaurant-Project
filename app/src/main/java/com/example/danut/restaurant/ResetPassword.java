@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,21 +43,15 @@ public class ResetPassword extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
 
         //Action of the button Reset password
-        Button buttonResetPass = findViewById(R.id.btnResetPassword);
-        buttonResetPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //change the old password to a new password
-                resetPassword();
-            }
-        });
+        Button btn_ResetPass = findViewById(R.id.btnResetPassword);
+        btn_ResetPass.setOnClickListener(view -> resetPassword());
     }
 
     private void resetPassword() {
 
         if (validateResetPassData()) {
 
-            progressDialog.setMessage("The password is reset!!");
+            progressDialog.setTitle("The password is reset!!");
             progressDialog.show();
 
             firebaseAuth.sendPasswordResetEmail(emailReset_Pass).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -93,7 +86,6 @@ public class ResetPassword extends AppCompatActivity {
 
         emailReset_Pass = emailResetPass.getText().toString().trim();
 
-        //check the input fields
         if (emailReset_Pass.isEmpty()) {
             emailResetPass.setError("Enter your Email Address");
             emailResetPass.requestFocus();

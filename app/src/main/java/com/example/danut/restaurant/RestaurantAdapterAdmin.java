@@ -76,7 +76,7 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                //Toast.makeText(RestaurantAdapterAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
             }
         });
     }

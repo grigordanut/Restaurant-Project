@@ -282,7 +282,7 @@ public class UpdateMenu extends AppCompatActivity {
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("No Menu picture changed.")
-                .setMessage("Update the Menu with old picture.")
+                .setMessage("Update the Menu with old picture?")
                 .setPositiveButton("YES", (dialog, id) -> uploadMenuWithOldPicture())
                 .setNegativeButton("CANCEL", (dialog, id) -> dialog.dismiss());
 

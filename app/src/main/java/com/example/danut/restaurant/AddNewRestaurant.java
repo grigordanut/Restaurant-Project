@@ -13,8 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -97,17 +95,14 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         if (validateRestDetails()) {
 
-            progressDialog.setMessage("The Restaurant is uploading!");
+            progressDialog.setTitle("The Restaurant is uploading!!");
             progressDialog.show();
 
             String rest_Id = databaseRefRest.push().getKey();
             Restaurants rest_Data = new Restaurants(rest_Name, rest_Address);
 
-            if (rest_Id != null) {
-
-                databaseRefRest.child(rest_Id).setValue(rest_Data).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+            assert rest_Id != null;
+            databaseRefRest.child(rest_Id).setValue(rest_Data).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
 
                             Toast.makeText(AddNewRestaurant.this, "Restaurant successfully added!", Toast.LENGTH_SHORT).show();
@@ -118,14 +113,14 @@ public class AddNewRestaurant extends AppCompatActivity {
                             try {
                                 throw Objects.requireNonNull(task.getException());
                             } catch (Exception e) {
-                                Toast.makeText(AddNewRestaurant.this, e.getMessage() , Toast.LENGTH_SHORT).show();
+                                Toast.makeText(AddNewRestaurant.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         progressDialog.dismiss();
-                    }
-                });
-            }
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(AddNewRestaurant.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+
         }
     }
 
@@ -155,7 +150,7 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Check restaurant name")
+                .setTitle("Check Restaurant name!!")
                 .setMessage("The restaurant: " + etRest_alertCheckName + " already exists!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());

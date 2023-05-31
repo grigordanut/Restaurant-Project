@@ -73,7 +73,6 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
         }
 
         tVRestNameCustomer.setText(restaurantName + " Restaurant ");
-        tVMenusAvCustomer.setText("No Menus available");
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -96,8 +95,8 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                menusList.clear();
                 if (dataSnapshot.exists()) {
-                    menusList.clear();
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         Menus menu_Data = postSnapshot.getValue(Menus.class);
 
@@ -107,11 +106,14 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                             menusList.add(menu_Data);
                             tVMenusAvCustomer.setText(menusList.size() + " Menus available");
                         }
+
+                        if (menusList.size() == 0) {
+                            tVMenusAvCustomer.setText("No Menus available");
+                        }
                     }
 
                     menuAdapterCustomer.notifyDataSetChanged();
-                }
-                else {
+                } else {
                     tVMenusAvCustomer.setText("No added Menus were found.");
                 }
 
@@ -145,14 +147,12 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                 .centerCrop()
                 .into(img_full);
 
-        //set dialog message
         alertDialogBuilder
                 .setTitle("Menu Name: " + selected_Menu.getMenu_Name())
                 .setView(promptsView)
                 .setCancelable(false)
                 .setNegativeButton("CLOSE", (dialog, id) -> dialog.cancel());
 
-        // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

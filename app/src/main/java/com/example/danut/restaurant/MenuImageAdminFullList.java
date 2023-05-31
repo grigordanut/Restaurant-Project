@@ -42,9 +42,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
 
     private List<Menus> menusList;
 
-    private String restaurantName;
-    private String restaurantKey;
-
     private ProgressDialog progressDialog;
 
     @SuppressLint("SetTextI18n")
@@ -74,25 +71,14 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
         menuAdapterAdminFullList.setOnItmClickListener(MenuImageAdminFullList.this);
 
         //Action button new Menu
-        Button buttonNewMenuFullList = findViewById(R.id.btnNewMenuFullList);
-        buttonNewMenuFullList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(MenuImageAdminFullList.this, AddNewMenu.class);
-                i.putExtra("RName", restaurantName);
-                i.putExtra("RKey", restaurantKey);
-                startActivity(i);
-            }
+        Button btn_NewMenuFullList = findViewById(R.id.btnNewMenuFullList);
+        btn_NewMenuFullList.setOnClickListener(v -> {
+            startActivity(new Intent(MenuImageAdminFullList.this, RestaurantImageAdminAddMenu.class));
         });
 
         //Action button back to Admin page
-        Button buttonBackAdminFullList = findViewById(R.id.btnBackAdminFullList);
-        buttonBackAdminFullList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MenuImageAdminFullList.this, AdminPage.class));
-            }
-        });
+        Button btn_BackAdminFullList = findViewById(R.id.btnBackAdminFullList);
+        btn_BackAdminFullList.setOnClickListener(v -> startActivity(new Intent(MenuImageAdminFullList.this, AdminPage.class)));
     }
 
     @Override
@@ -114,8 +100,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                         menus.setMenu_Key(postSnapshot.getKey());
                         menusList.add(menus);
                         tVMenusAvFullListAdmin.setText(menusList.size() + " Menus available");
-                        restaurantName = menus.getRestaurant_Name();
-                        restaurantKey = menus.getRestaurant_Key();
                     }
 
                     menuAdapterAdminFullList.notifyDataSetChanged();
@@ -149,7 +133,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                 .setAdapter(adapter, (dialog, id) -> {
 
                     if (id == 0) {
-                        //chooseUpdate(position);
                         Intent intent = new Intent(MenuImageAdminFullList.this, UpdateMenu.class);
                         Menus selected_MenuImg = menusList.get(position);
                         intent.putExtra("MName", selected_MenuImg.getMenu_Name());
@@ -170,16 +153,16 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
         alertDialog.show();
     }
 
-    public void confirmDeletion(final int position) {
+    public void confirmDeletion(int position) {
 
         Menus selected_Menu = menusList.get(position);
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MenuImageAdminFullList.this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuImageAdminFullList.this);
         alertDialogBuilder
-                .setTitle("Delete menu from restaurant.")
-                .setMessage("Are you sure to delete the menu: " + selected_Menu.getMenu_Name() + "?")
+                .setTitle("Delete menu from Restaurant!!")
+                .setMessage("Are you sure to delete the menu:\n" + selected_Menu.getMenu_Name() + "?")
                 .setCancelable(false)
-                .setPositiveButton("Yes", (dialog, id) -> {
+                .setPositiveButton("YES", (dialog, id) -> {
                             final String selectedMenuKey = selected_Menu.getMenu_Key();
                             StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
                             imageReference.delete().addOnSuccessListener(aVoid -> {
@@ -188,10 +171,10 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                             });
                         })
 
-                .setNegativeButton("No", (dialog, id) -> dialog.cancel());
+                .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
 
-        AlertDialog alert1 = alertDialogBuilder.create();
-        alert1.show();
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     @SuppressLint("SetTextI18n")
@@ -199,6 +182,5 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
     protected void onDestroy() {
         super.onDestroy();
         databaseRefMenu.removeEventListener(menuEventListener);
-        tVMenusAvFullListAdmin.setText(menusList.size() + " Menus available");
     }
 }
