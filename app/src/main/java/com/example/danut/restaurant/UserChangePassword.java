@@ -46,7 +46,7 @@ public class UserChangePassword extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: change Password");
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(UserChangePassword.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -149,8 +149,8 @@ public class UserChangePassword extends AppCompatActivity {
         });
     }
 
-    private void alertUserNotAuthPassword() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+    public void alertUserNotAuthPassword() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserChangePassword.this);
         alertDialogBuilder
                 .setTitle("User Unauthenticated!!")
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Password!!")
@@ -168,7 +168,7 @@ public class UserChangePassword extends AppCompatActivity {
         return true;
     }
 
-    private void userChangePassGoBack() {
+    public void userChangePassGoBack() {
         startActivity(new Intent(UserChangePassword.this, UserPage.class));
         finish();
     }

@@ -54,7 +54,7 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: update Restaurant");
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(UpdateRestaurant.this);
 
         databaseRefRestNameCheck = FirebaseDatabase.getInstance().getReference("Restaurants");
         databaseRefRestUpdate = FirebaseDatabase.getInstance().getReference("Restaurants");
@@ -80,7 +80,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         btn_SaveRestUpdates.setOnClickListener(v -> checkRestaurantName());
     }
 
-    private void checkRestaurantName() {
+    public void checkRestaurantName() {
 
         progressDialog.setTitle("Update Restaurant details!!");
         progressDialog.show();
@@ -106,7 +106,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         });
     }
 
-    private void updateRestDetails() {
+    public void updateRestDetails() {
 
         if (validateRestDetailsUpdate()) {
 
@@ -126,7 +126,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         }
     }
 
-    private void uploadRestNameMenuUp() {
+    public void uploadRestNameMenuUp() {
 
         final String menuRest_NameUp = restNameUp.getText().toString().trim();
 
@@ -158,7 +158,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         });
     }
 
-    private Boolean validateRestDetailsUpdate() {
+    public Boolean validateRestDetailsUpdate() {
 
         boolean result = false;
 
@@ -177,11 +177,11 @@ public class UpdateRestaurant extends AppCompatActivity {
         return result;
     }
 
-    private void alertDialogRestExist() {
+    public void alertDialogRestExist() {
 
         final String rest_alertNameCheck = restNameUp.getText().toString().trim();
 
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UpdateRestaurant.this);
         alertDialogBuilder
                 .setTitle("The Restaurant: " + rest_alertNameCheck + " already exists!")
                 .setMessage("Save the Restaurant with same name?")

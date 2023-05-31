@@ -60,7 +60,7 @@ public class UserPage extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: main page");
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(UserPage.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -159,21 +159,21 @@ public class UserPage extends AppCompatActivity {
         return true;
     }
 
-    private void userLogOut() {
+    public void userLogOut() {
         alertDialogUserLogout();
     }
 
-    private void userEditProfile() {
+    public void userEditProfile() {
         startActivity(new Intent(UserPage.this, UserEditProfile.class));
         finish();
     }
 
-    private void userChangeEmail() {
+    public void userChangeEmail() {
         startActivity(new Intent(UserPage.this, UserChangeEmail.class));
         finish();
     }
 
-    private void userChangePassword() {
+    public void userChangePassword() {
         startActivity(new Intent(UserPage.this, UserChangePassword.class));
         finish();
     }
@@ -205,8 +205,7 @@ public class UserPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void alertDialogUserLogout() {
-
+    public void alertDialogUserLogout() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
         alertDialogBuilder
                 .setTitle("Log out User!!")
@@ -235,7 +234,7 @@ public class UserPage extends AppCompatActivity {
         loadPatientsAv();
     }
 
-    private void loadPatientsAv() {
+    public void loadPatientsAv() {
 
         restEventListener = restDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override

@@ -53,7 +53,7 @@ public class UserChangeEmail extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: change Email");
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(UserChangeEmail.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -143,7 +143,7 @@ public class UserChangeEmail extends AppCompatActivity {
         });
     }
 
-    private void updateUserEmail(){
+    public void updateUserEmail(){
 
         firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
@@ -160,7 +160,7 @@ public class UserChangeEmail extends AppCompatActivity {
         });
     }
 
-    private void uploadChangeUserEmailData() {
+    public void uploadChangeUserEmailData() {
 
         String user_Id = firebaseUser.getUid();
 
@@ -185,8 +185,8 @@ public class UserChangeEmail extends AppCompatActivity {
         });
     }
 
-    private void alertUserEmailNotAuth() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+    public void alertUserEmailNotAuth() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserChangeEmail.this);
         alertDialogBuilder
                 .setTitle("User Unauthenticated!!")
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Email!!")
@@ -204,7 +204,7 @@ public class UserChangeEmail extends AppCompatActivity {
         return true;
     }
 
-    private void userChangeEmailGoBack() {
+    public void userChangeEmailGoBack() {
         startActivity(new Intent(UserChangeEmail.this, UserPage.class));
         finish();
     }

@@ -52,7 +52,7 @@ public class UserEditProfile extends AppCompatActivity {
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("USER: edit Profile");
 
-        progressDialog = new ProgressDialog(this);
+        progressDialog = new ProgressDialog(UserEditProfile.this);
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -78,7 +78,7 @@ public class UserEditProfile extends AppCompatActivity {
         btn_SaveUp.setOnClickListener(v -> updateUserDetails());
     }
 
-    private void updateUserDetails() {
+    public void updateUserDetails() {
 
         if (validateUserUpdateData()) {
 
@@ -105,7 +105,6 @@ public class UserEditProfile extends AppCompatActivity {
 
                     progressDialog.dismiss();
                     Toast.makeText(UserEditProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
-                    //startActivity(new Intent(UserEditProfile.this, LoginUser.class));
                     startActivity(new Intent(UserEditProfile.this, UserPage.class));
                     finish();
                 }
@@ -118,7 +117,7 @@ public class UserEditProfile extends AppCompatActivity {
         }
     }
 
-    private Boolean validateUserUpdateData() {
+    public Boolean validateUserUpdateData() {
 
         boolean result = false;
 
@@ -147,7 +146,7 @@ public class UserEditProfile extends AppCompatActivity {
         loadUserData();
     }
 
-    private void loadUserData() {
+    public void loadUserData() {
 
         eventListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
@@ -176,8 +175,8 @@ public class UserEditProfile extends AppCompatActivity {
         });
     }
 
-    private void alertChangeEmailPlace() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+    public void alertChangeEmailPlace() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserEditProfile.this);
         alertDialogBuilder
                 .setTitle("Change User Email!!")
                 .setMessage("The Email Address cannot be change here.\nPlease use Change Email option.")
@@ -195,7 +194,7 @@ public class UserEditProfile extends AppCompatActivity {
         return true;
     }
 
-    private void userEditProfileGoBack() {
+    public void userEditProfileGoBack() {
         startActivity(new Intent(UserEditProfile.this, UserPage.class));
         finish();
     }

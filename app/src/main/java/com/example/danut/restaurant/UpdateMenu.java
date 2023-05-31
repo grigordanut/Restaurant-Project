@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -13,7 +14,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -106,29 +106,21 @@ public class UpdateMenu extends AppCompatActivity {
         ivMenuUpdate.setOnClickListener(view -> openGallery());
 
         //Action button Save updated Menu
-        btn_SaveMenuUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btn_SaveMenuUpdate.setOnClickListener(view -> {
 
-                if (menuTaskUpdate != null && menuTaskUpdate.isInProgress()) {
-                    Toast.makeText(UpdateMenu.this, "Update Menu in progress!!", Toast.LENGTH_SHORT).show();
+            if (menuTaskUpdate != null && menuTaskUpdate.isInProgress()) {
+                Toast.makeText(UpdateMenu.this, "Update Menu in progress!!", Toast.LENGTH_SHORT).show();
+            } else {
+                if (imageUriUpdate == null) {
+                    alertDialogBikePicture();
                 } else {
-                    if (imageUriUpdate == null) {
-                        alertDialogBikePicture();
-                    } else {
-                        updateMenuWithNewPicture();
-                    }
+                    updateMenuWithNewPicture();
                 }
             }
         });
 
         Button btn_BackMenuUpdate = findViewById(R.id.btnBacMenuUpdate);
-        btn_BackMenuUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UpdateMenu.this, AdminPage.class));
-            }
-        });
+        btn_BackMenuUpdate.setOnClickListener(v -> startActivity(new Intent(UpdateMenu.this, AdminPage.class)));
     }
 
     //Insert a picture
@@ -154,7 +146,7 @@ public class UpdateMenu extends AppCompatActivity {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
-    private void deleteOldMenuPicture() {
+    public void deleteOldMenuPicture() {
 
         StorageReference storageRefDelete = getInstance().getReferenceFromUrl(menu_ImageUp);
         storageRefDelete.delete()
@@ -176,38 +168,36 @@ public class UpdateMenu extends AppCompatActivity {
 
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUpdate));
             menuTaskUpdate = fileReference.putFile(imageUriUpdate)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            databaseRefUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl()
+                            .addOnSuccessListener(uri ->
+                                    databaseRefUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                                        String menu_Key = postSnapshot.getKey();
-                                        assert menu_Key != null;
+                                                String menu_Key = postSnapshot.getKey();
+                                                assert menu_Key != null;
 
-                                        if (menu_Key.equals(menu_KeyUp)) {
-                                            postSnapshot.getRef().child("menu_Name").setValue(menuName_Update);
-                                            postSnapshot.getRef().child("menu_Description").setValue(menuDescription_Update);
-                                            postSnapshot.getRef().child("menu_Price").setValue(menuPrice_Update);
-                                            postSnapshot.getRef().child("menu_Image").setValue(uri.toString());
+                                                if (menu_Key.equals(menu_KeyUp)) {
+                                                    postSnapshot.getRef().child("menu_Name").setValue(menuName_Update);
+                                                    postSnapshot.getRef().child("menu_Description").setValue(menuDescription_Update);
+                                                    postSnapshot.getRef().child("menu_Price").setValue(menuPrice_Update);
+                                                    postSnapshot.getRef().child("menu_Image").setValue(uri.toString());
+                                                }
+                                            }
+
+                                            deleteOldMenuPicture();
+                                            Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(UpdateMenu.this, AdminPage.class));
+                                            finish();
                                         }
-                                    }
 
-                                    deleteOldMenuPicture();
-                                    Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(UpdateMenu.this, AdminPage.class));
-                                    finish();
-                                }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Toast.makeText(UpdateMenu.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    })))
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(UpdateMenu.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        });
-
-                    })
                     .addOnFailureListener(e -> Toast.makeText(UpdateMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show())
                     .addOnProgressListener(taskSnapshot -> {
                         //show upload Progress
@@ -218,17 +208,17 @@ public class UpdateMenu extends AppCompatActivity {
         }
     }
 
-    private void uploadMenuWithOldPicture() {
+    public void uploadMenuWithOldPicture() {
 
         if (validateUpdateMenuDetails()) {
+
+            progressDialog.setTitle("Update Menu details!!");
+            progressDialog.show();
 
             //Add a new Menu into the Menu's table
             menuName_Update = etMenuName_Update.getText().toString().trim();
             menuDescription_Update = etMenuDescription_Update.getText().toString().trim();
             menuPrice_Update = Double.parseDouble(etMenuPrice_Update.getText().toString().trim());
-
-            progressDialog.setTitle("The Menu is updating!");
-            progressDialog.show();
 
             Query query = databaseRefUpdate.orderByKey().equalTo(menu_KeyUp);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -279,11 +269,12 @@ public class UpdateMenu extends AppCompatActivity {
     }
 
     public void alertDialogBikePicture() {
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UpdateMenu.this);
         alertDialogBuilder
-                .setTitle("No Menu picture changed.")
+                .setTitle("No Menu picture changed!!")
                 .setMessage("Update the Menu with old picture?")
                 .setPositiveButton("YES", (dialog, id) -> uploadMenuWithOldPicture())
+
                 .setNegativeButton("CANCEL", (dialog, id) -> dialog.dismiss());
 
         android.app.AlertDialog alertDialog = alertDialogBuilder.create();
