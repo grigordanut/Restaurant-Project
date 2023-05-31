@@ -59,8 +59,8 @@ public class RegisterUser extends AppCompatActivity {
         btn_RegUser.setOnClickListener(view -> registerUser());
 
         //action button cancel
-        Button buttonCancelRegUser = (Button) findViewById(R.id.btnCancelRegUser);
-        buttonCancelRegUser.setOnClickListener(v -> {
+        Button btn_CancelRegUser = (Button) findViewById(R.id.btnCancelRegUser);
+        btn_CancelRegUser.setOnClickListener(v -> {
             firstNameRegUser.setText("");
             lastNameRegUser.setText("");
             phoneNrRegUser.setText("");
@@ -72,8 +72,7 @@ public class RegisterUser extends AppCompatActivity {
         //Action TextView Log In
         Button btn_RegLogUser = findViewById(R.id.btnRegLogUser);
         btn_RegLogUser.setOnClickListener(view -> {
-            Intent textLog = new Intent(RegisterUser.this, LoginUser.class);
-            startActivity(textLog);
+            startActivity(new Intent(RegisterUser.this, LoginUser.class));
         });
     }
 
