@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -106,28 +107,9 @@ public class UserChangePassword extends AppCompatActivity {
                                 userNewPassword.setError("Password too short, enter minimum 6 character long");
                             } else if (userOld_Password.matches(userNew_Password)) {
                                 userNewPassword.setError("Please enter a new Password\nNew Password cannot same as old");
-                            }
-                            else {
+                            } else {
 
-                                progressDialog.setTitle("Changing user Password!!");
-                                progressDialog.show();
-
-                                firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(task1 -> {
-                                    if (task1.isSuccessful()) {
-
-                                        Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(UserChangePassword.this, LoginUser.class));
-                                        finish();
-                                    } else {
-                                        try {
-                                            throw Objects.requireNonNull(task1.getException());
-                                        } catch (Exception e) {
-                                            Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-
-                                    progressDialog.dismiss();
-                                });
+                                updateUserPassword();
                             }
                         });
 
@@ -148,6 +130,30 @@ public class UserChangePassword extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    public void updateUserPassword() {
+
+        progressDialog.setTitle("Changing user Password!!");
+        progressDialog.show();
+
+        firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful()) {
+
+                        Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(UserChangePassword.this, LoginUser.class));
+                        finish();
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task1.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    progressDialog.dismiss();
+                })
+                .addOnFailureListener(e -> Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     public void alertUserNotAuthPassword() {

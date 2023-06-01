@@ -112,13 +112,11 @@ public class UserChangeEmail extends AppCompatActivity {
                                 userNewEmail.requestFocus();
                             } else if (!Patterns.EMAIL_ADDRESS.matcher(userNew_Email).matches()) {
                                 userNewEmail.setError("Enter a valid Email Address");
-                                userNewEmail.requestFocus();
                             } else if (userOdl_Email.matches(userNew_Email)) {
                                 userNewEmail.setError("Please enter a new Email\nNew Email cannot same as old");
                             } else {
 
-                                progressDialog.setTitle("Changing user Email!!");
-                                progressDialog.show();
+
 
                                 updateUserEmail();
                             }
@@ -144,6 +142,9 @@ public class UserChangeEmail extends AppCompatActivity {
     }
 
     public void updateUserEmail() {
+
+        progressDialog.setTitle("Changing user Email!!");
+        progressDialog.show();
 
         firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
