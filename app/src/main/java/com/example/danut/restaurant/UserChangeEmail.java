@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -143,21 +144,22 @@ public class UserChangeEmail extends AppCompatActivity {
         });
     }
 
-    public void updateUserEmail(){
+    public void updateUserEmail() {
 
-        firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(task1 -> {
-            if (task1.isSuccessful()) {
-                uploadChangeUserEmailData();
-            } else {
-                try {
-                    throw Objects.requireNonNull(task1.getException());
-                } catch (Exception e) {
-                    Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
+        firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        uploadChangeUserEmailData();
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
-            progressDialog.dismiss();
-        });
+                    progressDialog.dismiss();
+                })
+                .addOnFailureListener(e -> Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     public void uploadChangeUserEmailData() {
@@ -165,24 +167,27 @@ public class UserChangeEmail extends AppCompatActivity {
         String user_Id = firebaseUser.getUid();
 
         databaseReference.child(user_Id).child("user_email").setValue(userNew_Email).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
+                    if (task.isSuccessful()) {
 
-                firebaseUser.sendEmailVerification();
+                        firebaseUser.sendEmailVerification();
 
-                Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
-                finish();
+                        Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
+                        finish();
 
-            } else {
-                try {
-                    throw Objects.requireNonNull(task.getException());
-                } catch (Exception e) {
+                    } else {
+                        try {
+                            throw Objects.requireNonNull(task.getException());
+                        } catch (Exception e) {
+                            Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    progressDialog.dismiss();
+                })
+                .addOnFailureListener(e -> {
                     Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            progressDialog.dismiss();
-        });
+                });
     }
 
     public void alertUserEmailNotAuth() {
