@@ -113,7 +113,7 @@ public class UserChangeEmail extends AppCompatActivity {
                             } else if (!Patterns.EMAIL_ADDRESS.matcher(userNew_Email).matches()) {
                                 userNewEmail.setError("Enter a valid Email Address");
                             } else if (userOdl_Email.matches(userNew_Email)) {
-                                userNewEmail.setError("Please enter a new Email\nNew Email cannot same as old");
+                                userNewEmail.setError("Please enter a new Email\nNew Email cannot be same as old");
                             } else {
 
                                 updateUserEmail();

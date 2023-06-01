@@ -106,7 +106,7 @@ public class UserChangePassword extends AppCompatActivity {
                             } else if (userNew_Password.length() < 6) {
                                 userNewPassword.setError("Password too short, enter minimum 6 character long");
                             } else if (userOld_Password.matches(userNew_Password)) {
-                                userNewPassword.setError("Please enter a new Password\nNew Password cannot same as old");
+                                userNewPassword.setError("Please enter a new Password\nNew Password cannot be same as old");
                             } else {
 
                                 updateUserPassword();
