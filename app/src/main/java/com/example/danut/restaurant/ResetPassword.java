@@ -51,7 +51,7 @@ public class ResetPassword extends AppCompatActivity {
 
         if (validateResetPassData()) {
 
-            progressDialog.setTitle("The password is reset!!");
+            progressDialog.setTitle("Reset user Password!!");
             progressDialog.show();
 
             firebaseAuth.sendPasswordResetEmail(emailReset_Pass).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -59,7 +59,7 @@ public class ResetPassword extends AppCompatActivity {
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
 
-                        Toast.makeText(ResetPassword.this, "The password reset email was sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ResetPassword.this, "Password reset email has been sent", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(ResetPassword.this, LoginUser.class));
                         finish();
 
@@ -91,7 +91,6 @@ public class ResetPassword extends AppCompatActivity {
             emailResetPass.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailReset_Pass).matches()) {
             emailResetPass.setError("Enter a valid Email Address");
-            emailResetPass.requestFocus();
         } else {
             result = true;
         }
