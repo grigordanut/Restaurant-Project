@@ -116,8 +116,6 @@ public class UserChangeEmail extends AppCompatActivity {
                                 userNewEmail.setError("Please enter a new Email\nNew Email cannot same as old");
                             } else {
 
-
-
                                 updateUserEmail();
                             }
                         });

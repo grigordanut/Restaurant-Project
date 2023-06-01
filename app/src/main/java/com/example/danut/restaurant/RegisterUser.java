@@ -152,19 +152,16 @@ public class RegisterUser extends AppCompatActivity {
             emailRegUser.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email_regUser).matches()) {
             emailRegUser.setError("Enter a valid Email Address");
-            emailRegUser.requestFocus();
         } else if (pass_regUser.isEmpty()) {
             passRegUser.setError("Enter your Password");
             passRegUser.requestFocus();
         } else if (pass_regUser.length() < 6) {
             passRegUser.setError("Password too short, enter minimum 6 character long");
-            passRegUser.requestFocus();
         } else if (confPass_regUser.isEmpty()) {
             confPassRegUser.setError("Enter your Confirm Password");
             confPassRegUser.requestFocus();
         } else if (!confPass_regUser.equals(pass_regUser)) {
             confPassRegUser.setError("The Confirm Password does not match Password");
-            confPassRegUser.requestFocus();
         } else {
             result = true;
         }
