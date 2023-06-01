@@ -184,9 +184,7 @@ public class UserChangeEmail extends AppCompatActivity {
 
                     progressDialog.dismiss();
                 })
-                .addOnFailureListener(e -> {
-                    Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+                .addOnFailureListener(e -> Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     public void alertUserEmailNotAuth() {
