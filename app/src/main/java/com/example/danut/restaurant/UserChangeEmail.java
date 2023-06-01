@@ -126,8 +126,6 @@ public class UserChangeEmail extends AppCompatActivity {
                         } catch (FirebaseAuthInvalidCredentialsException e) {
                             userPassword.setError("Invalid Password");
                             userPassword.requestFocus();
-                            tVUserAuthChangeEmail.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the email!!");
-                            tVUserAuthChangeEmail.setTextColor(Color.RED);
                         } catch (Exception e) {
                             Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }

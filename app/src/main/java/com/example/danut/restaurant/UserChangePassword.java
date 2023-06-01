@@ -119,8 +119,6 @@ public class UserChangePassword extends AppCompatActivity {
                         } catch (FirebaseAuthInvalidCredentialsException e) {
                             userOldPassword.setError("Invalid Password");
                             userOldPassword.requestFocus();
-                            tVUserAuthChangePass.setText("Your profile is not authenticated yet. Please authenticate your profile first and then change the Password!!");
-                            tVUserAuthChangePass.setTextColor(Color.RED);
                         } catch (Exception e) {
                             Toast.makeText(UserChangePassword.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }

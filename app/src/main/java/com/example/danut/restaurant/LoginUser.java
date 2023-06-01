@@ -132,7 +132,6 @@ public class LoginUser extends AppCompatActivity {
             emailLogUser.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()) {
             emailLogUser.setError("Enter a valid Email Address");
-            emailLogUser.requestFocus();
         } else if (passLog_User.isEmpty()) {
             passwordLogUser.setError("Enter your Password");
             passwordLogUser.requestFocus();
