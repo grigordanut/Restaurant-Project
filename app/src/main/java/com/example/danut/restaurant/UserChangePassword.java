@@ -78,7 +78,7 @@ public class UserChangePassword extends AppCompatActivity {
                 userOldPassword.requestFocus();
             } else {
 
-                progressDialog.setMessage("The user is authenticating!!");
+                progressDialog.setMessage("User authentication!!");
                 progressDialog.show();
 
                 AuthCredential credential = EmailAuthProvider.getCredential(user_Email, userOld_Password);
@@ -106,7 +106,7 @@ public class UserChangePassword extends AppCompatActivity {
                                 userNewPassword.setError("The password is too short, enter minimum 6 character long");
                             } else {
 
-                                progressDialog.setTitle("The user Password is changing!!");
+                                progressDialog.setTitle("Changing user Password!!");
                                 progressDialog.show();
 
                                 firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(task1 -> {

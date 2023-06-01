@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -87,7 +86,7 @@ public class UserChangeEmail extends AppCompatActivity {
                 userPassword.requestFocus();
             } else {
 
-                progressDialog.setTitle("The user is authenticating!!");
+                progressDialog.setTitle("User authentication!!");
                 progressDialog.show();
 
                 AuthCredential credential = EmailAuthProvider.getCredential(userOdl_Email, user_Password);
@@ -118,7 +117,7 @@ public class UserChangeEmail extends AppCompatActivity {
                                 userNewEmail.setError("Please enter a new email\nNew email cannot same as old");
                             } else {
 
-                                progressDialog.setTitle("The user Email is changing!!");
+                                progressDialog.setTitle("Changing user Email!!");
                                 progressDialog.show();
 
                                 updateUserEmail();
