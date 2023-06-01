@@ -103,8 +103,11 @@ public class UserChangePassword extends AppCompatActivity {
                                 userNewPassword.setError("Enter your new Password");
                                 userNewPassword.requestFocus();
                             } else if (userNew_Password.length() < 6) {
-                                userNewPassword.setError("The password is too short, enter minimum 6 character long");
-                            } else {
+                                userNewPassword.setError("Password too short, enter minimum 6 character long");
+                            } else if (userOld_Password.matches(userNew_Password)) {
+                                userNewPassword.setError("Please enter a new Password\nNew Password cannot same as old");
+                            }
+                            else {
 
                                 progressDialog.setTitle("Changing user Password!!");
                                 progressDialog.show();
@@ -115,9 +118,7 @@ public class UserChangePassword extends AppCompatActivity {
                                         Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(UserChangePassword.this, LoginUser.class));
                                         finish();
-                                    }
-
-                                    else {
+                                    } else {
                                         try {
                                             throw Objects.requireNonNull(task1.getException());
                                         } catch (Exception e) {

@@ -114,7 +114,7 @@ public class UserChangeEmail extends AppCompatActivity {
                                 userNewEmail.setError("Enter a valid Email Address");
                                 userNewEmail.requestFocus();
                             } else if (userOdl_Email.matches(userNew_Email)) {
-                                userNewEmail.setError("Please enter a new email\nNew email cannot same as old");
+                                userNewEmail.setError("Please enter a new Email\nNew Email cannot same as old");
                             } else {
 
                                 progressDialog.setTitle("Changing user Email!!");
@@ -170,7 +170,7 @@ public class UserChangeEmail extends AppCompatActivity {
 
                         firebaseUser.sendEmailVerification();
 
-                        Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent.", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
                         finish();
 
