@@ -19,4 +19,5 @@
             tools:ignore="ContentDescription" />
 
     </androidx.cardview.widget.CardView>
+
 </LinearLayout>

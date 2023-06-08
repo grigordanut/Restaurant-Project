@@ -25,8 +25,8 @@ import java.util.List;
 
 public class RestaurantAdapterAdminShowRest extends RecyclerView.Adapter<RestaurantAdapterAdminShowRest.ImageViewHolder> {
 
-    private Context restaurantsContext;
-    private List<Restaurants> restaurantsUploads;
+    private final Context restaurantsContext;
+    private final List<Restaurants> restaurantsUploads;
 
     private OnItemClickListener clickListener;
 
@@ -46,7 +46,7 @@ public class RestaurantAdapterAdminShowRest extends RecyclerView.Adapter<Restaur
     @NonNull
     @Override
     public ImageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(restaurantsContext).inflate(R.layout.image_restaurant_admin, parent, false);
+        View view = LayoutInflater.from(restaurantsContext).inflate(R.layout.image_restaurant, parent, false);
         return new ImageViewHolder(view);
     }
 
@@ -123,10 +123,12 @@ public class RestaurantAdapterAdminShowRest extends RecyclerView.Adapter<Restaur
             MenuItem doAddMenu = menu.add(NONE, 1, 1, "Add New Menu");
             MenuItem doUpdateRest = menu.add(NONE, 2, 2, "Update Restaurant");
             MenuItem doDeleteRest = menu.add(NONE, 3, 3, "Delete restaurant");
+            MenuItem doClose = menu.add(NONE, 4, 4, "Close");
 
             doAddMenu.setOnMenuItemClickListener(this);
             doUpdateRest.setOnMenuItemClickListener(this);
             doDeleteRest.setOnMenuItemClickListener(this);
+            doClose.setOnMenuItemClickListener(this);
         }
 
         @Override

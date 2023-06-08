@@ -21,51 +21,47 @@
             android:layout_marginEnd="20dp"
             android:text="@string/tv_logInUser"
             android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="32sp" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmailLogUser"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/et_round_corners"
+            android:drawableStart="@drawable/ic_baseline_email_24"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="@string/et_logInUserEmailAddress"
+            android:inputType="textEmailAddress"
+            android:paddingStart="10dp"
             android:textColor="@android:color/black"
-            android:textSize="22sp" />
+            android:textColorHint="@android:color/black"
+            android:textSize="20sp"
+            tools:ignore="RtlSymmetry" />
 
-        <com.google.android.material.textfield.TextInputLayout
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassLogUser"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:textColorHint="#000000">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmailLogUser"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/et_round_corners"
-                android:ems="10"
-                android:hint="@string/et_logInUserEmailAddress"
-                android:inputType="textEmailAddress"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:textColorHint="#000000"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassLogUser"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/et_round_corners"
-                android:hint="@string/et_logInUserPassword"
-                android:inputType="textPassword"
-                android:paddingStart="10dp"
-                android:textSize="20sp"
-                tools:ignore="RtlSymmetry" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="50dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/et_round_corners"
+            android:drawableStart="@drawable/ic_baseline_security_24"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="@string/et_logInUserPassword"
+            android:inputType="textPassword"
+            android:paddingStart="10dp"
+            android:textColor="@android:color/black"
+            android:textColorHint="@android:color/black"
+            android:textSize="20sp"
+            app:passwordToggleEnabled="true"
+            tools:ignore="RtlSymmetry" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -82,7 +78,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_left"
                 android:text="@string/btn_logInUser"
-                android:textColor="#000000"
+                android:textColor="@android:color/black"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
@@ -97,7 +93,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/btn_round_right"
                 android:text="@string/btn_logCancelUser"
-                android:textColor="#000000"
                 android:textSize="26sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
@@ -108,9 +103,9 @@
             android:id="@+id/tvForgotPassUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="30dp"
             android:text="@string/tv_logInUserForgottenPass"
             android:textAlignment="center"
             android:textColor="@color/colorAccent"

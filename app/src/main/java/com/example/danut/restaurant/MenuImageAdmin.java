@@ -13,8 +13,8 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -76,14 +76,6 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
         //Set textview
         tVRestName.setText("Restaurant: " + restaurantName);
-
-        //Action button new Menus
-        Button btn_NewMenuAdmin = findViewById(R.id.btnNewMenuAdmin);
-        btn_NewMenuAdmin.setOnClickListener(v -> startActivity(new Intent(MenuImageAdmin.this, RestaurantImageAdminAddMenu.class)));
-
-        //Action button back to restaurant
-        Button btn_BackAdmin = findViewById(R.id.btnBackAdmin);
-        btn_BackAdmin.setOnClickListener(v -> startActivity(new Intent(MenuImageAdmin.this, AdminPage.class)));
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -147,7 +139,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         Menus selected_Menu = menusList.get(position);
 
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
                 .setTitle("Selected Menu: " + selected_Menu.getMenu_Name() + "\nSelect an option:")
                 .setCancelable(false)
@@ -224,5 +216,36 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_image_admin, menu);
+        return true;
+    }
+
+    public void menuImgAdminGoBack() {
+        startActivity(new Intent(MenuImageAdmin.this, AdminPage.class));
+        finish();
+    }
+
+    public void menuImgAdminAddMenu() {
+        startActivity(new Intent(MenuImageAdmin.this, RestaurantImageAdminAddMenu.class));
+        finish();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.menuImgAdmin_goBack) {
+            menuImgAdminGoBack();
+        }
+
+        if (item.getItemId() == R.id.menuImgAdmin_addMenu) {
+            menuImgAdminAddMenu();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

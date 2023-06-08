@@ -20,7 +20,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity android:name=".RestaurantImageCustomerShowRest" />
         <activity android:name=".UserChangeEmail" />
         <activity android:name=".UserChangePassword" />
@@ -37,7 +36,6 @@
         <activity android:name=".AddNewRestaurant" />
         <activity android:name=".AdminPage" />
         <activity android:name=".RestaurantImageAdminShowRest" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -48,7 +46,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".LoginUser" />
         <activity android:name=".ContactUs" />
         <activity android:name=".ResetPassword" />

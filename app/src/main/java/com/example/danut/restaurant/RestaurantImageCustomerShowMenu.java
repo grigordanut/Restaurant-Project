@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 public class RestaurantImageCustomerShowMenu extends AppCompatActivity implements RestaurantAdapterCustomer.OnItemClickListener {
 
@@ -66,9 +65,9 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         customerRecyclerView.setAdapter(restaurantAdapterCustomer);
         restaurantAdapterCustomer.setOnItmClickListener(RestaurantImageCustomerShowMenu.this);
 
-        //action of the button show map
-        Button buttonShowMap = findViewById(R.id.btnShowMap);
-        buttonShowMap.setOnClickListener(v -> startActivity(new Intent(RestaurantImageCustomerShowMenu.this, MapsActivity.class)));
+
+
+
     }
 
     @SuppressLint("SetTextI18n")

@@ -8,8 +8,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -100,6 +103,7 @@ public class LoginUser extends AppCompatActivity {
     }
 
     //check if the email has been verified
+    @SuppressLint("SetTextI18n")
     public void checkEmailVerification() {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -107,14 +111,33 @@ public class LoginUser extends AppCompatActivity {
         assert firebaseUser != null;
         if (firebaseUser.isEmailVerified()) {
 
-            Toast.makeText(LoginUser.this, "User successfully Log in!!", Toast.LENGTH_SHORT).show();
+            LayoutInflater inflater = getLayoutInflater();
+            @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+            TextView text = layout.findViewById(R.id.tvToast);
+            ImageView imageView = layout.findViewById(R.id.imgToast);
+            text.setText("Log in Successful!!");
+            imageView.setImageResource(R.drawable.ic_baseline_login_24);
+            Toast toast = new Toast(getApplicationContext());
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
+
             Intent intent = new Intent(LoginUser.this, UserPage.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
 
         } else {
-            Toast.makeText(this, "Please verify your Email first", Toast.LENGTH_SHORT).show();
+            LayoutInflater inflater = getLayoutInflater();
+            @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+            TextView text = layout.findViewById(R.id.tvToast);
+            ImageView imageView = layout.findViewById(R.id.imgToast);
+            text.setText("Please verify your Email first!!");
+            imageView.setImageResource(R.drawable.ic_baseline_mark_email_unread_24);
+            Toast toast = new Toast(getApplicationContext());
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
         }
         progressDialog.dismiss();
     }

@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Button buttonContUs = findViewById(R.id.btnContUs);
         buttonContUs.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactUs.class)));
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
 

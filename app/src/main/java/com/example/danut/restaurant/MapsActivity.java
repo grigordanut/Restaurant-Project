@@ -58,7 +58,6 @@ import Modules.DirectionFinder;
 import Modules.DirectionFinderListener;
 import Modules.Route;
 
-
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, DirectionFinderListener, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
@@ -553,7 +552,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         googlePlaceUrl.append("&sensor=true");
         googlePlaceUrl.append("&key=" + "AIzaSyDogzVfmVckJxGEVbWTQc4ljUg8dzgID7E");
 
-        Log.d("MapsActivity", "url = " + googlePlaceUrl.toString());
+        Log.d("MapsActivity", "url = " + googlePlaceUrl);
 
         return googlePlaceUrl.toString();
     }

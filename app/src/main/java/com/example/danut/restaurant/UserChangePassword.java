@@ -2,6 +2,7 @@ package com.example.danut.restaurant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -9,7 +10,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -95,6 +96,8 @@ public class UserChangePassword extends AppCompatActivity {
                         btn_AuthUserPass.setEnabled(false);
                         btn_AuthUserPass.setText("Disabled");
                         userNewPassword.requestFocus();
+
+                        btn_ChangePassword.setBackgroundTintList(ContextCompat.getColorStateList(UserChangePassword.this, R.color.dark_Green));
 
                         btn_ChangePassword.setOnClickListener(view1 -> {
 

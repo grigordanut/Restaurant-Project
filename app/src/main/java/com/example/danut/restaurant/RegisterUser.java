@@ -2,13 +2,18 @@ package com.example.danut.restaurant;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,11 +75,12 @@ public class RegisterUser extends AppCompatActivity {
         btn_RegLogUser.setOnClickListener(view -> startActivity(new Intent(RegisterUser.this, LoginUser.class)));
     }
 
+    @SuppressLint("SetTextI18n")
     public void registerUser() {
 
         if (validateRegUserData()) {
 
-            progressDialog.setTitle("Registering User details!!");
+            progressDialog.setTitle("Register User details!!");
             progressDialog.show();
 
             firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser).addOnCompleteListener(task -> {
@@ -86,7 +92,18 @@ public class RegisterUser extends AppCompatActivity {
                     try {
                         throw Objects.requireNonNull(task.getException());
                     } catch (Exception e) {
-                        Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                        TextView text = layout.findViewById(R.id.tvToast);
+                        ImageView imageView = layout.findViewById(R.id.imgToast);
+                        text.setText(e.getMessage());
+                        imageView.setImageResource(R.drawable.ic_baseline_shopping_cart_24);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+                        //Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -95,6 +112,7 @@ public class RegisterUser extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void uploadUserData() {
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -109,7 +127,17 @@ public class RegisterUser extends AppCompatActivity {
 
                 firebaseUser.sendEmailVerification();
 
-                Toast.makeText(RegisterUser.this, "User successfully registered.\nVerification Email has been sent!", Toast.LENGTH_SHORT).show();
+                LayoutInflater inflater = getLayoutInflater();
+                @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                TextView text = layout.findViewById(R.id.tvToast);
+                ImageView imageView = layout.findViewById(R.id.imgToast);
+                text.setText("Registered Successful. Verification Email has been sent!!");
+                imageView.setImageResource(R.drawable.ic_baseline_email_24);
+                Toast toast = new Toast(getApplicationContext());
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+
                 Intent intent = new Intent(RegisterUser.this, LoginUser.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);

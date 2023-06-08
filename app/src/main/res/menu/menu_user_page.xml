@@ -26,6 +26,12 @@
         android:title="@string/menuUser_changePassword"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/user_close"
+        android:orderInCategory="100"
+        android:title="@string/menuUser_close"
+        app:showAsAction="never" />
+
 </menu>
 
 

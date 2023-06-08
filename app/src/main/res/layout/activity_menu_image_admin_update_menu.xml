@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_bright"
     android:orientation="vertical"
+    android:padding="5dp"
     tools:context=".MenuImageAdminUpdateMenu">
 
     <TextView
@@ -13,11 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:text="@string/tv_menuImageUpdateMenuRestName"
         android:textAlignment="center"
-        android:textColor="#000000"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
 
@@ -28,7 +28,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:text="@string/tv_menuImageUpdateMenuMenusAv"
-        android:textColor="#000000"
+        android:textColor="@android:color/black"
         android:textSize="24sp" />
 
     <androidx.recyclerview.widget.RecyclerView

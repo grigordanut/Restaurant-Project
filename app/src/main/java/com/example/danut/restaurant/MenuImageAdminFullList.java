@@ -10,9 +10,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,14 +68,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
         menuAdapterAdminFullList = new MenuAdapterAdminFullList(MenuImageAdminFullList.this, menusList);
         rVFullList.setAdapter(menuAdapterAdminFullList);
         menuAdapterAdminFullList.setOnItmClickListener(MenuImageAdminFullList.this);
-
-        //Action button new Menu
-        Button btn_NewMenuFullList = findViewById(R.id.btnNewMenuFullList);
-        btn_NewMenuFullList.setOnClickListener(v -> startActivity(new Intent(MenuImageAdminFullList.this, RestaurantImageAdminAddMenu.class)));
-
-        //Action button back to Admin page
-        Button btn_BackAdminFullList = findViewById(R.id.btnBackAdminFullList);
-        btn_BackAdminFullList.setOnClickListener(v -> startActivity(new Intent(MenuImageAdminFullList.this, AdminPage.class)));
     }
 
     @Override
@@ -179,5 +170,36 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
     protected void onDestroy() {
         super.onDestroy();
         databaseRefMenu.removeEventListener(menuEventListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_image_admin_full_list, menu);
+        return true;
+    }
+
+    public void menuImgAdminFullListGoBack() {
+        startActivity(new Intent(MenuImageAdminFullList.this, AdminPage.class));
+        finish();
+    }
+
+    public void menuImgAdminFullListAddMenu() {
+        startActivity(new Intent(MenuImageAdminFullList.this, RestaurantImageAdminAddMenu.class));
+        finish();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.menuImgAdminFullList_goBack) {
+            menuImgAdminFullListGoBack();
+        }
+
+        if (item.getItemId() == R.id.menuImgAdminFullList_addMenu) {
+            menuImgAdminFullListAddMenu();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

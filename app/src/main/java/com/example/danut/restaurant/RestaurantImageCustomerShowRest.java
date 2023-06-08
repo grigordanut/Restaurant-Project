@@ -86,7 +86,7 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                         assert rest_Data != null;
                         rest_Data.setRest_Key(postSnapshot.getKey());
                         customRestList.add(rest_Data);
-                        tVRestCustomShowMenu.setText("Select your Restaurant");
+                        tVRestCustomShowMenu.setText(customRestList.size() + " Restaurants available");
                     }
 
                     restaurantAdapterCustomer.notifyDataSetChanged();
@@ -109,7 +109,7 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
     @Override
     public void onItemClick(final int position) {
 
-        final String[] options = {"Show Menus", "Back User Page"};
+        final String[] options = {"Back User Page", "Show Menus", "Show Map" };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         Restaurants selected_Rest = customRestList.get(position);
@@ -121,6 +121,11 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                 .setAdapter(adapter, (dialog, id) -> {
 
                     if (id == 0) {
+                        Toast.makeText(RestaurantImageCustomerShowRest.this, "Back to User page", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RestaurantImageCustomerShowRest.this, UserPage.class));
+                    }
+
+                    if (id == 1) {
                         Toast.makeText(RestaurantImageCustomerShowRest.this, "Show Restaurant Menus", Toast.LENGTH_SHORT).show();
                         Intent intent_Update = new Intent(RestaurantImageCustomerShowRest.this, MenuImageCustomer.class);
                         intent_Update.putExtra("RName", selected_Rest.getRest_Name());
@@ -128,9 +133,9 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                         startActivity(intent_Update);
                     }
 
-                    if (id == 1) {
-                        Toast.makeText(RestaurantImageCustomerShowRest.this, "Back to User page", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(RestaurantImageCustomerShowRest.this, UserPage.class));
+                    if (id == 2) {
+                        Toast.makeText(RestaurantImageCustomerShowRest.this, "Show Map", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RestaurantImageCustomerShowRest.this, MapsActivity.class));
                     }
                 })
 

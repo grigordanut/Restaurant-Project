@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menuImgAdmin_goBack"
+        android:orderInCategory="100"
+        android:title="@string/mImgAdmin_goBack"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuImgAdmin_addMenu"
+        android:orderInCategory="100"
+        android:title="@string/mImgAdmin_addMenu"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menuImgAdmin_close"
+        android:orderInCategory="100"
+        android:title="@string/mImgAdmin_Close"
+        app:showAsAction="never" />
+
+</menu>

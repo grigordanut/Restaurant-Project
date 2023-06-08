@@ -2,10 +2,12 @@ package com.example.danut.restaurant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -102,6 +104,8 @@ public class UserChangeEmail extends AppCompatActivity {
                         btn_AuthUser.setEnabled(false);
                         btn_AuthUser.setText("Disabled");
                         userNewEmail.requestFocus();
+
+                        btn_ChangeEmail.setBackgroundTintList(ContextCompat.getColorStateList(UserChangeEmail.this, R.color.dark_Green));
 
                         btn_ChangeEmail.setOnClickListener(view1 -> {
 

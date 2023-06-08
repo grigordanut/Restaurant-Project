@@ -10,7 +10,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class UserPage extends AppCompatActivity {
+public class UserPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     //Access customer database
     private FirebaseAuth firebaseAuth;
@@ -42,7 +45,7 @@ public class UserPage extends AppCompatActivity {
     private ValueEventListener restEventListener;
     private List<Restaurants> restaurantsList;
 
-    private TextView tVUserWelcome, tVUserShowDetails, tVUserRestsAv;
+    private TextView tVUserPage, tVUserWelcome, tVUserRestsAv;
 
     private int numberRestsAv;
 
@@ -53,6 +56,7 @@ public class UserPage extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggleUser;
     private NavigationView navigationViewUser;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,12 +77,16 @@ public class UserPage extends AppCompatActivity {
 
         restaurantsList = new ArrayList<>();
 
-        tVUserWelcome = findViewById(R.id.tvUserWelcome);
-        tVUserShowDetails = findViewById(R.id.tvUserShowDetails);
-        tVUserRestsAv = findViewById(R.id.tvUserRestsAv);
-
         drawerLayoutUser = findViewById(R.id.activity_user_page);
         navigationViewUser = findViewById(R.id.navViewUserPage);
+        View header = navigationViewUser.getHeaderView(0);
+
+        tVUserWelcome = findViewById(R.id.tvUserWelcome);
+        tVUserRestsAv = findViewById(R.id.tvUserRestsAv);
+        tVUserPage = header.findViewById(R.id.tvUserPage);
+
+        findViewById(R.id.layoutRestaurants).setOnClickListener(this);
+        findViewById(R.id.layoutMenus).setOnClickListener(this);
 
         drawerToggleUser = new ActionBarDrawerToggle(this, drawerLayoutUser, R.string.open_userPage, R.string.close_userPage);
 
@@ -100,24 +108,13 @@ public class UserPage extends AppCompatActivity {
                     assert users_Data != null;
                     if (firebaseUser.getUid().equals(postSnapshot.getKey())) {
                         tVUserWelcome.setText("Welcome: " + users_Data.getUser_firstName() + " " + users_Data.getUser_lastName());
-                        tVUserShowDetails.setText("Customer Name: \n" + users_Data.getUser_firstName() + " "
-                                + users_Data.getUser_lastName() + "\n\nEmail: \n" + users_Data.getUser_email());
+
+                        tVUserPage.setText(users_Data.getUser_firstName() + " " + users_Data.getUser_lastName());
 
                         //Adding Click Events to our navigation drawer item
                         navigationViewUser.setNavigationItemSelectedListener(item -> {
                             int id = item.getItemId();
                             switch (id) {
-                                //Show Restaurants
-                                case R.id.user_showRests:
-                                    Intent show_Rests = new Intent(UserPage.this, RestaurantImageCustomerShowRest.class);
-                                    startActivity(show_Rests);
-                                    break;
-
-                                //Show Menus
-                                case R.id.user_showMenus:
-                                    Intent show_Menus = new Intent(UserPage.this, RestaurantImageCustomerShowMenu.class);
-                                    startActivity(show_Menus);
-                                    break;
 
                                 //Edit User profile
                                 case R.id.user_editProfile:
@@ -205,6 +202,7 @@ public class UserPage extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("SetTextI18n")
     public void alertDialogUserLogout() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserPage.this);
         alertDialogBuilder
@@ -217,6 +215,16 @@ public class UserPage extends AppCompatActivity {
                     progressDialog.show();
 
                     firebaseAuth.signOut();
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                    TextView text = layout.findViewById(R.id.tvToast);
+                    ImageView imageView = layout.findViewById(R.id.imgToast);
+                    text.setText("Logout Successful!!");
+                    imageView.setImageResource(R.drawable.ic_baseline_logout_24);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
                 })
@@ -257,5 +265,29 @@ public class UserPage extends AppCompatActivity {
                 Toast.makeText(UserPage.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            //Show Restaurants
+            case R.id.layoutRestaurants:
+                startActivity(new Intent(UserPage.this, RestaurantImageCustomerShowRest.class));
+                //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+            //Show Menus
+            case R.id.layoutMenus:
+                startActivity(new Intent(UserPage.this, RestaurantImageCustomerShowMenu.class));
+                //overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                break;
+
+        }//end switch
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }
