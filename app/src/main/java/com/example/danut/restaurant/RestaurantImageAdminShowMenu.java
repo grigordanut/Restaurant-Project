@@ -42,7 +42,7 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_image_admin_show_menu);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Restaurants show Menu");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Admin restaurants show menu");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -86,8 +86,7 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
                     }
 
                     restaurantAdapterAdmin.notifyDataSetChanged();
-                }
-                else {
+                } else {
                     tVRestImageShowMenusAdmin.setText("No registered Restaurants.");
                 }
 
@@ -95,8 +94,8 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(RestaurantImageAdminShowMenu.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(RestaurantImageAdminShowMenu.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -104,8 +103,8 @@ public class RestaurantImageAdminShowMenu extends AppCompatActivity implements R
     //Action on Restaurants onClick
     @Override
     public void onItemClick(int position) {
-        Restaurants selected_Rest = restaurantsList.get(position);
 
+        Restaurants selected_Rest = restaurantsList.get(position);
         Intent intentAdd = new Intent(RestaurantImageAdminShowMenu.this, MenuImageAdmin.class);
         intentAdd.putExtra("RName", selected_Rest.getRest_Name());
         intentAdd.putExtra("RKey", selected_Rest.getRest_Key());

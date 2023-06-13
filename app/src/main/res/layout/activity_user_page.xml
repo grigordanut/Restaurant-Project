@@ -5,7 +5,7 @@
     android:id="@+id/activity_user_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#C0C0C0"
+    android:background="@drawable/bg_pages"
     tools:context=".UserPage">
 
     <LinearLayout
@@ -19,9 +19,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
-            android:text="@string/tv_userWelcomePage"
+            android:text="@string/tv_userWelcome"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvUserService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:text="@string/tv_userService"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="24sp"
@@ -50,8 +63,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
@@ -60,10 +73,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:text="Restaurants"
                     android:textColor="#000000"
-                    android:layout_marginBottom="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -83,8 +96,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:adjustViewBounds="true"
                     android:contentDescription="@string/app_name"
@@ -93,15 +106,14 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:text="Menu List"
                     android:textColor="#000000"
                     android:textSize="20sp"
-                    android:layout_marginBottom="10dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 
@@ -144,12 +156,14 @@
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navViewUserPage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:background="#dddddd"
         app:headerLayout="@layout/header_user_page"
         app:itemTextAppearance="?android:textAppearanceMedium"
         app:itemTextColor="@drawable/drawer_item_color"
-        app:menu="@menu/menu_drawer_user_page" />
+        app:menu="@menu/menu_drawer_user_page"
+        />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -56,7 +56,7 @@ public class AdminPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_page);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Admin Page");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Admin page");
 
         progressDialog = new ProgressDialog(this);
 
@@ -168,12 +168,12 @@ public class AdminPage extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
         alertDialogBuilder
-                .setTitle("Log out Admin!!")
-                .setMessage("Are sure to Log out?")
+                .setTitle("Admin logout!!")
+                .setMessage("Are you sure to logout?")
                 .setCancelable(false)
                 .setPositiveButton("YES", (dialog, id) -> {
 
-                    progressDialog.setTitle("Log out Admin!!");
+                    progressDialog.setTitle("Admin logout!!");
                     progressDialog.show();
 
                     startActivity(new Intent(AdminPage.this, LoginUser.class));

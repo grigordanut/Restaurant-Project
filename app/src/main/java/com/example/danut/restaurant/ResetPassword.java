@@ -1,5 +1,6 @@
 package com.example.danut.restaurant;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 
@@ -8,8 +9,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,7 +38,7 @@ public class ResetPassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("CUSTOMER: reset Password");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Reset password");
 
         progressDialog = new ProgressDialog(this);
 
@@ -51,15 +56,26 @@ public class ResetPassword extends AppCompatActivity {
 
         if (validateResetPassData()) {
 
-            progressDialog.setTitle("Reset user Password!!");
+            progressDialog.setTitle("Resetting user password!!");
             progressDialog.show();
 
             firebaseAuth.sendPasswordResetEmail(emailReset_Pass).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
 
-                        Toast.makeText(ResetPassword.this, "Password reset email has been sent", Toast.LENGTH_SHORT).show();
+                        LayoutInflater inflater = getLayoutInflater();
+                        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                        TextView text = layout.findViewById(R.id.tvToast);
+                        ImageView imageView = layout.findViewById(R.id.imgToast);
+                        text.setText("An email has been sent to reset your password!!");
+                        imageView.setImageResource(R.drawable.baseline_security_update_good_24);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+
                         startActivity(new Intent(ResetPassword.this, LoginUser.class));
                         finish();
 

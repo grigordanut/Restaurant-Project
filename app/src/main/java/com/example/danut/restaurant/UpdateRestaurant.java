@@ -9,8 +9,11 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +55,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_restaurant);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: update Restaurant");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Admin restaurant update");
 
         progressDialog = new ProgressDialog(UpdateRestaurant.this);
 
@@ -71,7 +74,7 @@ public class UpdateRestaurant extends AppCompatActivity {
             restKeyUpdate = bundleRest.getString("RKey");
         }
 
-        tVRestUpdate.setText("Update Restaurant: " + restNameUpdate);
+        tVRestUpdate.setText("Updating the restaurant: " + restNameUpdate);
 
         restNameUp.setText(restNameUpdate);
         restAddressUp.setText(restAddressUpdate);
@@ -82,7 +85,7 @@ public class UpdateRestaurant extends AppCompatActivity {
 
     public void checkRestaurantName() {
 
-        progressDialog.setTitle("Update Restaurant details!!");
+        progressDialog.setTitle("Updateing restaurant details!!");
         progressDialog.show();
 
         final String rest_nameCheck = restNameUp.getText().toString().trim();
@@ -114,7 +117,9 @@ public class UpdateRestaurant extends AppCompatActivity {
 
             databaseRefRestUpdate.child(restKeyUpdate).setValue(rest_Data).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
+
                     uploadRestNameMenuUp();
+
                 } else {
                     try {
                         throw Objects.requireNonNull(task.getException());
@@ -131,6 +136,7 @@ public class UpdateRestaurant extends AppCompatActivity {
         final String menuRest_NameUp = restNameUp.getText().toString().trim();
 
         databaseRefMenuUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -146,7 +152,18 @@ public class UpdateRestaurant extends AppCompatActivity {
                 }
 
                 progressDialog.dismiss();
-                Toast.makeText(UpdateRestaurant.this, "Restaurant Updated", Toast.LENGTH_SHORT).show();
+
+                LayoutInflater inflater = getLayoutInflater();
+                @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                TextView text = layout.findViewById(R.id.tvToast);
+                ImageView imageView = layout.findViewById(R.id.imgToast);
+                text.setText("Restaurant updated successfully!!");
+                imageView.setImageResource(R.drawable.baseline_restaurant_24);
+                Toast toast = new Toast(getApplicationContext());
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+
                 startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
                 finish();
             }
@@ -183,8 +200,8 @@ public class UpdateRestaurant extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UpdateRestaurant.this);
         alertDialogBuilder
-                .setTitle("The Restaurant: " + rest_alertNameCheck + " already exists!")
-                .setMessage("Save the Restaurant with same name?")
+                .setTitle("The restaurant: " + rest_alertNameCheck + " already exists!!")
+                .setMessage("Save the restaurant with same name?")
                 .setCancelable(false)
                 .setPositiveButton("YES", (dialog, id) -> updateRestDetails())
 

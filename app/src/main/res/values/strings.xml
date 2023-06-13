@@ -4,18 +4,17 @@
     <string name="title_activity_maps">Map</string>
 
     <!--    Activity Add New Menu-->
-    <string name="tv_restaurantName">Restaurant Name</string>
+    <string name="tv_menuRestName">Restaurant Name</string>
     <string name="et_menuName">Enter Menu Name</string>
     <string name="et_menuDescription">Enter Menu Description</string>
     <string name="et_menuPrice">Enter Menu Price</string>
     <string name="btn_saveMenu">Save Menu</string>
-    <string name="btn_backToAdminPage">Back Admin</string>
 
     <!--    Activity Add New Restaurant-->
-    <string name="tv_addNewRestaurant">Please enter Restaurant details</string>
-    <string name="et_addRestName">Restaurant Name</string>
-    <string name="et_addRestAddress">Restaurant Address</string>
-    <string name="btn_saveRestaurant">Save Restaurant</string>
+    <string name="tv_restPage">Please enter restaurant details</string>
+    <string name="et_restName">Restaurant Name</string>
+    <string name="et_restAddress">Restaurant Address</string>
+    <string name="btn_save">Save Restaurant</string>
 
     <!--    Activity Admin Page-->
     <string name="tv_adminPage">Welcome to Admin Page</string>
@@ -110,7 +109,6 @@
 
     <!--    Activity Update Menu-->
     <string name="tv_menuUpdate">Update Menu</string>
-    <string name="tv_menuImage">Update Image</string>
     <string name="et_menuNameUpdate">Menu Name</string>
     <string name="et_menuDescriptionUpdate">Menu Description</string>
     <string name="et_menuPriceUpdate">Menu Price</string>
@@ -154,7 +152,9 @@
     <string name="btn_userEditProfile">Update Profile</string>
 
     <!--    Activity User Page-->
-    <string name="tv_userWelcomePage">Welcome:</string>
+    <string name="tv_userHeader">User Name</string>
+    <string name="tv_userWelcome">Welcome</string>
+    <string name="tv_userService">Select a service:</string>
     <string name="tv_userRests">Restaurants Available</string>
     <string name="tv_userRestsAv">0</string>
     <string name="open_userPage">Open</string>
@@ -214,9 +214,10 @@
     <string name="menuDAdmin_updateMenu">Update Menu</string>
 
     <!--    Menu Drawer User Page-->
-    <string name="mDUser_editProfile">Edit Profile</string>
-    <string name="mDUser_changeEmail">Change Email</string>
-    <string name="mDUser_changePassword">Change Password</string>
+    <string name="mDUser_addPicture">Add User Picture</string>
+    <string name="mDUser_editProfile">Edit User Profile</string>
+    <string name="mDUser_changeEmail">Change User Email</string>
+    <string name="mDUser_changePassword">Change User Password</string>
 
     <!--    Menu Image Admin-->
     <string name="mImgAdmin_goBack">Go Back Admin</string>

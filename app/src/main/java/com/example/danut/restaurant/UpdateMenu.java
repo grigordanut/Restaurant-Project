@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +33,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.Objects;
 
 public class UpdateMenu extends AppCompatActivity {
 
@@ -65,6 +69,8 @@ public class UpdateMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_menu);
 
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Update menu");
+
         storageRefUpdate = FirebaseStorage.getInstance().getReference("Menus");
         databaseRefUpdate = FirebaseDatabase.getInstance().getReference("Menus");
 
@@ -97,7 +103,7 @@ public class UpdateMenu extends AppCompatActivity {
                 .centerCrop()
                 .into(ivMenuUpdate);
 
-        tViewMenuUpdate.setText("Update the menu: " + menu_NameUp);
+        tViewMenuUpdate.setText("Updating the menu: " + menu_NameUp);
 
         etMenuName_Update.setText(menu_NameUp);
         etMenuDescription_Update.setText(menu_DescriptionUp);
@@ -130,13 +136,24 @@ public class UpdateMenu extends AppCompatActivity {
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             imageUriUpdate = data.getData();
             ivMenuUpdate.setImageURI(imageUriUpdate);
-            Toast.makeText(UpdateMenu.this, "Image uploaded", Toast.LENGTH_SHORT).show();
+
+            LayoutInflater inflater = getLayoutInflater();
+            @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+            TextView text = layout.findViewById(R.id.tvToast);
+            ImageView imageView = layout.findViewById(R.id.imgToast);
+            text.setText("Image picked from Gallery!!");
+            imageView.setImageResource(R.drawable.baseline_camera_24);
+            Toast toast = new Toast(getApplicationContext());
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
         }
     }
 
@@ -144,14 +161,6 @@ public class UpdateMenu extends AppCompatActivity {
         ContentResolver contentResolver = getContentResolver();
         MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
-    }
-
-    public void deleteOldMenuPicture() {
-
-        StorageReference storageRefDelete = getInstance().getReferenceFromUrl(menu_ImageUp);
-        storageRefDelete.delete()
-                .addOnSuccessListener(aVoid -> Toast.makeText(UpdateMenu.this, "Previous image deleted", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(UpdateMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 
     //Upload the updated Menu into the Menu table
@@ -163,7 +172,7 @@ public class UpdateMenu extends AppCompatActivity {
             menuDescription_Update = etMenuDescription_Update.getText().toString().trim();
             menuPrice_Update = Double.parseDouble(etMenuPrice_Update.getText().toString().trim());
 
-            progressDialog.setTitle("Update Menu details!!");
+            progressDialog.setTitle("Updating menu details!!");
             progressDialog.show();
 
             final StorageReference fileReference = storageRefUpdate.child(System.currentTimeMillis() + "." + getFileExtension(imageUriUpdate));
@@ -171,6 +180,7 @@ public class UpdateMenu extends AppCompatActivity {
                     .addOnSuccessListener(taskSnapshot -> fileReference.getDownloadUrl()
                             .addOnSuccessListener(uri ->
                                     databaseRefUpdate.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @SuppressLint("SetTextI18n")
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -187,6 +197,18 @@ public class UpdateMenu extends AppCompatActivity {
                                             }
 
                                             deleteOldMenuPicture();
+
+                                            LayoutInflater inflater = getLayoutInflater();
+                                            @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                                            TextView text = layout.findViewById(R.id.tvToast);
+                                            ImageView imageView = layout.findViewById(R.id.imgToast);
+                                            text.setText("The menu has been updated successfully!!");
+                                            imageView.setImageResource(R.drawable.baseline_restaurant_menu_24);
+                                            Toast toast = new Toast(getApplicationContext());
+                                            toast.setDuration(Toast.LENGTH_LONG);
+                                            toast.setView(layout);
+                                            toast.show();
+
                                             Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
                                             startActivity(new Intent(UpdateMenu.this, AdminPage.class));
                                             finish();
@@ -208,11 +230,33 @@ public class UpdateMenu extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
+    public void deleteOldMenuPicture() {
+
+        StorageReference storageRefDelete = getInstance().getReferenceFromUrl(menu_ImageUp);
+        storageRefDelete.delete()
+                .addOnSuccessListener(aVoid -> {
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                    TextView text = layout.findViewById(R.id.tvToast);
+                    ImageView imageView = layout.findViewById(R.id.imgToast);
+                    text.setText("Previous image deleted!!");
+                    imageView.setImageResource(R.drawable.baseline_delete_forever_24);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
+                })
+
+                .addOnFailureListener(e -> Toast.makeText(UpdateMenu.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+    }
+
     public void uploadMenuWithOldPicture() {
 
         if (validateUpdateMenuDetails()) {
 
-            progressDialog.setTitle("Update Menu details!!");
+            progressDialog.setTitle("Updating menu details!!");
             progressDialog.show();
 
             //Add a new Menu into the Menu's table
@@ -222,6 +266,7 @@ public class UpdateMenu extends AppCompatActivity {
 
             Query query = databaseRefUpdate.orderByKey().equalTo(menu_KeyUp);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
@@ -231,7 +276,18 @@ public class UpdateMenu extends AppCompatActivity {
                     }
 
                     progressDialog.dismiss();
-                    Toast.makeText(UpdateMenu.this, "The Menu will be updated", Toast.LENGTH_SHORT).show();
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                    TextView text = layout.findViewById(R.id.tvToast);
+                    ImageView imageView = layout.findViewById(R.id.imgToast);
+                    text.setText("The menu has been updated successfully!!");
+                    imageView.setImageResource(R.drawable.baseline_restaurant_menu_24);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
+
                     startActivity(new Intent(UpdateMenu.this, AdminPage.class));
                     finish();
                 }
@@ -271,8 +327,8 @@ public class UpdateMenu extends AppCompatActivity {
     public void alertDialogBikePicture() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UpdateMenu.this);
         alertDialogBuilder
-                .setTitle("No Menu picture changed!!")
-                .setMessage("Update the Menu with old picture?")
+                .setTitle("No menu picture changed!!")
+                .setMessage("Update the menu with old picture?")
                 .setPositiveButton("YES", (dialog, id) -> uploadMenuWithOldPicture())
 
                 .setNegativeButton("CANCEL", (dialog, id) -> dialog.dismiss());

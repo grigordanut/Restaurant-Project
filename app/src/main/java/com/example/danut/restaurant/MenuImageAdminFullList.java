@@ -100,8 +100,8 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(MenuImageAdminFullList.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MenuImageAdminFullList.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

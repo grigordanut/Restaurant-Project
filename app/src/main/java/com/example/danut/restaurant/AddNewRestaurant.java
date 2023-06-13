@@ -3,13 +3,18 @@ package com.example.danut.restaurant;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -42,7 +47,7 @@ public class AddNewRestaurant extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_restaurant);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add new Restaurant");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add new restaurant");
 
         progressDialog = new ProgressDialog(this);
 
@@ -87,11 +92,12 @@ public class AddNewRestaurant extends AppCompatActivity {
                 });
     }
 
+    @SuppressLint("SetTextI18n")
     private void uploadRestaurantData() {
 
         if (validateRestDetails()) {
 
-            progressDialog.setTitle("Upload Restaurant details!!");
+            progressDialog.setTitle("Uploading restaurant details!!");
             progressDialog.show();
 
             String rest_Id = databaseRefRest.push().getKey();
@@ -101,7 +107,17 @@ public class AddNewRestaurant extends AppCompatActivity {
             databaseRefRest.child(rest_Id).setValue(rest_Data).addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
 
-                            Toast.makeText(AddNewRestaurant.this, "Restaurant successfully added!", Toast.LENGTH_SHORT).show();
+                            LayoutInflater inflater = getLayoutInflater();
+                            @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                            TextView text = layout.findViewById(R.id.tvToast);
+                            ImageView imageView = layout.findViewById(R.id.imgToast);
+                            text.setText("Restaurant added successfully!!");
+                            imageView.setImageResource(R.drawable.baseline_restaurant_24);
+                            Toast toast = new Toast(getApplicationContext());
+                            toast.setDuration(Toast.LENGTH_LONG);
+                            toast.setView(layout);
+                            toast.show();
+
                             startActivity(new Intent(AddNewRestaurant.this, RestaurantImageAdminShowRest.class));
                             finish();
 
@@ -129,10 +145,10 @@ public class AddNewRestaurant extends AppCompatActivity {
         rest_Address = etRest_Address.getText().toString().trim();
 
         if (TextUtils.isEmpty(rest_Name)) {
-            etRest_Name.setError("Enter Restaurant name");
+            etRest_Name.setError("Enter the restaurant name");
             etRest_Name.requestFocus();
         } else if (TextUtils.isEmpty(rest_Address)) {
-            etRest_Address.setError("Enter Restaurant address");
+            etRest_Address.setError("Enter the restaurant address");
             etRest_Address.requestFocus();
         } else {
             result = true;
@@ -146,8 +162,8 @@ public class AddNewRestaurant extends AppCompatActivity {
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
         alertDialogBuilder
-                .setTitle("Check the Restaurant name!!")
-                .setMessage("The restaurant: " + etRest_alertCheckName + " already exists!")
+                .setTitle("Checking the restaurant name!!")
+                .setMessage("The restaurant: " + etRest_alertCheckName + " already exists!!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 

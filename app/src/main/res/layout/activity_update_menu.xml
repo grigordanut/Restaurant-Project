@@ -30,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="#f2f2f2"
-            android:src="@drawable/add_menus_picture"
+            android:src="@drawable/image_add_menus"
             tools:ignore="ContentDescription" />
 
         <com.google.android.material.textfield.TextInputLayout

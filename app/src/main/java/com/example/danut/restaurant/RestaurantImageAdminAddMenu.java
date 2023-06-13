@@ -42,7 +42,7 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_image_admin_add_menu);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Restaurants add Menu");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Admin restaurants add menu");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -104,8 +104,8 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
     //Action on Restaurant onClick
     @Override
     public void onItemClick(int position) {
-        Restaurants selected_Rest = restaurantsList.get(position);
 
+        Restaurants selected_Rest = restaurantsList.get(position);
         Intent intentAdd = new Intent(RestaurantImageAdminAddMenu.this, AddNewMenu.class);
         intentAdd.putExtra("RName", selected_Rest.getRest_Name());
         intentAdd.putExtra("RKey", selected_Rest.getRest_Key());

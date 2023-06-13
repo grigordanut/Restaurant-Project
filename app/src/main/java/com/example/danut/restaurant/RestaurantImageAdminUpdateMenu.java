@@ -104,8 +104,8 @@ public class RestaurantImageAdminUpdateMenu extends AppCompatActivity implements
     //Action on Restaurant onClick
     @Override
     public void onItemClick(int position) {
-        Restaurants selected_Rest = restaurantsList.get(position);
 
+        Restaurants selected_Rest = restaurantsList.get(position);
         Intent intent_Update = new Intent(RestaurantImageAdminUpdateMenu.this, MenuImageAdminUpdateMenu.class);
         intent_Update.putExtra("RName", selected_Rest.getRest_Name());
         intent_Update.putExtra("RKey", selected_Rest.getRest_Key());

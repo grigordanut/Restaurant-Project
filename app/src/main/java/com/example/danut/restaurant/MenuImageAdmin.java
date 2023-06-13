@@ -13,8 +13,11 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -167,13 +170,14 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         alertDialog.show();
     }
 
+    @SuppressLint("SetTextI18n")
     public void confirmDeletion(final int position) {
 
         Menus selected_Menu = menusList.get(position);
 
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuImageAdmin.this);
         alertDialogBuilder
-                .setTitle("Delete Menu from restaurant!!")
+                .setTitle("Delete menu from restaurant!!")
                 .setMessage("Are you sure to delete the menu:\n" + selected_Menu.getMenu_Name() + "?")
                 .setCancelable(false)
                 .setPositiveButton("YES", (dialog, id) -> {
@@ -183,8 +187,17 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                     StorageReference imageReference = menuStorage.getReferenceFromUrl(selected_Menu.getMenu_Image());
                     imageReference.delete().addOnSuccessListener(aVoid -> {
                         databaseRefMenu.child(selectedMenuKey).removeValue();
-                        menusList.clear();
-                        Toast.makeText(MenuImageAdmin.this, "The Menu has been successfully deleted!", Toast.LENGTH_SHORT).show();
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                        TextView text = layout.findViewById(R.id.tvToast);
+                        ImageView imageView = layout.findViewById(R.id.imgToast);
+                        text.setText("The menu was successfully deleted!!");
+                        imageView.setImageResource(R.drawable.baseline_delete_forever_24);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
                     });
                 })
 

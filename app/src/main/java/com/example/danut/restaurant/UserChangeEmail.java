@@ -7,16 +7,18 @@ import androidx.core.content.ContextCompat;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +55,7 @@ public class UserChangeEmail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_change_email);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: change Email");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("User change email");
 
         progressDialog = new ProgressDialog(UserChangeEmail.this);
 
@@ -102,10 +104,9 @@ public class UserChangeEmail extends AppCompatActivity {
 
                         userPassword.setEnabled(false);
                         btn_AuthUser.setEnabled(false);
-                        btn_AuthUser.setText("Disabled");
                         userNewEmail.requestFocus();
 
-                        btn_ChangeEmail.setBackgroundTintList(ContextCompat.getColorStateList(UserChangeEmail.this, R.color.dark_Green));
+                        btn_ChangeEmail.setBackgroundTintList(ContextCompat.getColorStateList(UserChangeEmail.this, R.color.green));
 
                         btn_ChangeEmail.setOnClickListener(view1 -> {
 
@@ -143,7 +144,7 @@ public class UserChangeEmail extends AppCompatActivity {
 
     public void updateUserEmail() {
 
-        progressDialog.setTitle("Changing user Email!!");
+        progressDialog.setTitle("Changing user email!!");
         progressDialog.show();
 
         firebaseUser.updateEmail(userNew_Email).addOnCompleteListener(task -> {
@@ -159,9 +160,22 @@ public class UserChangeEmail extends AppCompatActivity {
 
                     progressDialog.dismiss();
                 })
-                .addOnFailureListener(e -> Toast.makeText(UserChangeEmail.this, e.getMessage(), Toast.LENGTH_SHORT).show());
+                .addOnFailureListener(e -> {
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                    TextView text = layout.findViewById(R.id.tvToast);
+                    ImageView imageView = layout.findViewById(R.id.imgToast);
+                    text.setText(e.getMessage());
+                    imageView.setImageResource(R.drawable.baseline_report_gmailerrorred_24);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
+                });
     }
 
+    @SuppressLint("SetTextI18n")
     public void uploadChangeUserEmailData() {
 
         String user_Id = firebaseUser.getUid();
@@ -171,7 +185,17 @@ public class UserChangeEmail extends AppCompatActivity {
 
                         firebaseUser.sendEmailVerification();
 
-                        Toast.makeText(UserChangeEmail.this, "Email was changed. Email verification has been sent.", Toast.LENGTH_SHORT).show();
+                        LayoutInflater inflater = getLayoutInflater();
+                        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                        TextView text = layout.findViewById(R.id.tvToast);
+                        ImageView imageView = layout.findViewById(R.id.imgToast);
+                        text.setText("Email has been changed successfully. Verification email has been sent!!");
+                        imageView.setImageResource(R.drawable.ic_baseline_email_24);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+
                         startActivity(new Intent(UserChangeEmail.this, LoginUser.class));
                         finish();
 
@@ -191,10 +215,10 @@ public class UserChangeEmail extends AppCompatActivity {
     public void alertUserEmailNotAuth() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserChangeEmail.this);
         alertDialogBuilder
-                .setTitle("User Unauthenticated!!")
+                .setTitle("unauthenticated user!!")
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Email!!")
                 .setCancelable(false)
-                .setPositiveButton("Ok", (dialog, id) -> dialog.dismiss());
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();

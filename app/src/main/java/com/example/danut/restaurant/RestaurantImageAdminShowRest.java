@@ -10,7 +10,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +47,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_image_admin_show_rest);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Restaurants available");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Admin restaurants available");
 
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
@@ -111,6 +114,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
 
     @Override
     public void onAddMenuClick(int position) {
+
         Intent intent = new Intent(RestaurantImageAdminShowRest.this, AddNewMenu.class);
         Restaurants selected_Rest = restaurantList.get(position);
         intent.putExtra("RName", selected_Rest.getRest_Name());
@@ -120,6 +124,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
 
     @Override
     public void onUpdateRestClick(int position) {
+
         Intent intent = new Intent(RestaurantImageAdminShowRest.this, UpdateRestaurant.class);
         Restaurants selected_Rest = restaurantList.get(position);
         intent.putExtra("RName", selected_Rest.getRest_Name());
@@ -129,6 +134,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
     }
 
     //Action of the menu Delete and alert dialog
+    @SuppressLint("SetTextI18n")
     @Override
     public void onDeleteRestClick(final int position) {
 
@@ -136,13 +142,23 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
 
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
         builderAlert
-                .setTitle("Delete Restaurant!!")
+                .setTitle("Delete restaurant!!")
                 .setMessage("Are sure to delete the restaurant:\n" + selectedRest.getRest_Name() + "?")
                 .setCancelable(true)
                 .setPositiveButton("YES", (dialog, id) -> {
                     String selectedRestKey = selectedRest.getRest_Key();
                     databaseReference.child(selectedRestKey).removeValue();
-                    Toast.makeText(RestaurantImageAdminShowRest.this, "The Restaurant " + selectedRest.getRest_Name() + " has been deleted successfully", Toast.LENGTH_SHORT).show();
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                    TextView text = layout.findViewById(R.id.tvToast);
+                    ImageView imageView = layout.findViewById(R.id.imgToast);
+                    text.setText("The restaurant " + selectedRest.getRest_Name() + " was successfully deleted!!");
+                    imageView.setImageResource(R.drawable.baseline_delete_forever_24);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
                 })
 
                 .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
@@ -184,7 +200,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         finish();
     }
 
-    public void menuRestImgAdminShowRestAddREst() {
+    public void menuRestImgAdminShowRestAddRest() {
         startActivity(new Intent(RestaurantImageAdminShowRest.this, AddNewRestaurant.class));
         finish();
     }
@@ -198,10 +214,9 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         }
 
         if (item.getItemId() == R.id.menuRestImgAdminShowRest_addRest) {
-            menuRestImgAdminShowRestAddREst();
+            menuRestImgAdminShowRestAddRest();
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 }

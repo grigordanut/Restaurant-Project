@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,7 +59,7 @@ public class AddNewMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_menu);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add Menus to Restaurant");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Add menus to restaurant");
 
         progressDialog = new ProgressDialog(this);
 
@@ -90,9 +92,6 @@ public class AddNewMenu extends AppCompatActivity {
                 uploadMenuData();
             }
         });
-
-        Button btn_BackAdminMenu = findViewById(R.id.btnBackAdminMenu);
-        btn_BackAdminMenu.setOnClickListener(v -> startActivity(new Intent(AddNewMenu.this, AdminPage.class)));
     }
 
     //Insert a picture
@@ -102,13 +101,24 @@ public class AddNewMenu extends AppCompatActivity {
         startActivityForResult(gallery, PICK_IMAGE);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
             imageUri = data.getData();
             menuImg.setImageURI(imageUri);
-            Toast.makeText(AddNewMenu.this, "Image uploaded", Toast.LENGTH_SHORT).show();
+
+            LayoutInflater inflater = getLayoutInflater();
+            @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+            TextView text = layout.findViewById(R.id.tvToast);
+            ImageView imageView = layout.findViewById(R.id.imgToast);
+            text.setText("Image picked from Gallery!!");
+            imageView.setImageResource(R.drawable.baseline_camera_24);
+            Toast toast = new Toast(getApplicationContext());
+            toast.setDuration(Toast.LENGTH_LONG);
+            toast.setView(layout);
+            toast.show();
         }
     }
 
@@ -119,6 +129,7 @@ public class AddNewMenu extends AppCompatActivity {
     }
 
     //Upload a new menu into the Menu table
+    @SuppressLint("SetTextI18n")
     public void uploadMenuData() {
 
         //Add menu into Menu's database
@@ -128,7 +139,7 @@ public class AddNewMenu extends AppCompatActivity {
             menu_Description = menuDescription.getText().toString().trim();
             menu_Price = Double.parseDouble(menuPrice.getText().toString().trim());
 
-            progressDialog.setTitle("Upload Menu details!!");
+            progressDialog.setTitle("Uploading menu details!!");
             progressDialog.show();
 
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
@@ -145,8 +156,18 @@ public class AddNewMenu extends AppCompatActivity {
                                 assert menu_Id != null;
                                 databaseReference.child(menu_Id).setValue(menus);
 
+                                LayoutInflater inflater = getLayoutInflater();
+                                @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                                TextView text = layout.findViewById(R.id.tvToast);
+                                ImageView imageView = layout.findViewById(R.id.imgToast);
+                                text.setText("The menu was successfully uploaded!!");
+                                imageView.setImageResource(R.drawable.baseline_restaurant_menu_24);
+                                Toast toast = new Toast(getApplicationContext());
+                                toast.setDuration(Toast.LENGTH_LONG);
+                                toast.setView(layout);
+                                toast.show();
+
                                 startActivity(new Intent(AddNewMenu.this, AdminPage.class));
-                                Toast.makeText(AddNewMenu.this, "Menu successfully uploaded", Toast.LENGTH_LONG).show();
                                 finish();
 
                             }))
@@ -187,7 +208,7 @@ public class AddNewMenu extends AppCompatActivity {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AddNewMenu.this);
         alertDialogBuilder
                 .setTitle("No menu picture!!")
-                .setMessage("Please add a Menu picture.")
+                .setMessage("Please add a menu picture.")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 

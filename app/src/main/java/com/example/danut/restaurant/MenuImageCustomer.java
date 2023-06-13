@@ -148,7 +148,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                 .into(img_full);
 
         alertDialogBuilder
-                .setTitle("Menu Name: " + selected_Menu.getMenu_Name())
+                .setTitle("Menu name: " + selected_Menu.getMenu_Name())
                 .setView(promptsView)
                 .setCancelable(false)
                 .setNegativeButton("CLOSE", (dialog, id) -> dialog.cancel());

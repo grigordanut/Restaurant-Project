@@ -102,14 +102,13 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
                             menusList.add(menu_Data);
                             tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
                         }
-                        if(menusList.size() == 0) {
+                        if (menusList.size() == 0) {
                             tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
                         }
                     }
 
                     menuAdapterAdmin.notifyDataSetChanged();
-                }
-                else {
+                } else {
                     tVMenuImageUpdateMenuMenusAv.setText("There are not Menus added");
                 }
 

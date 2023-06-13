@@ -4,6 +4,7 @@ import com.google.firebase.database.Exclude;
 
 public class Users {
 
+    private String user_picture;
     private String user_firstName;
     private String user_lastName;
     private String user_phone;
@@ -14,11 +15,20 @@ public class Users {
 
     }
 
-    public Users(String user_firstName, String user_lastName, String user_phone, String user_email) {
+    public Users(String user_picture, String user_firstName, String user_lastName, String user_phone, String user_email) {
+        this.user_picture = user_picture;
         this.user_firstName = user_firstName;
         this.user_lastName = user_lastName;
         this.user_phone = user_phone;
         this.user_email = user_email;
+    }
+
+    public String getUser_picture() {
+        return user_picture;
+    }
+
+    public void setUser_picture(String user_picture) {
+        this.user_picture = user_picture;
     }
 
     public String getUser_firstName() {

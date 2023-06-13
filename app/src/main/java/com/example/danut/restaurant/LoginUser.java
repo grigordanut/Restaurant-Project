@@ -40,7 +40,7 @@ public class LoginUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_user);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Log in User");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("User login");
 
         progressDialog = new ProgressDialog(this);
 
@@ -75,12 +75,13 @@ public class LoginUser extends AppCompatActivity {
         //Log in a new user
         if (validateUserData()) {
 
-            progressDialog.setTitle("Log in User!!");
+            progressDialog.setTitle("User login!!");
             progressDialog.show();
 
             firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(task -> {
 
                 if (task.isSuccessful()) {
+
                     checkEmailVerification();
 
                 } else {
@@ -90,7 +91,7 @@ public class LoginUser extends AppCompatActivity {
                         emailLogUser.setError("This email is not registered.");
                         emailLogUser.requestFocus();
                     } catch (FirebaseAuthInvalidCredentialsException e) {
-                        passwordLogUser.setError("Invalid Password");
+                        passwordLogUser.setError("Invalid password");
                         passwordLogUser.requestFocus();
                     } catch (Exception e) {
                         Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -115,7 +116,7 @@ public class LoginUser extends AppCompatActivity {
             @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
             TextView text = layout.findViewById(R.id.tvToast);
             ImageView imageView = layout.findViewById(R.id.imgToast);
-            text.setText("Log in Successful!!");
+            text.setText("Login successful!!");
             imageView.setImageResource(R.drawable.ic_baseline_login_24);
             Toast toast = new Toast(getApplicationContext());
             toast.setDuration(Toast.LENGTH_LONG);
@@ -132,7 +133,7 @@ public class LoginUser extends AppCompatActivity {
             @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
             TextView text = layout.findViewById(R.id.tvToast);
             ImageView imageView = layout.findViewById(R.id.imgToast);
-            text.setText("Please verify your Email first!!");
+            text.setText("Please verify your email first!!");
             imageView.setImageResource(R.drawable.ic_baseline_mark_email_unread_24);
             Toast toast = new Toast(getApplicationContext());
             toast.setDuration(Toast.LENGTH_LONG);

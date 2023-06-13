@@ -19,7 +19,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:text="@string/tv_restaurantName"
+            android:text="@string/tv_menuRestName"
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="24sp"
@@ -32,7 +32,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:background="#f2f2f2"
-            android:src="@drawable/add_menus_picture"
+            android:src="@drawable/image_add_menus"
             tools:ignore="ContentDescription" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -110,29 +110,13 @@
                 android:id="@+id/btnAddMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="50dp"
                 android:layout_marginBottom="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_round_left"
+                android:background="@drawable/btn_round_corners"
                 android:text="@string/btn_saveMenu"
-                android:textSize="22sp"
-                android:textStyle="bold"
-                tools:ignore="ButtonStyle" />
-
-            <Button
-                android:id="@+id/btnBackAdminMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="15dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_round_right"
-                android:text="@string/btn_backToAdminPage"
-                android:textSize="22sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:ignore="ButtonStyle" />
 

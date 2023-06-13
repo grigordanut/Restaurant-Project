@@ -44,7 +44,7 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_image_customer_show_menu);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("CUSTOMER: Restaurants show Menu");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Customer restaurants show menu");
 
         //initialize variables
         progressDialog = new ProgressDialog(this);
@@ -64,10 +64,6 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
         restaurantAdapterCustomer = new RestaurantAdapterCustomer(RestaurantImageCustomerShowMenu.this, customRestList);
         customerRecyclerView.setAdapter(restaurantAdapterCustomer);
         restaurantAdapterCustomer.setOnItmClickListener(RestaurantImageCustomerShowMenu.this);
-
-
-
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -113,7 +109,6 @@ public class RestaurantImageCustomerShowMenu extends AppCompatActivity implement
     public void onItemClick(int position) {
 
         Restaurants selected_Rest = customRestList.get(position);
-
         Intent intent_Update = new Intent(RestaurantImageCustomerShowMenu.this, MenuImageCustomer.class);
         intent_Update.putExtra("RName", selected_Rest.getRest_Name());
         intent_Update.putExtra("RKey", selected_Rest.getRest_Key());

@@ -11,10 +11,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +49,7 @@ public class UserChangePassword extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_change_password);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: change Password");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("User change password");
 
         progressDialog = new ProgressDialog(UserChangePassword.this);
 
@@ -80,7 +83,7 @@ public class UserChangePassword extends AppCompatActivity {
                 userOldPassword.requestFocus();
             } else {
 
-                progressDialog.setMessage("User authentication!!");
+                progressDialog.setTitle("User authentication!!");
                 progressDialog.show();
 
                 AuthCredential credential = EmailAuthProvider.getCredential(user_Email, userOld_Password);
@@ -97,7 +100,7 @@ public class UserChangePassword extends AppCompatActivity {
                         btn_AuthUserPass.setText("Disabled");
                         userNewPassword.requestFocus();
 
-                        btn_ChangePassword.setBackgroundTintList(ContextCompat.getColorStateList(UserChangePassword.this, R.color.dark_Green));
+                        btn_ChangePassword.setBackgroundTintList(ContextCompat.getColorStateList(UserChangePassword.this, R.color.green));
 
                         btn_ChangePassword.setOnClickListener(view1 -> {
 
@@ -133,6 +136,7 @@ public class UserChangePassword extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     public void updateUserPassword() {
 
         progressDialog.setTitle("Changing user Password!!");
@@ -141,7 +145,19 @@ public class UserChangePassword extends AppCompatActivity {
         firebaseUser.updatePassword(userNew_Password).addOnCompleteListener(task1 -> {
                     if (task1.isSuccessful()) {
 
-                        Toast.makeText(UserChangePassword.this, "The password will be changed.", Toast.LENGTH_SHORT).show();
+                        firebaseAuth.signOut();
+
+                        LayoutInflater inflater = getLayoutInflater();
+                        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                        TextView text = layout.findViewById(R.id.tvToast);
+                        ImageView imageView = layout.findViewById(R.id.imgToast);
+                        text.setText("Password has been changed successfully!!");
+                        imageView.setImageResource(R.drawable.baseline_security_update_good_24);
+                        Toast toast = new Toast(getApplicationContext());
+                        toast.setDuration(Toast.LENGTH_LONG);
+                        toast.setView(layout);
+                        toast.show();
+
                         startActivity(new Intent(UserChangePassword.this, LoginUser.class));
                         finish();
                     } else {
@@ -160,7 +176,7 @@ public class UserChangePassword extends AppCompatActivity {
     public void alertUserNotAuthPassword() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserChangePassword.this);
         alertDialogBuilder
-                .setTitle("User Unauthenticated!!")
+                .setTitle("Unauthenticated user!!")
                 .setMessage("Your profile is not authenticated yet.\nPlease authenticate your profile first and then change the Password!!")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());

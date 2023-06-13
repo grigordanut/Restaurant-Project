@@ -10,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +53,7 @@ public class UserEditProfile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit_profile);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("USER: edit Profile");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Edit user profile");
 
         progressDialog = new ProgressDialog(UserEditProfile.this);
 
@@ -82,7 +85,7 @@ public class UserEditProfile extends AppCompatActivity {
 
         if (validateUserUpdateData()) {
 
-            progressDialog.setTitle("Update User details!!");
+            progressDialog.setTitle("Updating user details!!");
             progressDialog.show();
 
             firstName_UserUp = firstNameUserUp.getText().toString().trim();
@@ -91,6 +94,7 @@ public class UserEditProfile extends AppCompatActivity {
             email_UserUp = emailUserUp.getText().toString().trim();
 
             databaseReferenceUp.addListenerForSingleValueEvent(new ValueEventListener() {
+                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -104,7 +108,18 @@ public class UserEditProfile extends AppCompatActivity {
                     }
 
                     progressDialog.dismiss();
-                    Toast.makeText(UserEditProfile.this, "Your details has been changed successfully", Toast.LENGTH_SHORT).show();
+
+                    LayoutInflater inflater = getLayoutInflater();
+                    @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+                    TextView text = layout.findViewById(R.id.tvToast);
+                    ImageView imageView = layout.findViewById(R.id.imgToast);
+                    text.setText("Your details have been successfully updated!!");
+                    imageView.setImageResource(R.drawable.baseline_person_add_alt_1_24);
+                    Toast toast = new Toast(getApplicationContext());
+                    toast.setDuration(Toast.LENGTH_LONG);
+                    toast.setView(layout);
+                    toast.show();
+
                     startActivity(new Intent(UserEditProfile.this, UserPage.class));
                     finish();
                 }
@@ -178,8 +193,8 @@ public class UserEditProfile extends AppCompatActivity {
     public void alertChangeEmailPlace() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(UserEditProfile.this);
         alertDialogBuilder
-                .setTitle("Change User Email!!")
-                .setMessage("The Email Address cannot be change here.\nPlease use Change Email option.")
+                .setTitle("Changing user email!!")
+                .setMessage("The email address cannot be change here.\nPlease use Change Email option.")
                 .setCancelable(false)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 

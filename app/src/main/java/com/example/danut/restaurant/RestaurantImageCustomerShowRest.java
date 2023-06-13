@@ -90,8 +90,7 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                     }
 
                     restaurantAdapterCustomer.notifyDataSetChanged();
-                }
-                else {
+                } else {
                     tVRestCustomShowMenu.setText("No registered Restaurants");
                 }
 
@@ -109,7 +108,7 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
     @Override
     public void onItemClick(final int position) {
 
-        final String[] options = {"Back User Page", "Show Menus", "Show Map" };
+        final String[] options = {"Back User Page", "Show Menus", "Show Map"};
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.select_dialog_item, options);
         Restaurants selected_Rest = customRestList.get(position);
@@ -140,6 +139,7 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                 })
 
                 .setNegativeButton("CLOSE", (dialog, id) -> dialog.dismiss());
+
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
     }

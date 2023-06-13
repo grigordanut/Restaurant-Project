@@ -40,7 +40,7 @@ public class RegisterUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
 
-        Objects.requireNonNull(getSupportActionBar()).setTitle("Register User");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("User registration");
 
         progressDialog = new ProgressDialog(this);
 
@@ -80,7 +80,7 @@ public class RegisterUser extends AppCompatActivity {
 
         if (validateRegUserData()) {
 
-            progressDialog.setTitle("Register User details!!");
+            progressDialog.setTitle("Registration of user details!!");
             progressDialog.show();
 
             firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser).addOnCompleteListener(task -> {
@@ -98,12 +98,11 @@ public class RegisterUser extends AppCompatActivity {
                         TextView text = layout.findViewById(R.id.tvToast);
                         ImageView imageView = layout.findViewById(R.id.imgToast);
                         text.setText(e.getMessage());
-                        imageView.setImageResource(R.drawable.ic_baseline_shopping_cart_24);
+                        imageView.setImageResource(R.drawable.baseline_report_gmailerrorred_24);
                         Toast toast = new Toast(getApplicationContext());
                         toast.setDuration(Toast.LENGTH_LONG);
                         toast.setView(layout);
                         toast.show();
-                        //Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -118,41 +117,32 @@ public class RegisterUser extends AppCompatActivity {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
         assert firebaseUser != null;
-        String user_Id = firebaseUser.getUid();
-        Users user_data = new Users(firstName_regUser, lastName_regUser, phoneNr_regUser, email_regUser);
+        String user_id = firebaseUser.getUid();
 
-        databaseReference.child(user_Id).setValue(user_data).addOnCompleteListener(RegisterUser.this, task -> {
+        databaseReference.child(user_id).child("user_firstName").setValue(firstName_regUser);
+        databaseReference.child(user_id).child("user_lastName").setValue(lastName_regUser);
+        databaseReference.child(user_id).child("user_phone").setValue(phoneNr_regUser);
+        databaseReference.child(user_id).child("user_email").setValue(email_regUser);
 
-            if (task.isSuccessful()) {
+        firebaseUser.sendEmailVerification();
 
-                firebaseUser.sendEmailVerification();
+        LayoutInflater inflater = getLayoutInflater();
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
+        TextView text = layout.findViewById(R.id.tvToast);
+        ImageView imageView = layout.findViewById(R.id.imgToast);
+        text.setText("Registration successful. Verification email sent!!");
+        imageView.setImageResource(R.drawable.baseline_person_add_alt_1_24);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
 
-                LayoutInflater inflater = getLayoutInflater();
-                @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
-                TextView text = layout.findViewById(R.id.tvToast);
-                ImageView imageView = layout.findViewById(R.id.imgToast);
-                text.setText("Registered Successful. Verification Email has been sent!!");
-                imageView.setImageResource(R.drawable.ic_baseline_email_24);
-                Toast toast = new Toast(getApplicationContext());
-                toast.setDuration(Toast.LENGTH_LONG);
-                toast.setView(layout);
-                toast.show();
+        Intent intent = new Intent(RegisterUser.this, LoginUser.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
 
-                Intent intent = new Intent(RegisterUser.this, LoginUser.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-
-            } else {
-                try {
-                    throw Objects.requireNonNull(task.getException());
-                } catch (Exception e) {
-                    Toast.makeText(RegisterUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            progressDialog.dismiss();
-        });
+        progressDialog.dismiss();
     }
 
     public Boolean validateRegUserData() {
