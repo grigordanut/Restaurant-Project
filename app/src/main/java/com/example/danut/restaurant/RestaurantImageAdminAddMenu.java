@@ -36,7 +36,6 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
 
     private ProgressDialog progressDialog;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,22 +74,16 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    restaurantsList.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
-                        assert restaurants != null;
-                        restaurants.setRest_Key(postSnapshot.getKey());
-                        restaurantsList.add(restaurants);
-                        tVRestImageAddMenus.setText("Select the Restaurant");
-                    }
-
-                    restaurantAdapterAdmin.notifyDataSetChanged();
-                }
-                else {
-                    tVRestImageAddMenus.setText("No registered Restaurants.");
+                restaurantsList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Restaurants restaurants = postSnapshot.getValue(Restaurants.class);
+                    assert restaurants != null;
+                    restaurants.setRest_Key(postSnapshot.getKey());
+                    restaurantsList.add(restaurants);
+                    tVRestImageAddMenus.setText("Select the Restaurant");
                 }
 
+                restaurantAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 
@@ -104,7 +97,6 @@ public class RestaurantImageAdminAddMenu extends AppCompatActivity implements Re
     //Action on Restaurant onClick
     @Override
     public void onItemClick(int position) {
-
         Restaurants selected_Rest = restaurantsList.get(position);
         Intent intentAdd = new Intent(RestaurantImageAdminAddMenu.this, AddNewMenu.class);
         intentAdd.putExtra("RName", selected_Rest.getRest_Name());

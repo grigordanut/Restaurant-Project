@@ -263,10 +263,10 @@ public class UserPage extends AppCompatActivity implements NavigationView.OnNavi
                     toast.setDuration(Toast.LENGTH_LONG);
                     toast.setView(layout);
                     toast.show();
+
                     startActivity(new Intent(UserPage.this, LoginUser.class));
                     finish();
                 })
-
                 .setNegativeButton("NO", (dialog, id) -> dialog.cancel());
 
         progressDialog.dismiss();

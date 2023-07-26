@@ -21,7 +21,7 @@
             android:layout_marginEnd="10dp"
             android:text="@string/tv_userEditProfile"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
             android:layout_marginEnd="15dp"
             android:text="@string/tv_userFirstName"
             android:textAlignment="textStart"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="22sp"
             tools:ignore="RtlCompat" />
 
@@ -43,7 +43,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-
             android:layout_marginEnd="10dp"
             android:background="@drawable/et_round_corners"
             android:ems="10"
@@ -52,6 +51,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/et_userFirstName"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -64,7 +64,7 @@
             android:layout_marginEnd="15dp"
             android:text="@string/tv_userLastName"
             android:textAlignment="textStart"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="22sp"
             tools:ignore="RtlCompat" />
 
@@ -81,6 +81,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/et_userLastName"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -93,7 +94,7 @@
             android:layout_marginEnd="15dp"
             android:text="@string/tv_userPhone"
             android:textAlignment="textStart"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="22sp"
             tools:ignore="RtlCompat" />
 
@@ -110,6 +111,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/et_userPhone"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 
@@ -122,7 +124,7 @@
             android:layout_marginEnd="15dp"
             android:text="@string/tv_userEmailAddress"
             android:textAlignment="textStart"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="22sp"
             tools:ignore="RtlCompat" />
 
@@ -138,7 +140,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:text="@string/et_userEmailAddress"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             tools:ignore="Autofill,LabelFor,RtlSymmetry" />
 

@@ -84,14 +84,16 @@ public class RegisterUser extends AppCompatActivity {
             progressDialog.show();
 
             firebaseAuth.createUserWithEmailAndPassword(email_regUser, pass_regUser).addOnCompleteListener(task -> {
-
                 if (task.isSuccessful()) {
+
                     uploadUserData();
 
                 } else {
                     try {
                         throw Objects.requireNonNull(task.getException());
                     } catch (Exception e) {
+
+                        progressDialog.dismiss();
 
                         LayoutInflater inflater = getLayoutInflater();
                         @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
@@ -105,8 +107,6 @@ public class RegisterUser extends AppCompatActivity {
                         toast.show();
                     }
                 }
-
-                progressDialog.dismiss();
             });
         }
     }
@@ -138,11 +138,8 @@ public class RegisterUser extends AppCompatActivity {
         toast.show();
 
         Intent intent = new Intent(RegisterUser.this, LoginUser.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
-
-        progressDialog.dismiss();
     }
 
     public Boolean validateRegUserData() {

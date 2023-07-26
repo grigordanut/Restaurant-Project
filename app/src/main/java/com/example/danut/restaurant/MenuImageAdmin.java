@@ -50,8 +50,6 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     private String restaurantName = "";
     private String restaurantKey = "";
 
-    private ProgressDialog progressDialog;
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +57,6 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         setContentView(R.layout.activity_menu_image_admin);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Menus available");
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.show();
 
         menuStorage = FirebaseStorage.getInstance();
         databaseRefMenu = FirebaseDatabase.getInstance().getReference().child("Menus");
@@ -84,9 +79,6 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        menuAdapterAdmin = new MenuAdapterAdmin(MenuImageAdmin.this, menusList);
-        recyclerView.setAdapter(menuAdapterAdmin);
-        menuAdapterAdmin.setOnItmClickListener(MenuImageAdmin.this);
     }
 
     @Override
@@ -101,30 +93,30 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Menus menus = postSnapshot.getValue(Menus.class);
-                        assert menus != null;
-                        menus.setMenu_Key(postSnapshot.getKey());
-                        String rest_Key = menus.getRestaurant_Key();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Menus menus = postSnapshot.getValue(Menus.class);
+                    assert menus != null;
+                    menus.setMenu_Key(postSnapshot.getKey());
+                    String rest_Key = menus.getRestaurant_Key();
 
-                        if (rest_Key.equals(restaurantKey)) {
-                            menusList.add(menus);
-                            tVMenusAvAdmin.setText(menusList.size() + " Menus available");
-                        }
-
-                        if (menusList.size() == 0) {
-                            tVMenusAvAdmin.setText("No Menus available");
+                    if (rest_Key.equals(restaurantKey)) {
+                        menusList.add(menus);
+                        if (menusList.size() == 1) {
+                            tVMenusAvAdmin.setText(menusList.size() + " menu available");
+                        } else {
+                            tVMenusAvAdmin.setText(menusList.size() + " menus available");
                         }
                     }
-
-                    menuAdapterAdmin.notifyDataSetChanged();
-                } else {
-                    tVMenusAvAdmin.setText("There are not Menus added");
-                    alertDialogNoMenusAvailable();
                 }
 
-                progressDialog.dismiss();
+                if (menusList.size() == 1) {
+                    tVMenusAvAdmin.setText(menusList.size() + " menu available");
+                } else {
+                    tVMenusAvAdmin.setText(menusList.size() + " menus available");
+                }
+                menuAdapterAdmin = new MenuAdapterAdmin(MenuImageAdmin.this, menusList);
+                recyclerView.setAdapter(menuAdapterAdmin);
+                menuAdapterAdmin.setOnItmClickListener(MenuImageAdmin.this);
             }
 
             @Override
@@ -212,23 +204,6 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     protected void onDestroy() {
         super.onDestroy();
         databaseRefMenu.removeEventListener(menuEventListener);
-    }
-
-    public void alertDialogNoMenusAvailable() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MenuImageAdmin.this);
-        alertDialogBuilder
-                .setTitle("There are not Menus available!!")
-                .setMessage("Would you like to add Menus?")
-                .setPositiveButton("YES", (dialog, id) -> {
-                    finish();
-                    Intent intent = new Intent(MenuImageAdmin.this, RestaurantImageAdminAddMenu.class);
-                    startActivity(intent);
-                })
-
-                .setNegativeButton("NO", (dialog, id) -> startActivity(new Intent(MenuImageAdmin.this, AdminPage.class)));
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +30,6 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
     private ValueEventListener menusEventListener;
 
     private List<Menus> menusList;
-
-    private int numberMenusAvailable;
 
     private OnItemClickListener clickListener;
 
@@ -68,15 +67,14 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
                     assert menus != null;
                     if (menus.getRestaurant_Key().equals(uploadCurrent.getRest_Key())) {
                         menusList.add(menus);
-                        numberMenusAvailable = menusList.size();
-                        holder.tVMenusAvailable.setText(String.valueOf(numberMenusAvailable));
+                        holder.tVMenusAvailable.setText(String.valueOf(menusList.size()));
                     }
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(restaurantsContext, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

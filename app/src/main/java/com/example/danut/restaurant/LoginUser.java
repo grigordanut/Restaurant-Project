@@ -72,19 +72,20 @@ public class LoginUser extends AppCompatActivity {
 
     public void logInUser() {
 
-        //Log in a new user
         if (validateUserData()) {
 
             progressDialog.setTitle("User login!!");
             progressDialog.show();
 
             firebaseAuth.signInWithEmailAndPassword(emailLog_User, passLog_User).addOnCompleteListener(task -> {
-
                 if (task.isSuccessful()) {
 
                     checkEmailVerification();
 
                 } else {
+
+                    progressDialog.dismiss();
+
                     try {
                         throw Objects.requireNonNull(task.getException());
                     } catch (FirebaseAuthInvalidUserException e) {
@@ -97,8 +98,6 @@ public class LoginUser extends AppCompatActivity {
                         Toast.makeText(LoginUser.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-
-                progressDialog.dismiss();
             });
         }
     }
@@ -112,6 +111,8 @@ public class LoginUser extends AppCompatActivity {
         assert firebaseUser != null;
         if (firebaseUser.isEmailVerified()) {
 
+            //progressDialog.dismiss();
+
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
             TextView text = layout.findViewById(R.id.tvToast);
@@ -124,11 +125,13 @@ public class LoginUser extends AppCompatActivity {
             toast.show();
 
             Intent intent = new Intent(LoginUser.this, UserPage.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
             finish();
 
         } else {
+
+            progressDialog.dismiss();
+
             LayoutInflater inflater = getLayoutInflater();
             @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
             TextView text = layout.findViewById(R.id.tvToast);
@@ -140,7 +143,6 @@ public class LoginUser extends AppCompatActivity {
             toast.setView(layout);
             toast.show();
         }
-        progressDialog.dismiss();
     }
 
     //validate input data into the editText
@@ -152,12 +154,12 @@ public class LoginUser extends AppCompatActivity {
         passLog_User = passwordLogUser.getText().toString();
 
         if (emailLog_User.isEmpty()) {
-            emailLogUser.setError("Enter your Email Address");
+            emailLogUser.setError("Enter your email address");
             emailLogUser.requestFocus();
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailLog_User).matches()) {
-            emailLogUser.setError("Enter a valid Email Address");
+            emailLogUser.setError("Enter a valid email address");
         } else if (passLog_User.isEmpty()) {
-            passwordLogUser.setError("Enter your Password");
+            passwordLogUser.setError("Enter your password");
             passwordLogUser.requestFocus();
         } else if (emailLog_User.equals("admin@gmail.com") && (passLog_User.equals("admin"))) {
             progressDialog.setMessage("Login Admin");

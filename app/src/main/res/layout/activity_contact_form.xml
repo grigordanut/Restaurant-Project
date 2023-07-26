@@ -24,7 +24,7 @@
             android:textAllCaps="true"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="@color/colorBlack"
             tools:ignore="RtlSymmetry" />
 
         <TextView

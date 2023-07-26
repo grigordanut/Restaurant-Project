@@ -80,8 +80,8 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="C:\Users\danut\AndroidStudioProjects\Restaurant\app\src\main\res\drawable-v24\restaurants.jpg" />
-                                                <entry key="scalingPercent" value="99" />
+                                                <entry key="imagePath" value="C:\Users\danut\AndroidStudioProjects\Restaurant\app\src\main\res\drawable\image_restaurant_icon.jpg" />
+                                                <entry key="scalingPercent" value="74" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -114,7 +114,6 @@
                                   <option name="values">
                                     <map>
                                       <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="outputName" value="ic_launcher_rest" />
                                     </map>
                                   </option>
                                 </PersistentState>

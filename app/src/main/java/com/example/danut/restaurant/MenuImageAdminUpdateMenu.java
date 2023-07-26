@@ -90,28 +90,20 @@ public class MenuImageAdminUpdateMenu extends AppCompatActivity implements MenuA
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    menusList.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                menusList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
 
-                        Menus menu_Data = postSnapshot.getValue(Menus.class);
-                        assert menu_Data != null;
+                    Menus menu_Data = postSnapshot.getValue(Menus.class);
+                    assert menu_Data != null;
 
-                        if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
-                            menu_Data.setMenu_Key(postSnapshot.getKey());
-                            menusList.add(menu_Data);
-                            tVMenuImageUpdateMenuMenusAv.setText("Select your Menu");
-                        }
-                        if (menusList.size() == 0) {
-                            tVMenuImageUpdateMenuMenusAv.setText("No Menus available");
-                        }
+                    if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
+                        menu_Data.setMenu_Key(postSnapshot.getKey());
+                        menusList.add(menu_Data);
+                        tVMenuImageUpdateMenuMenusAv.setText("Select a Menu to update");
                     }
-
-                    menuAdapterAdmin.notifyDataSetChanged();
-                } else {
-                    tVMenuImageUpdateMenuMenusAv.setText("There are not Menus added");
                 }
 
+                menuAdapterAdmin.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

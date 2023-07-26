@@ -43,7 +43,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
 
     private ProgressDialog progressDialog;
 
-    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,21 +80,25 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    menusList.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Menus menus = postSnapshot.getValue(Menus.class);
-                        assert menus != null;
-                        menus.setMenu_Key(postSnapshot.getKey());
-                        menusList.add(menus);
-                        tVMenusAvFullListAdmin.setText(menusList.size() + " Menus available");
+                menusList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Menus menus = postSnapshot.getValue(Menus.class);
+                    assert menus != null;
+                    menus.setMenu_Key(postSnapshot.getKey());
+                    menusList.add(menus);
+                    if (menusList.size() == 1) {
+                        tVMenusAvFullListAdmin.setText(menusList.size() + " menu available");
+                    } else {
+                        tVMenusAvFullListAdmin.setText(menusList.size() + " menus available");
                     }
-
-                    menuAdapterAdminFullList.notifyDataSetChanged();
-                } else {
-                    tVMenusAvFullListAdmin.setText("There are not Menus added");
                 }
 
+                menuAdapterAdminFullList.notifyDataSetChanged();
+                if (menusList.size() == 1) {
+                    tVMenusAvFullListAdmin.setText(menusList.size() + " menu available");
+                } else {
+                    tVMenusAvFullListAdmin.setText(menusList.size() + " menus available");
+                }
                 progressDialog.dismiss();
             }
 

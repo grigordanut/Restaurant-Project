@@ -86,7 +86,12 @@ public class RestaurantImageCustomerShowRest extends AppCompatActivity implement
                         assert rest_Data != null;
                         rest_Data.setRest_Key(postSnapshot.getKey());
                         customRestList.add(rest_Data);
-                        tVRestCustomShowMenu.setText(customRestList.size() + " Restaurants available");
+                        if (customRestList.size() == 1) {
+                            tVRestCustomShowMenu.setText(customRestList.size() + " Restaurant available");
+                        }
+                        else {
+                            tVRestCustomShowMenu.setText(customRestList.size() + " Restaurants available");
+                        }
                     }
 
                     restaurantAdapterCustomer.notifyDataSetChanged();

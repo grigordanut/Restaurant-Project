@@ -38,9 +38,6 @@ public class AdminPage extends AppCompatActivity {
     private List<Restaurants> restListAv;
     private List<Menus> menuListAv;
 
-    private int numberRestAv;
-    private int numberMenuAv;
-
     private TextView tVAdminRestAv, tVAdminMenusAv;
 
     private ProgressDialog progressDialog;
@@ -101,32 +98,103 @@ public class AdminPage extends AppCompatActivity {
 
                 //Edit the Restaurants available
                 case R.id.adminUpdate_restaurant:
-                    Toast.makeText(AdminPage.this, "Update Restaurant", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateRest.class));
+                    databaseRefRestAv.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Toast.makeText(AdminPage.this, "Update Restaurant", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateRest.class));
+                            } else {
+                                alertNoRestaurantsAvailable();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     break;
 
                 //Add Menus to the Restaurants available
                 case R.id.adminAdd_menu:
-                    Toast.makeText(AdminPage.this, "Add Menu to Restaurant", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminAddMenu.class));
+
+                    databaseRefRestAv.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Toast.makeText(AdminPage.this, "Add Menu to Restaurant", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(AdminPage.this, RestaurantImageAdminAddMenu.class));
+                            } else {
+                                alertNoRestaurantsAvailable();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     break;
 
                 //Show the list of Menus available ordered by Restaurants
                 case R.id.adminShow_menus:
-                    Toast.makeText(AdminPage.this, "Show list of Menus", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowMenu.class));
+                    databaseRefRestAv.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Toast.makeText(AdminPage.this, "Show list of Menus", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(AdminPage.this, RestaurantImageAdminShowMenu.class));
+                            } else {
+                                alertNoRestaurantsAvailable();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     break;
 
                 //Show the full list of Menus available
                 case R.id.adminShow_menusFullList:
-                    Toast.makeText(AdminPage.this, "Show full list of Menus", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AdminPage.this, MenuImageAdminFullList.class));
+                    databaseRefMenuAv.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Toast.makeText(AdminPage.this, "Show full list of Menus", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(AdminPage.this, MenuImageAdminFullList.class));
+                            } else {
+                                alertNoMenusAvailable();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     break;
 
                 //Edit the Menus available ordered by Restaurants
                 case R.id.adminUpdate_menu:
-                    Toast.makeText(AdminPage.this, "Edit Menus", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateMenu.class));
+                    databaseRefRestAv.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Toast.makeText(AdminPage.this, "Edit Menus", Toast.LENGTH_SHORT).show();
+                                startActivity(new Intent(AdminPage.this, RestaurantImageAdminUpdateMenu.class));
+                            } else {
+                                alertNoRestaurantsAvailable();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     break;
 
                 default:
@@ -198,14 +266,16 @@ public class AdminPage extends AppCompatActivity {
 
         eventListenerRestAv = databaseRefRestAv.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 restListAv.clear();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
-
-                    restListAv.add(rest_Data);
-                    numberRestAv = restListAv.size();
-                    tVAdminRestAv.setText(String.valueOf(numberRestAv));
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Restaurants rest_Data = postSnapshot.getValue(Restaurants.class);
+                        restListAv.add(rest_Data);
+                        tVAdminRestAv.setText(String.valueOf(restListAv.size()));
+                    }
+                } else {
+                    tVAdminRestAv.setText(String.valueOf(restListAv.size()));
                 }
             }
 
@@ -220,14 +290,16 @@ public class AdminPage extends AppCompatActivity {
 
         eventListenerMenuAv = databaseRefMenuAv.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menuListAv.clear();
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Menus menu_data = postSnapshot.getValue(Menus.class);
-
-                    menuListAv.add(menu_data);
-                    numberMenuAv = menuListAv.size();
-                    tVAdminMenusAv.setText(String.valueOf(numberMenuAv));
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Menus menu_data = postSnapshot.getValue(Menus.class);
+                        menuListAv.add(menu_data);
+                        tVAdminMenusAv.setText(String.valueOf(menuListAv.size()));
+                    }
+                } else {
+                    tVAdminMenusAv.setText(String.valueOf(menuListAv.size()));
                 }
             }
 
@@ -236,5 +308,29 @@ public class AdminPage extends AppCompatActivity {
                 Toast.makeText(AdminPage.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void alertNoRestaurantsAvailable() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
+        alertDialogBuilder
+                .setTitle("There are no Restaurants available!!")
+                .setMessage("Add new restaurants using the Add Restaurants menu and then you can use this service.")
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
+    public void alertNoMenusAvailable() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(AdminPage.this);
+        alertDialogBuilder
+                .setTitle("There are no Menus available!!")
+                .setMessage("Add new menus using the Add Menus menu and then you can use this service.")
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 }

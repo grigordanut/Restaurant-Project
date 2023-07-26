@@ -96,27 +96,22 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Menus menu_Data = postSnapshot.getValue(Menus.class);
-
-                        assert menu_Data != null;
-                        if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
-                            menu_Data.setMenu_Key(postSnapshot.getKey());
-                            menusList.add(menu_Data);
-                            tVMenusAvCustomer.setText(menusList.size() + " Menus available");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Menus menu_Data = postSnapshot.getValue(Menus.class);
+                    assert menu_Data != null;
+                    if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
+                        menu_Data.setMenu_Key(postSnapshot.getKey());
+                        menusList.add(menu_Data);
+                        if (menusList.size() == 1) {
+                            tVMenusAvCustomer.setText(menusList.size() + " menu available");
                         }
-
-                        if (menusList.size() == 0) {
-                            tVMenusAvCustomer.setText("No Menus available");
+                        else {
+                            tVMenusAvCustomer.setText(menusList.size() + " menus available");
                         }
                     }
-
-                    menuAdapterCustomer.notifyDataSetChanged();
-                } else {
-                    tVMenusAvCustomer.setText("No added Menus were found.");
                 }
 
+                menuAdapterCustomer.notifyDataSetChanged();
                 progressDialog.dismiss();
             }
 

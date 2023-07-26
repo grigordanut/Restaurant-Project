@@ -39,8 +39,6 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
 
     public List<Restaurants> restaurantList;
 
-    private ProgressDialog progressDialog;
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +46,6 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
         setContentView(R.layout.activity_restaurant_image_admin_show_rest);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("Admin restaurants available");
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.show();
 
         //Retrieve data from Restaurants database
         databaseReference = FirebaseDatabase.getInstance().getReference("Restaurants");
@@ -80,23 +75,26 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
             @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    restaurantList.clear();
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        Restaurants rest = postSnapshot.getValue(Restaurants.class);
-                        assert rest != null;
-                        rest.setRest_Key(postSnapshot.getKey());
-                        restaurantList.add(rest);
-                        tVRestImageShowRestAdmin.setText(restaurantList.size() + " Restaurants available");
+                restaurantList.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Restaurants rest = postSnapshot.getValue(Restaurants.class);
+                    assert rest != null;
+                    rest.setRest_Key(postSnapshot.getKey());
+                    restaurantList.add(rest);
+
+                    if (restaurantList.size() == 1) {
+                        tVRestImageShowRestAdmin.setText(restaurantList.size() + " restaurant available");
+                    } else {
+                        tVRestImageShowRestAdmin.setText(restaurantList.size() + " restaurants available");
                     }
-
-                    restaurantAdapterAdminShowRest.notifyDataSetChanged();
-                }
-                else {
-                    tVRestImageShowRestAdmin.setText("No registered Restaurants.");
                 }
 
-                progressDialog.dismiss();
+                if (restaurantList.size() == 1) {
+                    tVRestImageShowRestAdmin.setText(restaurantList.size() + " restaurant available");
+                } else {
+                    tVRestImageShowRestAdmin.setText(restaurantList.size() + " restaurants available");
+                }
+                restaurantAdapterAdminShowRest.notifyDataSetChanged();
             }
 
             @Override
@@ -134,7 +132,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
     }
 
     //Action of the menu Delete and alert dialog
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "NotifyDataSetChanged"})
     @Override
     public void onDeleteRestClick(final int position) {
 
@@ -142,12 +140,12 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
 
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
         builderAlert
-                .setTitle("Delete restaurant!!")
+                .setTitle("Delete restaurant?")
                 .setMessage("Are sure to delete the restaurant:\n" + selectedRest.getRest_Name() + "?")
                 .setCancelable(true)
                 .setPositiveButton("YES", (dialog, id) -> {
-                    String selectedRestKey = selectedRest.getRest_Key();
-                    databaseReference.child(selectedRestKey).removeValue();
+
+                    databaseReference.child(selectedRest.getRest_Key()).removeValue();
 
                     LayoutInflater inflater = getLayoutInflater();
                     @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.toast, null);
@@ -174,7 +172,7 @@ public class RestaurantImageAdminShowRest extends AppCompatActivity implements R
 
         AlertDialog.Builder builderAlert = new AlertDialog.Builder(RestaurantImageAdminShowRest.this);
         builderAlert
-                .setMessage("The " + selected_rest.getRest_Name() + " Restaurant still has Menus and cannot be deleted \nDelete the Menus first and after delete the Restaurant.")
+                .setMessage("The " + selected_rest.getRest_Name() + " Restaurant still has Menus and cannot be deleted\nDelete the Menus first and after delete the Restaurant.")
                 .setCancelable(true)
                 .setPositiveButton("OK", (dialog, id) -> dialog.dismiss());
 

@@ -167,7 +167,10 @@ public class AddNewMenu extends AppCompatActivity {
                                 toast.setView(layout);
                                 toast.show();
 
-                                startActivity(new Intent(AddNewMenu.this, AdminPage.class));
+                                Intent intent = new Intent(AddNewMenu.this, MenuImageAdmin.class);
+                                intent.putExtra("RName", restName);
+                                intent.putExtra("RKey", restKey);
+                                startActivity(intent);
                                 finish();
 
                             }))

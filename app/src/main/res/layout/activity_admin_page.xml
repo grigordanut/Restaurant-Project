@@ -23,7 +23,7 @@
             android:layout_marginEnd="20dp"
             android:text="@string/tv_adminPage"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
             android:layout_marginEnd="20dp"
             android:text="@string/tv_adminDetails"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp" />
 
         <TextView
@@ -53,7 +53,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:text="@string/tv_adminPersonalDetails"
-            android:textColor="#000000"
+            android:textColor="@color/colorBlack"
             android:textSize="24sp"
             tools:ignore="RtlSymmetry,TextViewEdits" />
 
@@ -73,7 +73,7 @@
                 android:layout_marginEnd="-80dp"
                 android:layout_weight="1"
                 android:text="@string/tv_adminRestaurant"
-                android:textColor="#000000"
+                android:textColor="@color/colorBlack"
                 android:textSize="24sp" />
 
             <TextView
@@ -84,10 +84,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:background="#ffffff"
+                android:background="@color/colorWhite"
                 android:text="@string/tv_adminRestaurantAv"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="@color/colorBlack"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -109,7 +109,7 @@
                 android:layout_marginEnd="-80dp"
                 android:layout_weight="1"
                 android:text="@string/tv_adminMenus"
-                android:textColor="#000000"
+                android:textColor="@color/colorBlack"
                 android:textSize="24sp" />
 
             <TextView
@@ -120,10 +120,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:background="#ffffff"
+                android:background="@color/colorWhite"
                 android:text="@string/tv_adminMenusAv"
                 android:textAlignment="center"
-                android:textColor="#000000"
+                android:textColor="@color/colorBlack"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 

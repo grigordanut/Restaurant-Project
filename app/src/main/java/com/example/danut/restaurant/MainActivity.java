@@ -22,16 +22,16 @@ public class MainActivity extends AppCompatActivity {
         btn_MainLogIn.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, LoginUser.class)));
 
         //Action button Deals
-        Button buttonMainDeals = findViewById(R.id.btnMainDeals);
-        buttonMainDeals.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AdminPage.class)));
+        Button btn_MainDeals = findViewById(R.id.btnMainDeals);
+        btn_MainDeals.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, AdminPage.class)));
 
         //Action button LogIn/RegisterUser
-        Button buttonMainReg = findViewById(R.id.btnMainReg);
-        buttonMainReg.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, RegisterUser.class)));
+        Button btn_MainReg = findViewById(R.id.btnMainReg);
+        btn_MainReg.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, RegisterUser.class)));
 
         //Action button Contact Us
-        Button buttonContUs = findViewById(R.id.btnContUs);
-        buttonContUs.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactUs.class)));
+        Button btn_ContUs = findViewById(R.id.btnContUs);
+        btn_ContUs.setOnClickListener(view -> startActivity(new Intent(MainActivity.this, ContactUs.class)));
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

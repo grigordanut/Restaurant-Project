@@ -164,7 +164,8 @@ public class UpdateRestaurant extends AppCompatActivity {
                 toast.setView(layout);
                 toast.show();
 
-                startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
+                //startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
+                startActivity(new Intent(UpdateRestaurant.this, RestaurantImageAdminUpdateRest.class));
                 finish();
             }
 
