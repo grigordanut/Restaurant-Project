@@ -79,6 +79,9 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        menuAdapterAdmin = new MenuAdapterAdmin(MenuImageAdmin.this, menusList);
+        recyclerView.setAdapter(menuAdapterAdmin);
+        menuAdapterAdmin.setOnItmClickListener(MenuImageAdmin.this);
     }
 
     @Override
@@ -114,9 +117,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                 } else {
                     tVMenusAvAdmin.setText(menusList.size() + " menus available");
                 }
-                menuAdapterAdmin = new MenuAdapterAdmin(MenuImageAdmin.this, menusList);
-                recyclerView.setAdapter(menuAdapterAdmin);
-                menuAdapterAdmin.setOnItmClickListener(MenuImageAdmin.this);
+                menuAdapterAdmin.notifyDataSetChanged();
             }
 
             @Override

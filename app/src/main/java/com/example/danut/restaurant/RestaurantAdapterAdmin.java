@@ -62,13 +62,18 @@ public class RestaurantAdapterAdmin extends RecyclerView.Adapter<RestaurantAdapt
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 menusList.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Menus menus = postSnapshot.getValue(Menus.class);
-                    assert menus != null;
-                    if (menus.getRestaurant_Key().equals(uploadCurrent.getRest_Key())) {
-                        menusList.add(menus);
-                        holder.tVMenusAvailable.setText(String.valueOf(menusList.size()));
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                        Menus menus = postSnapshot.getValue(Menus.class);
+                        assert menus != null;
+                        if (menus.getRestaurant_Key().equals(uploadCurrent.getRest_Key())) {
+                            menusList.add(menus);
+                            holder.tVMenusAvailable.setText(String.valueOf(menusList.size()));
+                        }
                     }
+                }
+                else {
+                    holder.tVMenusAvailable.setText(String.valueOf(menusList.size()));
                 }
             }
 
