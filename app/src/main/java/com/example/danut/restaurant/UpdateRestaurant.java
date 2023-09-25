@@ -85,7 +85,7 @@ public class UpdateRestaurant extends AppCompatActivity {
 
     public void checkRestaurantName() {
 
-        progressDialog.setTitle("Updateing restaurant details!!");
+        progressDialog.setTitle("Updating restaurant details!!");
         progressDialog.show();
 
         final String rest_nameCheck = restNameUp.getText().toString().trim();
@@ -164,7 +164,6 @@ public class UpdateRestaurant extends AppCompatActivity {
                 toast.setView(layout);
                 toast.show();
 
-                //startActivity(new Intent(UpdateRestaurant.this, AdminPage.class));
                 startActivity(new Intent(UpdateRestaurant.this, RestaurantImageAdminUpdateRest.class));
                 finish();
             }

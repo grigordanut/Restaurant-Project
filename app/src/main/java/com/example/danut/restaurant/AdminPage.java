@@ -118,7 +118,6 @@ public class AdminPage extends AppCompatActivity {
 
                 //Add Menus to the Restaurants available
                 case R.id.adminAdd_menu:
-
                     databaseRefRestAv.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
