@@ -50,6 +50,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     private String restaurantName = "";
     private String restaurantKey = "";
 
+    private ProgressDialog progressDialog;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
         setContentView(R.layout.activity_menu_image_admin);
 
         Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: Menus available");
+
+        progressDialog = new ProgressDialog(this);
 
         menuStorage = FirebaseStorage.getInstance();
         databaseRefMenu = FirebaseDatabase.getInstance().getReference().child("Menus");
@@ -91,6 +95,9 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
     }
 
     public void loadMenusAdmin() {
+
+        progressDialog.show();
+
         menuEventListener = databaseRefMenu.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
@@ -104,20 +111,16 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
 
                     if (rest_Key.equals(restaurantKey)) {
                         menusList.add(menus);
-                        if (menusList.size() == 1) {
-                            tVMenusAvAdmin.setText(menusList.size() + " menu available");
-                        } else {
-                            tVMenusAvAdmin.setText(menusList.size() + " menus available");
-                        }
                     }
                 }
+
+                menuAdapterAdmin.notifyDataSetChanged();
 
                 if (menusList.size() == 1) {
                     tVMenusAvAdmin.setText(menusList.size() + " menu available");
                 } else {
                     tVMenusAvAdmin.setText(menusList.size() + " menus available");
                 }
-                menuAdapterAdmin.notifyDataSetChanged();
             }
 
             @Override
@@ -125,6 +128,7 @@ public class MenuImageAdmin extends AppCompatActivity implements MenuAdapterAdmi
                 Toast.makeText(MenuImageAdmin.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        progressDialog.dismiss();
     }
 
     //Action on menus onClick

@@ -231,6 +231,11 @@
 
     <!--    Menu Main-->
 
+    <!--    Menu Restaurant Image Admin Show Menu-->
+    <string name="mRestImgAdminShowMenu_goBack">Go Back Admin</string>
+    <string name="mRestImgAdminShowMenu_addMenu">Add New Menu</string>
+    <string name="mRestImgAdminShowMenu_Close">Close</string>
+
     <!--    Menu Restaurant Image Admin Show Rest-->
     <string name="mRestImgAdminShowRest_goBack">Go Back Admin</string>
     <string name="mRestImgAdminShowRest_addMenu">Add Restaurant</string>

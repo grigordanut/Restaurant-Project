@@ -102,17 +102,17 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                     if (menu_Data.getRestaurant_Key().equals(restaurantKey)) {
                         menu_Data.setMenu_Key(postSnapshot.getKey());
                         menusList.add(menu_Data);
-                        if (menusList.size() == 1) {
-                            tVMenusAvCustomer.setText(menusList.size() + " menu available");
-                        }
-                        else {
-                            tVMenusAvCustomer.setText(menusList.size() + " menus available");
-                        }
                     }
                 }
 
                 menuAdapterCustomer.notifyDataSetChanged();
-                progressDialog.dismiss();
+
+                if (menusList.size() == 1) {
+                    tVMenusAvCustomer.setText(menusList.size() + " menu available");
+                }
+                else {
+                    tVMenusAvCustomer.setText(menusList.size() + " menus available");
+                }
             }
 
             @Override
@@ -120,6 +120,7 @@ public class MenuImageCustomer extends AppCompatActivity implements MenuAdapterC
                 Toast.makeText(MenuImageCustomer.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        progressDialog.dismiss();
     }
 
     //Action on Menu onClick

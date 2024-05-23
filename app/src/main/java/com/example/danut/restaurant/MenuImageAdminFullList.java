@@ -51,7 +51,6 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
         Objects.requireNonNull(getSupportActionBar()).setTitle("ADMIN: All Menus available");
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.show();
 
         menuStorage = FirebaseStorage.getInstance();
         databaseRefMenu = FirebaseDatabase.getInstance().getReference("Menus");
@@ -76,6 +75,9 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
     }
 
     private void loadMenusFullListAdmin() {
+
+        progressDialog.show();
+
         menuEventListener = databaseRefMenu.addValueEventListener(new ValueEventListener() {
             @SuppressLint({"NotifyDataSetChanged", "SetTextI18n"})
             @Override
@@ -86,20 +88,15 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                     assert menus != null;
                     menus.setMenu_Key(postSnapshot.getKey());
                     menusList.add(menus);
-                    if (menusList.size() == 1) {
-                        tVMenusAvFullListAdmin.setText(menusList.size() + " menu available");
-                    } else {
-                        tVMenusAvFullListAdmin.setText(menusList.size() + " menus available");
-                    }
                 }
 
                 menuAdapterAdminFullList.notifyDataSetChanged();
+
                 if (menusList.size() == 1) {
                     tVMenusAvFullListAdmin.setText(menusList.size() + " menu available");
                 } else {
                     tVMenusAvFullListAdmin.setText(menusList.size() + " menus available");
                 }
-                progressDialog.dismiss();
             }
 
             @Override
@@ -107,6 +104,8 @@ public class MenuImageAdminFullList extends AppCompatActivity implements MenuAda
                 Toast.makeText(MenuImageAdminFullList.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
+        progressDialog.dismiss();
     }
 
     //Action on Menus onClick
